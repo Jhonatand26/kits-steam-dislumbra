@@ -1,8 +1,15 @@
 """Build the gap-analysis workbook for the Dislumbra STEAM kits."""
+from pathlib import Path
+
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.worksheet.datavalidation import DataValidation
 from openpyxl.formatting.rule import CellIsRule, FormulaRule
+
+EXPORTS = Path(__file__).resolve().parent.parent / "exports"
+# Filas de Compra lunes ya resueltas sin comprar. Se conserva la
+# numeración original para no romper las referencias "#N".
+RESUELTO = {1}  # Panel: RTM020M 20 W de Dislumbra (7-nov)
 
 F = "Arial"
 HDR = PatternFill("solid", fgColor="1F4E5F")
@@ -148,7 +155,7 @@ buy = [
 import csv
 from collections import defaultdict
 _rows = defaultdict(list)
-for _r in csv.DictReader(open("/home/claude/kits/precios_reales.csv", encoding="utf-8")):
+for _r in csv.DictReader(open(EXPORTS / "precios_reales.csv", encoding="utf-8")):
     _rows[_r["item_num"]].append(_r)
 # my row number -> agent item_num
 _map = {i: str(i) for i in range(1, 24)}
@@ -172,12 +179,16 @@ for row_i, num in _map.items():
     cali = _cali_all
     cali_best = min(cali, key=lambda r: float(r["precio_unit_cop"])) if cali else None
     REAL[row_i] = (_composite.get(row_i, int(float(best["precio_unit_cop"]))), _fmt(best), _fmt(cali_best) + (" · " + cali_best["direccion"] if cali_best and cali_best["direccion"] else "") if cali_best else "—", best["url"])
+n = 0
 for i, (p, caja, proj, item, q, price, why, alt) in enumerate(buy, 1):
+    if i in RESUELTO:
+        continue
+    n += 1
     if i == 18:
         q = 1
     if i in REAL:
         price = REAL[i][0]
-    r = i + 1
+    r = n + 1
     best_txt, cali_txt, url = (REAL[i][1], REAL[i][2], REAL[i][3]) if i in REAL else ("No encontrado en línea", "Buscar en Cra 6 (Cali)", "")
     if i in (8, 14, 18):
         best_txt = "Combinado (ver CSV) · " + best_txt
@@ -187,7 +198,7 @@ for i, (p, caja, proj, item, q, price, why, alt) in enumerate(buy, 1):
         pass
     for col in (7, 8, 12, 13):
         wc.cell(row=r, column=col).number_format = '$#,##0;($#,##0);-'
-last = len(buy) + 1
+last = n + 1
 dv = DataValidation(type="list", formula1='"Sí,No"', allow_blank=True)
 wc.add_data_validation(dv)
 dv.add(f"K2:K{last}")
@@ -239,7 +250,7 @@ inv = {
   ("Relé de estado sólido 15 A 12 V→220 V",1,0,"—","Retirar (propuesto)","Ningún proyecto lo usa y conmuta 220 V: riesgo innecesario. Ahorro."),
   ("Inversor 12 V → 120 V",1,1,SN,"En mano ⚠","Truper 120 W. Ningún objetivo pide AC. Propuesta: uso exclusivo del docente o retirar."),
   ("Toma hembra automotriz 12 V",1,0,"—","Falta · comprar lunes",""),
-  ("Panel solar 80 W 12 V",1,0,"—","Falta · comprar lunes","CRÍTICO."),
+  ("Panel solar 80 W 12 V",1,1,"Dislumbra (RTM020M)","En mano · cambio","Panel de 20 W (Vmp 19,3 V · Imp 1,04 A) en lugar de 80 W. Con el controlador PWM carga a ~1 A = 0,14C, el rango sano para una batería de 7 Ah; uno de 80 W daría ~4,5 A (0,6C) y la calentaría. Repone ~45–55 Wh por día de sol, lo que se usa en un día. 45×35 cm: cabe en la caja. Cables de salida pelados: van directo a la bornera del controlador."),
   ("Controlador solar 10 A",1,1,SN,"En mano","Es de 30 A PWM con 2 USB (superior). Sus USB ya dan 5 V: el Taller 5 V usará el XL4016 para que el estudiante regule y mida."),
   ("Batería 12 V 7 Ah",1,1,SN,"En mano","Guardar cargada y con bornes tapados."),
   ("Cables y accesorios kit solar",1,0,"—","Falta · comprar lunes","Cable 2×14 AWG, terminales, fusible."),
@@ -332,6 +343,7 @@ chk = [
  ("LCD del Smart Home: ¿ya trae I2C?", "Ver si tiene una plaquita de 4 pines atrás.", "Sin cambio en la compra; solo para la guía."),
  ("Módulo BMP180: ¿tiene regulador (3 patas pequeñas, 662K)?", "Mirar la placa.", "Si no tiene, agregar 1 conversor de nivel más para C06."),
  ("Sensor de pH: ¿la sonda trae su capuchón con líquido?", "Revisar sin abrir el capuchón.", "Si llegó seco, pedir solución KCl 3M al proveedor (la sonda se daña seca)."),
+ ("Panel RTM020M al sol (antes de empacar)", "Sol directo, sin conectar nada. UT33C+ en V DC entre los dos cables: debe marcar 20–23 V. Luego en la escala 10 A (punta roja en el borne 10A) y por pocos segundos: ~1 A.", "Si marca mucho menos con sol pleno, revisar sombra o suciedad. Si no marca nada, revisar continuidad del cable. Anotar qué cable es el + y marcarlo con cinta roja."),
  ("Botones A14: ¿encajan en el pulsador B3F-4050?", "Poner uno.", "Si no encajan, usar los pulsadores sin tapa y retirar las tapas del Excel."),
 ]
 for i, (a, b, c) in enumerate(chk, 1):
@@ -339,4 +351,4 @@ for i, (a, b, c) in enumerate(chk, 1):
 
 for s in wb.worksheets:
     s.sheet_view.showGridLines = s.title == "Leeme" and False
-wb.save("/home/claude/kits-steam-dislumbra/exports/Faltantes_BOM_Kits_STEAM.xlsx")
+wb.save(EXPORTS / "Faltantes_BOM_Kits_STEAM.xlsx")
