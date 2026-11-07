@@ -20,7 +20,9 @@ data/lessons/*.json      ← lección de cada proyecto: piezas por agujero, cabl
 data/parts.json          ← qué es, cómo se conecta y cómo se cuida cada tipo de pieza
 firmware/<proyecto>/     ← sketch real que se carga en la placa (y que muestra la página)
 tools/inventario/        ← Python (uv): valida y genera el Excel físico
-exports/                 ← Excel de separación por caja (generado)
+tools/faltantes_build.py ← genera el Excel de faltantes y compra del lunes
+exports/                 ← Excel de separación, Excel de faltantes y
+                           precios_reales.csv (generados)
 ```
 
 ## Uso
@@ -35,7 +37,14 @@ ARDUINO_CORE=/ruta/ArduinoCore-avr scripts/compile-firmware.sh firmware/c06-p1-t
 cd tools/inventario
 uv run pytest        # pruebas de reglas y de contrato
 uv run inventario    # genera exports/Separacion_por_caja.xlsx
+uv run python ../faltantes_build.py   # genera exports/Faltantes_BOM_Kits_STEAM.xlsx
 ```
+
+El script de faltantes usa el entorno de `tools/inventario` (ya trae
+`openpyxl`). Lee los precios de `exports/precios_reales.csv`. Una fila de
+la compra que se resuelve sin comprar se agrega al conjunto `RESUELTO`
+del script: desaparece de la hoja, pero los demás ítems conservan su
+número (#N), al que se refieren las cajas y las otras hojas.
 
 Para cambiar el contenido de una caja se edita **solo** su JSON. El sitio
 y el Excel se regeneran desde ahí, así la página y la caja física nunca
@@ -53,6 +62,8 @@ dicen cosas distintas.
 | Parámetros leídos del sketch | El simulador lee MODO_DEMO, AVISO_MS, etc. del .ino real: placa y página no se pueden desincronizar en esos valores. |
 | Simulación en Wokwi enlazada (proyectos aún sin lección) | Los proyectos de Arduino ya se validaron en Wokwi (agosto 2026). Energía solar y seguidor de línea no se pueden simular en Wokwi: llevan simulador propio. |
 | Excel generado, no editado | Evita que el inventario físico y la página se desincronicen. |
+| Panel de C03 de 20 W (RTM020M), no de 80 W | Ya estaba en Dislumbra. Con el controlador PWM el panel trabaja al voltaje de la batería y entrega su corriente: ~1 A ≈ 0,14C, carga sana para la batería de 7 Ah. Uno de 80 W daría ~4,5 A (0,6C) y la calentaría. Repone ~45–55 Wh por día de sol y cabe en la caja. Ahorro: $120.960. |
+| Numeración fija en la compra del lunes | Las cajas y las hojas citan los ítems como "Compra lunes #N". Quitar una fila con `RESUELTO` no renumera las demás. |
 | Identidad visual por código de colores | Cada caja se reconoce por un resistor cuyas bandas son su número de categoría (C06 = negro, azul). |
 | Separación de rigor | Se dejó el formato pesado del repo EHS-Dislumbra (LaTeX, actas de 14 pruebas) para cumplir la entrega del 10-nov; cada proyecto conserva código, simulación, piezas, armado, fallos y prueba de funcionamiento. |
 
@@ -84,3 +95,4 @@ Ver `.env.example`. No hay credenciales en el proyecto.
 | `arduino-cli` no se instala en el contenedor | downloads.arduino.cc está bloqueado por la red | `apt install gcc-avr avr-libc` + clonar `arduino/ArduinoCore-avr` desde GitHub y usar `scripts/compile-firmware.sh` |
 | El LED RGB del simulador no cambiaba de color | Una regla CSS con `fill` pisa el atributo `fill` del SVG | Cambiar el color con `element.style.fill` |
 | El monitor serie mostraba todo duplicado | `start()` saltaba al último paso y ese paso volvía a llamar `start()` | Bandera `starting` que evita la doble ejecución |
+| `faltantes_build.py` fallaba con `FileNotFoundError` en un clon nuevo | Rutas absolutas fijas a la carpeta de trabajo donde se escribió el script | Rutas relativas al repo con `Path(__file__).resolve().parent.parent / "exports"` |
