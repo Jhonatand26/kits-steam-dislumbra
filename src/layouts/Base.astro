@@ -1,0 +1,91 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Contenido, armado y simulación de los kits STEAM de Dislumbra." } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#contenido">Ir al contenido</a>
+    <header class="top">
+      <div class="wrap top-row">
+        <a class="brand" href={base}>
+          <svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true">
+            <line x1="0" y1="7" x2="34" y2="7" stroke="currentColor" stroke-width="1.5" />
+            <rect x="7" y="1" width="20" height="12" rx="5" fill="var(--paper-2)" stroke="currentColor" />
+            <rect x="11" y="1" width="2.5" height="12" fill="var(--r0)" />
+            <rect x="16" y="1" width="2.5" height="12" fill="var(--r6)" />
+            <rect x="21" y="1" width="2.5" height="12" fill="var(--band-gold)" />
+          </svg>
+          <span>Kits STEAM · Dislumbra</span>
+        </a>
+        <span class="muted top-note">Centros de Interés CP 2026</span>
+      </div>
+    </header>
+    <main id="contenido">
+      <slot />
+    </main>
+    <footer class="foot">
+      <div class="wrap">
+        <p class="muted">
+          Asesoría técnica en electrónica y programación para Dislumbra SAS.
+          Los datos de cada caja salen del mismo archivo que el inventario
+          físico, así la página y la caja siempre dicen lo mismo.
+        </p>
+      </div>
+    </footer>
+    <style>
+      .top {
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--paper) 85%, transparent);
+        backdrop-filter: blur(6px);
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+      .top-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 56px;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--ink);
+        text-decoration: none;
+        font-family: var(--font-cond);
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+      .top-note { font-size: 0.95rem; }
+      @media (max-width: 520px) { .top-note { display: none; } }
+      .foot {
+        margin-top: 5rem;
+        padding: 2rem 0 3rem;
+        border-top: 1px solid var(--line);
+        font-size: 0.95rem;
+      }
+    </style>
+  </body>
+</html>

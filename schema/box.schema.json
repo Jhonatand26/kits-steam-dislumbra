@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kits-steam-dislumbra/schema/box.schema.json",
+  "title": "Caja de kit STEAM",
+  "description": "Contrato único de datos. Lo consumen el sitio web (Astro) y el generador de inventario (Python). Cambiar aquí obliga a revisar ambos.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "slug", "title", "category", "items", "projects"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^C\\d{2}$"},
+    "slug": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "title": {"type": "string"},
+    "category": {"type": "string"},
+    "summary": {"type": "string"},
+    "accent": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}$"},
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "qty", "unit", "status", "group"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^C\\d{2}-\\d{2}$"},
+          "name": {"type": "string"},
+          "qty": {"type": "integer", "minimum": 0},
+          "unit": {"type": "string"},
+          "status": {
+            "enum": ["en_mano", "verificar", "pendiente_compra",
+                     "pendiente_no_electronico", "interno"]
+          },
+          "group": {
+            "enum": ["placa", "sensor", "actuador", "pantalla",
+                     "energia", "granel", "cableado", "herramienta",
+                     "laboratorio", "consumible", "mecanico", "documento"]
+          },
+          "source": {"type": "string"},
+          "note": {"type": "string"},
+          "care": {"type": "string"}
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "slug", "title", "challenge", "objective", "uses", "simulation"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^P\\d$"},
+          "slug": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "title": {"type": "string"},
+          "challenge": {"type": "string"},
+          "objective": {"type": "string"},
+          "grades": {"type": "string"},
+          "ods": {"type": "array", "items": {"type": "string"}},
+          "uses": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["item", "qty"],
+              "properties": {
+                "item": {"type": "string", "pattern": "^C\\d{2}-\\d{2}$"},
+                "qty": {"type": "integer", "minimum": 1}
+              }
+            }
+          },
+          "wiring": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["from", "to"],
+              "properties": {
+                "from": {"type": "string"},
+                "to": {"type": "string"},
+                "note": {"type": "string"}
+              }
+            }
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "detail"],
+              "properties": {
+                "title": {"type": "string"},
+                "detail": {"type": "string"}
+              }
+            }
+          },
+          "failures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["symptom", "cause", "fix"],
+              "properties": {
+                "symptom": {"type": "string"},
+                "cause": {"type": "string"},
+                "fix": {"type": "string"}
+              }
+            }
+          },
+          "checks": {"type": "array", "items": {"type": "string"}},
+          "simulation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "status"],
+            "properties": {
+              "kind": {"enum": ["wokwi", "interactiva", "ninguna"]},
+              "status": {"enum": ["validada", "por_actualizar", "pendiente"]},
+              "wokwi": {"type": "string"},
+              "note": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,475 @@
+{
+  "id": "C06",
+  "slug": "software-aplicaciones",
+  "title": "Diseño de software y aplicaciones",
+  "category": "6. Diseño de software y aplicaciones · Soluciones digitales para la convivencia y el entorno escolar",
+  "summary": "Interfaces físicas que resuelven problemas del colegio: reportar el estado de ánimo, alertar la radiación UV, controlar accesos y anticipar el clima.",
+  "accent": "#2C6FBB",
+  "items": [
+    {
+      "id": "C06-01",
+      "name": "Arduino UNO R3 (CH340) + cable USB",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "placa",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C06-02",
+      "name": "Caja plástica para Arduino UNO",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "placa",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C06-03",
+      "name": "Pantalla LCD 1602 azul",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "pantalla",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C06-04",
+      "name": "Backpack I2C PCF8574 para LCD 1602",
+      "qty": 1,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "pantalla",
+      "source": "Compra lunes #10"
+    },
+    {
+      "id": "C06-05",
+      "name": "Módulo MB102 (fuente de protoboard)",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "energia",
+      "source": "Compra oficina"
+    },
+    {
+      "id": "C06-06",
+      "name": "Protoboard 830 puntos",
+      "qty": 1,
+      "unit": "und",
+      "status": "verificar",
+      "group": "energia",
+      "source": "¿Incluida con la MB102?"
+    },
+    {
+      "id": "C06-07",
+      "name": "Adaptador 9 V 1 A plug 5.5×2.1",
+      "qty": 1,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "energia",
+      "source": "Compra lunes #12"
+    },
+    {
+      "id": "C06-08",
+      "name": "LED RGB 5 mm (verificar cátodo común)",
+      "qty": 100,
+      "unit": "und",
+      "status": "verificar",
+      "group": "granel",
+      "source": "Vistrónica 4733-26"
+    },
+    {
+      "id": "C06-09",
+      "name": "LED rojo 5 mm difuso",
+      "qty": 100,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C06-10",
+      "name": "LED amarillo 5 mm difuso",
+      "qty": 100,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C06-11",
+      "name": "LED verde difuso (llegaron de 3 mm)",
+      "qty": 100,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "San Nicolás 908817",
+      "note": "El Excel dice 5 mm; funcionan igual."
+    },
+    {
+      "id": "C06-12",
+      "name": "LED azul 5 mm difuso",
+      "qty": 100,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "Vistrónica 4733-26"
+    },
+    {
+      "id": "C06-13",
+      "name": "Pulsador 12×12 B3F negro",
+      "qty": 9,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "Vistrónica 4733-26 (10 comprados; 1 va a C01)"
+    },
+    {
+      "id": "C06-14",
+      "name": "Tapas A14 para pulsador (amarillo, azul, blanco, rojo ×50)",
+      "qty": 200,
+      "unit": "und",
+      "status": "verificar",
+      "group": "granel",
+      "source": "Vistrónica 4733-26",
+      "note": "Verificar que encajan en el B3F-4050."
+    },
+    {
+      "id": "C06-15",
+      "name": "Buzzer BS3 5–15 V (verificar que es activo)",
+      "qty": 6,
+      "unit": "und",
+      "status": "verificar",
+      "group": "actuador",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C06-16",
+      "name": "Transistor NPN 2N2222 (driver del buzzer)",
+      "qty": 4,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "granel",
+      "source": "Compra lunes #20"
+    },
+    {
+      "id": "C06-17",
+      "name": "Fotorresistencia LDR 5 mm",
+      "qty": 6,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "sensor",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C06-18",
+      "name": "Sensor UV analógico GUVA-S12SD",
+      "qty": 2,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "sensor",
+      "source": "Compra lunes #2",
+      "care": "Bolsa antiestática; no tocar el fotodiodo."
+    },
+    {
+      "id": "C06-19",
+      "name": "Sensor de presión barométrica BMP180",
+      "qty": 2,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "sensor",
+      "source": "San Nicolás 908817",
+      "care": "Bolsa antiestática."
+    },
+    {
+      "id": "C06-20",
+      "name": "Micro servo MG90S piñonería metálica + brazos",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "actuador",
+      "source": "Vistrónica 4733-26"
+    },
+    {
+      "id": "C06-21",
+      "name": "Capacitor electrolítico 470 µF 16 V",
+      "qty": 2,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "granel",
+      "source": "Compra lunes #21"
+    },
+    {
+      "id": "C06-22",
+      "name": "Resistencias 1/4 W surtidas (resto del lote: 19 valores)",
+      "qty": 360,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "San Nicolás 908817",
+      "note": "Empacar por valor en bolsitas rotuladas. Más usadas: 330 Ω (LED), 1 kΩ (transistor), 10 kΩ (LDR)."
+    },
+    {
+      "id": "C06-23",
+      "name": "Cables de conexión M-M, M-H y H-H 10 cm (10 de cada uno) + M-H 20 cm ×10",
+      "qty": 40,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "cableado",
+      "source": "San Nicolás 908817 / Vistrónica"
+    },
+    {
+      "id": "C06-24",
+      "name": "Carcasa impresa en 3D (PLA) para la barrera",
+      "qty": 1,
+      "unit": "und",
+      "status": "interno",
+      "group": "mecanico",
+      "source": "Taller 3D de la empresa"
+    },
+    {
+      "id": "C06-25",
+      "name": "Material pedagógico (guía + acceso a la página de simulación)",
+      "qty": 1,
+      "unit": "und",
+      "status": "interno",
+      "group": "documento",
+      "source": "Asesoría técnica + pedagoga"
+    }
+  ],
+  "projects": [
+    {
+      "id": "P1",
+      "slug": "tablero-convivencia",
+      "title": "Tablero de Convivencia",
+      "challenge": "Inseguridad en el entorno escolar, problemas de convivencia y barreras de comunicación para reportar acoso.",
+      "objective": "Ensamblar una interfaz física con botones y LED RGB para que los estudiantes reporten su estado de ánimo o soliciten ayuda de forma discreta.",
+      "grades": "6-7",
+      "ods": [
+        "ODS 16",
+        "ODS 3"
+      ],
+      "uses": [
+        {
+          "item": "C06-01",
+          "qty": 1
+        },
+        {
+          "item": "C06-08",
+          "qty": 1
+        },
+        {
+          "item": "C06-13",
+          "qty": 3
+        },
+        {
+          "item": "C06-14",
+          "qty": 3
+        },
+        {
+          "item": "C06-15",
+          "qty": 1
+        },
+        {
+          "item": "C06-16",
+          "qty": 1
+        },
+        {
+          "item": "C06-22",
+          "qty": 4
+        },
+        {
+          "item": "C06-23",
+          "qty": 14
+        },
+        {
+          "item": "C06-05",
+          "qty": 1
+        },
+        {
+          "item": "C06-06",
+          "qty": 1
+        },
+        {
+          "item": "C06-07",
+          "qty": 1
+        }
+      ],
+      "simulation": {
+        "kind": "wokwi",
+        "status": "por_actualizar",
+        "note": "Validada en agosto: 3 botones, color por estado y el mismo sonido para cualquier reporte (discreto). Se pasa a LED RGB y duración parametrizable.",
+        "wokwi": "https://wokwi.com/projects/471465315562171393"
+      }
+    },
+    {
+      "id": "P2",
+      "slug": "semaforo-uv",
+      "title": "Semáforo UV para el Recreo",
+      "challenge": "Alta exposición a la radiación solar durante los descansos sin advertencias para los estudiantes.",
+      "objective": "Medir el índice UV con el sensor y encender el LED verde (seguro), amarillo (precaución) o rojo (peligro) según la intensidad.",
+      "grades": "6-7",
+      "ods": [
+        "ODS 3"
+      ],
+      "uses": [
+        {
+          "item": "C06-01",
+          "qty": 1
+        },
+        {
+          "item": "C06-18",
+          "qty": 1
+        },
+        {
+          "item": "C06-09",
+          "qty": 1
+        },
+        {
+          "item": "C06-10",
+          "qty": 1
+        },
+        {
+          "item": "C06-11",
+          "qty": 1
+        },
+        {
+          "item": "C06-22",
+          "qty": 3
+        },
+        {
+          "item": "C06-23",
+          "qty": 9
+        },
+        {
+          "item": "C06-06",
+          "qty": 1
+        }
+      ],
+      "simulation": {
+        "kind": "wokwi",
+        "status": "validada",
+        "note": "En simulación el sensor UV se representa con un potenciómetro.",
+        "wokwi": "https://wokwi.com/projects/471464617714864129"
+      }
+    },
+    {
+      "id": "P3",
+      "slug": "barrera-escolar",
+      "title": "Barrera Escolar Automatizada",
+      "challenge": "Acceso descontrolado a laboratorios o áreas restringidas, generando riesgos de accidentes.",
+      "objective": "Programar el servomotor para que la talanquera se abra 90° solo si se presiona la combinación correcta de botones.",
+      "grades": "8-9",
+      "ods": [
+        "ODS 16"
+      ],
+      "uses": [
+        {
+          "item": "C06-01",
+          "qty": 1
+        },
+        {
+          "item": "C06-20",
+          "qty": 1
+        },
+        {
+          "item": "C06-21",
+          "qty": 1
+        },
+        {
+          "item": "C06-13",
+          "qty": 3
+        },
+        {
+          "item": "C06-14",
+          "qty": 3
+        },
+        {
+          "item": "C06-09",
+          "qty": 1
+        },
+        {
+          "item": "C06-11",
+          "qty": 1
+        },
+        {
+          "item": "C06-22",
+          "qty": 2
+        },
+        {
+          "item": "C06-23",
+          "qty": 14
+        },
+        {
+          "item": "C06-24",
+          "qty": 1
+        },
+        {
+          "item": "C06-05",
+          "qty": 1
+        },
+        {
+          "item": "C06-06",
+          "qty": 1
+        },
+        {
+          "item": "C06-07",
+          "qty": 1
+        }
+      ],
+      "simulation": {
+        "kind": "wokwi",
+        "status": "validada",
+        "note": "Incluye la corrección de rebote de los botones.",
+        "wokwi": "https://wokwi.com/projects/471465569662575617"
+      }
+    },
+    {
+      "id": "P4",
+      "slug": "estacion-meteorologica",
+      "title": "Estación Meteorológica de Bolsillo",
+      "challenge": "Imposibilidad de planear actividades al aire libre por desconocer las condiciones atmosféricas.",
+      "objective": "Medir presión atmosférica y luminosidad y programar la LCD para predecir lluvia o días despejados con algoritmos sencillos.",
+      "grades": "8-9",
+      "ods": [
+        "ODS 13"
+      ],
+      "uses": [
+        {
+          "item": "C06-01",
+          "qty": 1
+        },
+        {
+          "item": "C06-03",
+          "qty": 1
+        },
+        {
+          "item": "C06-04",
+          "qty": 1
+        },
+        {
+          "item": "C06-19",
+          "qty": 1
+        },
+        {
+          "item": "C06-17",
+          "qty": 1
+        },
+        {
+          "item": "C06-22",
+          "qty": 1
+        },
+        {
+          "item": "C06-23",
+          "qty": 10
+        }
+      ],
+      "simulation": {
+        "kind": "wokwi",
+        "status": "por_actualizar",
+        "note": "Validada en agosto con potenciómetro como sensor de presión; se actualiza al BMP180 real y corrección de polaridad del LDR ya incluida.",
+        "wokwi": "https://wokwi.com/projects/471465962737037313"
+      }
+    }
+  ]
+}

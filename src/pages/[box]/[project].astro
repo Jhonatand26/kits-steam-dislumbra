@@ -1,0 +1,165 @@
+---
+import Base from "../../layouts/Base.astro";
+import StatusChip from "../../components/StatusChip.astro";
+import { boxes, itemsFor, SIM_LABEL, type Box, type Project } from "../../lib/boxes";
+
+export function getStaticPaths() {
+  return boxes.flatMap((box) =>
+    box.projects.map((project) => ({
+      params: { box: box.slug, project: project.slug },
+      props: { box, project },
+    })),
+  );
+}
+interface Props { box: Box; project: Project }
+const { box, project } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const items = itemsFor(box, project);
+const pending = items.filter((i) => i.status === "pendiente_compra" || i.status === "pendiente_no_electronico");
+const idx = box.projects.findIndex((p) => p.id === project.id);
+const prev = box.projects[idx - 1];
+const next = box.projects[idx + 1];
+---
+<Base title={`${project.title} · ${box.title}`} description={project.objective}>
+  <article class="wrap" style={`--accent:${box.accent}`}>
+    <nav class="crumbs">
+      <a href={base}>Todas las cajas</a> / <a href={`${base}${box.slug}/`}>{box.title}</a>
+    </nav>
+
+    <header class="head">
+      <p class="pid">{project.id} de {box.projects.length}{project.grades && ` · grados ${project.grades}`}{project.ods?.length ? ` · ${project.ods.join(", ")}` : ""}</p>
+      <h1>{project.title}</h1>
+      <div class="pair">
+        <div><h2 class="label">El reto</h2><p>{project.challenge}</p></div>
+        <div><h2 class="label">Lo que logra el estudiante</h2><p>{project.objective}</p></div>
+      </div>
+    </header>
+
+    <section class="sim sheet" aria-labelledby="sim">
+      <div>
+        <h2 id="sim">Verlo funcionar</h2>
+        <p class={`sim-status s-${project.simulation.status}`}>{SIM_LABEL[project.simulation.status]}</p>
+        {project.simulation.note && <p class="muted">{project.simulation.note}</p>}
+      </div>
+      {project.simulation.wokwi ? (
+        <a class="btn" href={project.simulation.wokwi} target="_blank" rel="noopener">Abrir la simulación en Wokwi</a>
+      ) : (
+        <p class="muted soon">La simulación de este proyecto se está preparando.</p>
+      )}
+    </section>
+
+    <section aria-labelledby="piezas">
+      <h2 id="piezas">Piezas que usa de la caja</h2>
+      {pending.length > 0 && (
+        <p class="warn">{pending.length} {pending.length === 1 ? "pieza está" : "piezas están"} pendiente{pending.length === 1 ? "" : "s"}; el resto ya está en la caja.</p>
+      )}
+      <div class="sheet tbl">
+        <table>
+          <thead><tr><th>Etiqueta</th><th>Pieza</th><th class="num">Usa</th><th>Estado</th></tr></thead>
+          <tbody>
+            {items.map((it) => (
+              <tr>
+                <td class="tag">{it.id}</td>
+                <td>{it.name}{it.note && <span class="note">{it.note}</span>}</td>
+                <td class="num">{it.need}</td>
+                <td><StatusChip status={it.status} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {project.wiring?.length ? (
+      <section aria-labelledby="conexiones">
+        <h2 id="conexiones">Conexiones</h2>
+        <div class="sheet tbl">
+          <table>
+            <thead><tr><th>Desde</th><th>Hasta</th><th>Nota</th></tr></thead>
+            <tbody>{project.wiring.map((w) => <tr><td>{w.from}</td><td>{w.to}</td><td class="muted">{w.note}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </section>
+    ) : null}
+
+    <section aria-labelledby="armado">
+      <h2 id="armado">Cómo se arma</h2>
+      {project.steps?.length ? (
+        <ol class="steps">{project.steps.map((s) => <li><h3>{s.title}</h3><p>{s.detail}</p></li>)}</ol>
+      ) : (
+        <p class="muted">Los pasos de armado se publican con la versión final del montaje.</p>
+      )}
+    </section>
+
+    {project.failures?.length ? (
+      <section aria-labelledby="fallos">
+        <h2 id="fallos">Si algo no funciona</h2>
+        <div class="sheet tbl">
+          <table>
+            <thead><tr><th>Lo que pasa</th><th>Por qué</th><th>Cómo se corrige</th></tr></thead>
+            <tbody>{project.failures.map((f) => <tr><td>{f.symptom}</td><td>{f.cause}</td><td>{f.fix}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </section>
+    ) : null}
+
+    {project.checks?.length ? (
+      <section aria-labelledby="prueba">
+        <h2 id="prueba">Prueba de funcionamiento</h2>
+        <ul class="checks">{project.checks.map((c) => <li>{c}</li>)}</ul>
+      </section>
+    ) : null}
+
+    <nav class="pager">
+      {prev ? <a href={`${base}${box.slug}/${prev.slug}/`}>Anterior: {prev.title}</a> : <span />}
+      {next ? <a href={`${base}${box.slug}/${next.slug}/`}>Siguiente: {next.title}</a> : <a href={`${base}${box.slug}/`}>Volver a la caja</a>}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .crumbs { padding: 1.2rem 0 0; font-size: 0.95rem; }
+  .head { padding: 1.8rem 0 2rem; border-bottom: 2px solid var(--ink); }
+  .pid { font-family: var(--font-cond); font-weight: 600; color: var(--accent); margin: 0 0 0.3rem; font-size: 1.1rem; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; }
+  .label { font-size: 1.15rem; color: var(--ink-2); margin-bottom: 0.2rem; }
+  section { margin-top: 2.5rem; }
+  .sim {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.4rem 1.5rem;
+    border-left: 6px solid var(--accent);
+  }
+  .sim p { margin-bottom: 0.3rem; }
+  .sim-status { font-weight: 600; }
+  .s-validada { color: var(--ok); }
+  .s-por_actualizar { color: var(--check); }
+  .s-pendiente { color: var(--ink-2); }
+  .soon { margin: 0; }
+  .warn { color: var(--todo); font-weight: 500; }
+  .tbl { padding: 0.4rem 1rem; overflow-x: auto; }
+  .tag { white-space: nowrap; color: var(--ink-2); font-size: 0.92rem; }
+  .note { display: block; font-size: 0.88rem; color: var(--ink-2); }
+  .steps { padding-left: 1.4rem; }
+  .steps li { margin-bottom: 1rem; }
+  .steps li::marker { font-family: var(--font-cond); font-weight: 700; color: var(--accent); }
+  .checks { padding-left: 1.2rem; }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-cond);
+    font-size: 1.15rem;
+  }
+  @media (max-width: 760px) {
+    .pair { grid-template-columns: 1fr; gap: 0.5rem; }
+    .sim { flex-direction: column; align-items: flex-start; }
+    .pager { flex-direction: column; }
+    th:first-child, td.tag { display: none; }
+  }
+</style>

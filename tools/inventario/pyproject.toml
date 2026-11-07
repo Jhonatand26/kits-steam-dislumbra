@@ -1,0 +1,34 @@
+[project]
+name = "inventario"
+version = "0.1.0"
+description = "Valida los datos de las cajas y genera el Excel de separación física."
+readme = "README.md"
+authors = [{ name = "Jhonatan" }]
+requires-python = ">=3.13"
+dependencies = [
+    "jsonschema>=4.26.0",
+    "openpyxl>=3.1.5",
+]
+
+[project.scripts]
+inventario = "inventario.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.11.32,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "D"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 72

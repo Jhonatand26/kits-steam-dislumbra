@@ -1,0 +1,59 @@
+{
+  "id": "C09",
+  "slug": "biotecnologia",
+  "title": "Biotecnología",
+  "category": "9. Biotecnología · Experimentación biológica e industrias locales sostenibles",
+  "summary": "Controlar con sensores los procesos vivos: fermentación de alimentos locales, germinación de semillas nativas y una incubadora a 37 °C para cultivos.",
+  "accent": "#8E44AD",
+  "items": [
+    {"id": "C09-01", "name": "Arduino UNO R3 (CH340) + cable USB", "qty": 1, "unit": "und", "status": "en_mano", "group": "placa", "source": "San Nicolás 908817"},
+    {"id": "C09-02", "name": "Caja plástica para Arduino UNO", "qty": 1, "unit": "und", "status": "en_mano", "group": "placa", "source": "San Nicolás 908817"},
+    {"id": "C09-03", "name": "Pantalla LCD 1602 azul", "qty": 1, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "San Nicolás 908817"},
+    {"id": "C09-04", "name": "Backpack I2C PCF8574 para LCD 1602", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "pantalla", "source": "Compra lunes #10"},
+    {"id": "C09-05", "name": "Módulo MB102 (fuente de protoboard)", "qty": 1, "unit": "und", "status": "en_mano", "group": "energia", "source": "Compra oficina"},
+    {"id": "C09-06", "name": "Protoboard 830 puntos", "qty": 1, "unit": "und", "status": "verificar", "group": "energia", "source": "¿Incluida con la MB102?"},
+    {"id": "C09-07", "name": "Adaptador 9 V 1 A plug 5.5×2.1", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #12"},
+    {"id": "C09-08", "name": "Sensor de pH analógico DFRobot (sonda BNC + tarjeta)", "qty": 1, "unit": "und", "status": "en_mano", "group": "sensor", "source": "Vistrónica 4733-26", "care": "Sonda siempre con su capuchón húmedo y de pie. Lavar con agua destilada después de cada fermentación."},
+    {"id": "C09-09", "name": "Módulo sensor DHT22 / AM2302", "qty": 1, "unit": "und", "status": "en_mano", "group": "sensor", "source": "San Nicolás 908817"},
+    {"id": "C09-10", "name": "Sensor de temperatura DS18B20 sumergible (sonda de acero)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "sensor", "source": "Compra lunes #6", "note": "No está en el Excel: mide el líquido en fermentación."},
+    {"id": "C09-11", "name": "Sensor de humedad de suelo capacitivo v1.2", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "sensor", "source": "Compra lunes #7", "note": "No está en el Excel: la propuesta pide sensores de humedad para la germinación."},
+    {"id": "C09-12", "name": "Módulo relé 5 V 1 canal con optoacoplador", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "actuador", "source": "Compra lunes #3"},
+    {"id": "C09-13", "name": "Bombillo incandescente 12 V 21 W (1156) + socket con cables", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "actuador", "source": "Compra lunes #4", "care": "Se calienta: dejar enfriar 10 min antes de guardar; envolver en espuma."},
+    {"id": "C09-14", "name": "Adaptador 12 V 2 A plug 5.5×2.1 (calefactor)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #5"},
+    {"id": "C09-15", "name": "Transistor NPN 2N2222 (indicador / repuesto)", "qty": 2, "unit": "und", "status": "pendiente_compra", "group": "granel", "source": "Compra lunes #20"},
+    {"id": "C09-16", "name": "Resistencias 1/4 W: 4.7 kΩ ×4, 10 kΩ ×2, 1 kΩ ×2, 330 Ω ×2", "qty": 10, "unit": "und", "status": "en_mano", "group": "granel", "source": "San Nicolás 908817 (del lote surtido)"},
+    {"id": "C09-17", "name": "Cables de conexión M-M, M-H y H-H 10 cm (10 de cada uno) + M-H 20 cm ×10", "qty": 40, "unit": "und", "status": "en_mano", "group": "cableado", "source": "San Nicolás 908817 / Vistrónica"},
+    {"id": "C09-18", "name": "Caja térmica de icopor (cuerpo de la incubadora)", "qty": 1, "unit": "und", "status": "pendiente_no_electronico", "group": "mecanico", "source": "Propuesta técnica (no está en el Excel)"},
+    {"id": "C09-19", "name": "Cajas Petri con tapa 60×15 mm", "qty": 20, "unit": "und", "status": "pendiente_no_electronico", "group": "laboratorio", "source": "Excel línea 6"},
+    {"id": "C09-20", "name": "Levaduras y cultivos: S. cerevisiae ×10 sobres, cultivo yogur, L. lactis", "qty": 1, "unit": "juego", "status": "pendiente_no_electronico", "group": "consumible", "source": "Excel línea 2", "care": "Perecederos: entregar aparte o como reposición, en lugar fresco y seco."},
+    {"id": "C09-21", "name": "Reactivos: azul de metileno 1 %, NaCl 0.9 %, papel pH, rojo de fenol", "qty": 1, "unit": "juego", "status": "pendiente_no_electronico", "group": "consumible", "source": "Excel línea 3", "care": "Empaque secundario a prueba de derrames, separado de la electrónica."},
+    {"id": "C09-22", "name": "Semillas locales: maíz, fríjol, ahuyama, cilantro, tomate", "qty": 1, "unit": "juego", "status": "pendiente_no_electronico", "group": "consumible", "source": "Excel línea 7"},
+    {"id": "C09-23", "name": "Material pedagógico (guía + acceso a la página de simulación)", "qty": 1, "unit": "und", "status": "interno", "group": "documento", "source": "Asesoría técnica + pedagoga"}
+  ],
+  "projects": [
+    {
+      "id": "P1", "slug": "levaduras-biorreactores", "title": "Levaduras y Biorreactores Caseros",
+      "challenge": "Desconocimiento del proceso de fermentación para la conservación y procesamiento de alimentos locales.",
+      "objective": "Activar levaduras en una solución azucarada dentro de un biorreactor casero, usando el sensor de temperatura (y el de pH) para encontrar el punto óptimo de fermentación.",
+      "grades": "8-9", "ods": ["ODS 2", "ODS 9"],
+      "uses": [{"item": "C09-01", "qty": 1}, {"item": "C09-03", "qty": 1}, {"item": "C09-04", "qty": 1}, {"item": "C09-08", "qty": 1}, {"item": "C09-10", "qty": 1}, {"item": "C09-16", "qty": 1}, {"item": "C09-17", "qty": 12}, {"item": "C09-20", "qty": 1}, {"item": "C09-21", "qty": 1}],
+      "simulation": {"kind": "wokwi", "status": "pendiente"}
+    },
+    {
+      "id": "P2", "slug": "biodiversidad-semillas", "title": "Biodiversidad Endémica en Semillas",
+      "challenge": "Erosión genética y pérdida de especies vegetales endémicas reemplazadas por monocultivos.",
+      "objective": "Crear un banco de semillas vivo: germinar especies locales controlando la humedad del sustrato y la temperatura para recuperar la flora endémica.",
+      "grades": "6-7", "ods": ["ODS 15", "ODS 2"],
+      "uses": [{"item": "C09-01", "qty": 1}, {"item": "C09-03", "qty": 1}, {"item": "C09-04", "qty": 1}, {"item": "C09-09", "qty": 1}, {"item": "C09-11", "qty": 1}, {"item": "C09-17", "qty": 10}, {"item": "C09-19", "qty": 10}, {"item": "C09-22", "qty": 1}],
+      "simulation": {"kind": "wokwi", "status": "pendiente", "note": "En simulación el sensor de suelo se representa con un potenciómetro."}
+    },
+    {
+      "id": "P3", "slug": "incubadora", "title": "Incubadora Escolar Automatizada",
+      "challenge": "Las temperaturas fluctuantes en las aulas arruinan los experimentos de microbiología y fermentación.",
+      "objective": "Convertir una caja térmica en incubadora: el Arduino enciende una fuente de calor para mantener 37 °C en el cultivo Petri (si T<37 encender; si T>37 apagar).",
+      "grades": "8-9", "ods": ["ODS 9"],
+      "uses": [{"item": "C09-01", "qty": 1}, {"item": "C09-03", "qty": 1}, {"item": "C09-04", "qty": 1}, {"item": "C09-05", "qty": 1}, {"item": "C09-06", "qty": 1}, {"item": "C09-07", "qty": 1}, {"item": "C09-09", "qty": 1}, {"item": "C09-12", "qty": 1}, {"item": "C09-13", "qty": 1}, {"item": "C09-14", "qty": 1}, {"item": "C09-17", "qty": 12}, {"item": "C09-18", "qty": 1}, {"item": "C09-19", "qty": 4}],
+      "simulation": {"kind": "wokwi", "status": "pendiente", "note": "En simulación el calefactor se representa con un LED en la salida del relé."}
+    }
+  ]
+}

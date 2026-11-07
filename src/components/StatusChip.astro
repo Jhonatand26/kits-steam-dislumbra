@@ -1,0 +1,25 @@
+---
+import { STATUS_LABEL, type Status } from "../lib/boxes";
+
+interface Props {
+  status: Status;
+}
+const { status } = Astro.props;
+---
+<span class={`chip c-${status}`}>{STATUS_LABEL[status]}</span>
+<style>
+  .chip {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0.1rem 0.5rem;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid currentColor;
+  }
+  .c-en_mano { color: var(--ok); }
+  .c-verificar { color: var(--check); }
+  .c-interno { color: var(--inner); }
+  .c-pendiente_compra { color: var(--todo); background: color-mix(in srgb, var(--todo) 10%, transparent); }
+  .c-pendiente_no_electronico { color: var(--todo); }
+</style>

@@ -1,0 +1,27 @@
+---
+// La caja se identifica con un resistor cuyo código de colores ES su
+// número de categoría (C06 → negro, azul) más la banda de tolerancia.
+interface Props {
+  digits: number[];
+  size?: "sm" | "lg";
+}
+const { digits, size = "sm" } = Astro.props;
+const w = size === "lg" ? 220 : 92;
+const h = size === "lg" ? 64 : 26;
+const body = { x: w * 0.2, w: w * 0.6, r: h * 0.42 };
+const bandW = w * 0.055;
+const xs = [0.3, 0.4, 0.68].map((f) => w * f);
+const colors = [...digits.map((d) => `var(--r${d})`), "var(--band-gold)"];
+---
+<svg
+  class={`res res-${size}`}
+  width={w}
+  height={h}
+  viewBox={`0 0 ${w} ${h}`}
+  role="img"
+  aria-label={`Código de colores: ${digits.join("")}`}
+>
+  <line x1="0" y1={h / 2} x2={w} y2={h / 2} stroke="var(--ink-2)" stroke-width={size === "lg" ? 3 : 1.5} />
+  <rect x={body.x} y="1" width={body.w} height={h - 2} rx={body.r} fill="#e8d6b4" stroke="var(--ink)" stroke-opacity="0.35" />
+  {xs.map((x, i) => <rect x={x} y="1" width={bandW} height={h - 2} fill={colors[i]} />)}
+</svg>

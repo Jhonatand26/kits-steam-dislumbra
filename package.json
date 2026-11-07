@@ -1,0 +1,16 @@
+{
+  "name": "kits-steam-dislumbra",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "validate": "node scripts/validate-data.mjs",
+    "dev": "astro dev",
+    "build": "npm run validate && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "astro": "^5.18.2"
+  }
+}

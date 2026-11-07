@@ -1,0 +1,139 @@
+---
+import Base from "../../layouts/Base.astro";
+import Resistor from "../../components/Resistor.astro";
+import Readiness from "../../components/Readiness.astro";
+import StatusChip from "../../components/StatusChip.astro";
+import { boxes, bandDigits, SIM_LABEL, type Box } from "../../lib/boxes";
+
+export function getStaticPaths() {
+  return boxes.map((box) => ({ params: { box: box.slug }, props: { box } }));
+}
+interface Props { box: Box }
+const { box } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const GROUPS: Record<string, string> = {
+  placa: "Placas y kits", sensor: "Sensores y módulos", actuador: "Actuadores",
+  pantalla: "Pantalla", energia: "Energía y protoboard", granel: "Componentes sueltos",
+  cableado: "Cables", herramienta: "Herramientas", laboratorio: "Material de laboratorio",
+  consumible: "Consumibles", mecanico: "Piezas mecánicas", documento: "Material pedagógico",
+};
+const groups = Object.entries(GROUPS)
+  .map(([key, label]) => ({ label, items: box.items.filter((i) => i.group === key) }))
+  .filter((g) => g.items.length);
+---
+<Base title={`${box.title} · Kits STEAM`} description={box.summary}>
+  <div class="wrap" style={`--accent:${box.accent}`}>
+    <nav class="crumbs"><a href={base}>Todas las cajas</a></nav>
+    <header class="head">
+      <Resistor digits={bandDigits(box)} size="lg" />
+      <div>
+        <p class="muted cat">{box.category}</p>
+        <h1>{box.title}</h1>
+        <p class="lead">{box.summary}</p>
+      </div>
+    </header>
+
+    <div class="cols">
+      <section aria-labelledby="proyectos">
+        <h2 id="proyectos">Proyectos en orden</h2>
+        <p class="muted">
+          Se hacen uno tras otro con las mismas piezas: al terminar uno
+          se desarma y se usa lo mismo en el siguiente.
+        </p>
+        <ol class="projects">
+          {box.projects.map((p) => (
+            <li>
+              <a href={`${base}${box.slug}/${p.slug}/`}>
+                <span class="pid">{p.id}</span>
+                <span class="ptitle">{p.title}</span>
+                <span class="pobj">{p.objective}</span>
+                <span class={`sim sim-${p.simulation.status}`}>{SIM_LABEL[p.simulation.status]}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section aria-labelledby="contenido-caja">
+        <h2 id="contenido-caja">Contenido de la caja</h2>
+        <Readiness box={box} legend />
+        {groups.map((g) => (
+          <div class="group sheet">
+            <h3>{g.label}</h3>
+            <table>
+              <thead><tr><th>Etiqueta</th><th>Ítem</th><th class="num">Cant.</th><th>Estado</th></tr></thead>
+              <tbody>
+                {g.items.map((it) => (
+                  <tr>
+                    <td class="tag">{it.id}</td>
+                    <td>
+                      {it.name}
+                      {it.care && <span class="care">Cuidado: {it.care}</span>}
+                    </td>
+                    <td class="num">{it.qty} {it.unit}</td>
+                    <td><StatusChip status={it.status} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding: 1.2rem 0 0; font-size: 0.95rem; }
+  .head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem 0 2.5rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .cat { margin: 0 0 0.2rem; }
+  .lead { font-size: 1.15rem; color: var(--ink-2); margin: 0; }
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 3rem;
+    padding-top: 2rem;
+  }
+  .projects { list-style: none; padding: 0; margin: 1rem 0 0; counter-reset: none; }
+  .projects li { border-top: 1px solid var(--line); }
+  .projects a {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    gap: 0.15rem 0.8rem;
+    padding: 1rem 0.2rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .projects a:hover .ptitle { color: var(--accent); }
+  .pid {
+    grid-row: span 3;
+    font-family: var(--font-cond);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--accent);
+  }
+  .ptitle { font-family: var(--font-cond); font-size: 1.35rem; font-weight: 600; }
+  .pobj { color: var(--ink-2); font-size: 0.97rem; }
+  .sim { font-size: 0.88rem; font-weight: 500; }
+  .sim-validada { color: var(--ok); }
+  .sim-por_actualizar { color: var(--check); }
+  .sim-pendiente { color: var(--ink-2); }
+  .group { margin-top: 1.2rem; padding: 0.8rem 1rem 0.4rem; overflow-x: auto; }
+  .group h3 { margin-bottom: 0.3rem; }
+  .tag { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink-2); font-size: 0.92rem; }
+  .care { display: block; font-size: 0.88rem; color: var(--copper); margin-top: 0.2rem; }
+  @media (max-width: 900px) {
+    .cols { grid-template-columns: 1fr; gap: 2rem; }
+    .head { grid-template-columns: 1fr; gap: 1rem; }
+    .head :global(svg) { width: 150px; height: auto; }
+    th:first-child, td.tag { display: none; }
+  }
+</style>

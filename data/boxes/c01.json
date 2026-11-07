@@ -1,0 +1,385 @@
+{
+  "id": "C01",
+  "slug": "guardianes-ecosistemas",
+  "title": "Guardianes de los ecosistemas",
+  "category": "1. Sostenibilidad y medioambiente · 1.2 Restauración ambiental",
+  "summary": "Medir el agua y el aire del colegio para tomar decisiones ambientales con datos: acidez de fuentes hídricas, microclimas para reforestar y confort térmico en las aulas.",
+  "accent": "#2E8B57",
+  "items": [
+    {
+      "id": "C01-01",
+      "name": "Arduino UNO R3 (CH340) + cable USB",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "placa",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C01-02",
+      "name": "Caja plástica para Arduino UNO",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "placa",
+      "source": "San Nicolás 908817"
+    },
+    {
+      "id": "C01-03",
+      "name": "Pantalla LCD 1602 azul",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "pantalla",
+      "source": "San Nicolás 908817",
+      "note": "Llega sin I2C; se suelda el backpack C01-04."
+    },
+    {
+      "id": "C01-04",
+      "name": "Backpack I2C PCF8574 para LCD 1602",
+      "qty": 1,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "pantalla",
+      "source": "Compra lunes #10",
+      "note": "Soldar a la LCD antes de empacar."
+    },
+    {
+      "id": "C01-05",
+      "name": "Módulo MB102 (fuente de protoboard)",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "energia",
+      "source": "Compra oficina"
+    },
+    {
+      "id": "C01-06",
+      "name": "Protoboard 830 puntos",
+      "qty": 1,
+      "unit": "und",
+      "status": "verificar",
+      "group": "energia",
+      "source": "¿Incluida con la MB102?",
+      "note": "Si no vino con la MB102, Compra lunes #25."
+    },
+    {
+      "id": "C01-07",
+      "name": "Adaptador 9 V 1 A plug 5.5×2.1",
+      "qty": 1,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "energia",
+      "source": "Compra lunes #12"
+    },
+    {
+      "id": "C01-08",
+      "name": "Sensor de pH analógico DFRobot (sonda BNC + tarjeta)",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "sensor",
+      "source": "Vistrónica 4733-26",
+      "care": "Sonda siempre con su capuchón húmedo y de pie. Nunca dejar secar ni tocar el bulbo de vidrio."
+    },
+    {
+      "id": "C01-09",
+      "name": "Sensor BME280 (temperatura, humedad, presión) versión 3.3 V",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "sensor",
+      "source": "Vistrónica 4733-26",
+      "note": "Alimentar a 3.3 V, nunca a 5 V.",
+      "care": "Bolsa antiestática."
+    },
+    {
+      "id": "C01-10",
+      "name": "Conversor de nivel lógico 4 canales 3.3 V ↔ 5 V",
+      "qty": 1,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "sensor",
+      "source": "Compra lunes #11"
+    },
+    {
+      "id": "C01-11",
+      "name": "Módulo sensor DHT22 / AM2302",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "sensor",
+      "source": "San Nicolás 908817",
+      "care": "Bolsa antiestática."
+    },
+    {
+      "id": "C01-12",
+      "name": "Módulo lector micro SD (SPI)",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "sensor",
+      "source": "Vistrónica 4733-26"
+    },
+    {
+      "id": "C01-13",
+      "name": "Memoria micro SD 16 GB + adaptador",
+      "qty": 1,
+      "unit": "und",
+      "status": "pendiente_compra",
+      "group": "sensor",
+      "source": "Compra lunes #13",
+      "note": "Formatear FAT32 antes de empacar."
+    },
+    {
+      "id": "C01-14",
+      "name": "Pulsador 12×12 B3F con tapa",
+      "qty": 1,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "Vistrónica 4733-26 (del lote de 10)",
+      "note": "Marca un registro manual en el datalogger."
+    },
+    {
+      "id": "C01-15",
+      "name": "Resistencias 1/4 W: 10 kΩ ×4, 4.7 kΩ ×2, 330 Ω ×4",
+      "qty": 10,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "granel",
+      "source": "San Nicolás 908817 (del lote surtido)"
+    },
+    {
+      "id": "C01-16",
+      "name": "Cables de conexión M-M, M-H y H-H 10 cm (10 de cada uno) + M-H 20 cm ×10",
+      "qty": 40,
+      "unit": "und",
+      "status": "en_mano",
+      "group": "cableado",
+      "source": "San Nicolás 908817 / Vistrónica"
+    },
+    {
+      "id": "C01-17",
+      "name": "Tubos de ensayo 15 ml ×5 con soporte",
+      "qty": 1,
+      "unit": "juego",
+      "status": "pendiente_no_electronico",
+      "group": "laboratorio",
+      "source": "Excel línea 5"
+    },
+    {
+      "id": "C01-18",
+      "name": "Vasos de precipitado 100 ml en polipropileno",
+      "qty": 2,
+      "unit": "und",
+      "status": "pendiente_no_electronico",
+      "group": "laboratorio",
+      "source": "Excel línea 3",
+      "note": "Para enjuagar la sonda entre muestras."
+    },
+    {
+      "id": "C01-19",
+      "name": "Agitadores plásticos",
+      "qty": 3,
+      "unit": "und",
+      "status": "pendiente_no_electronico",
+      "group": "laboratorio",
+      "source": "Propuesta técnica (no está en el Excel)"
+    },
+    {
+      "id": "C01-20",
+      "name": "Bata de laboratorio escolar",
+      "qty": 1,
+      "unit": "und",
+      "status": "pendiente_no_electronico",
+      "group": "laboratorio",
+      "source": "Excel línea 7"
+    },
+    {
+      "id": "C01-21",
+      "name": "Material pedagógico (guía + acceso a la página de simulación)",
+      "qty": 1,
+      "unit": "und",
+      "status": "interno",
+      "group": "documento",
+      "source": "Asesoría técnica + pedagoga"
+    }
+  ],
+  "projects": [
+    {
+      "id": "P1",
+      "slug": "fuentes-hidricas",
+      "title": "Guardianes de las Fuentes Hídricas",
+      "challenge": "Afectación del pH en fuentes hídricas cercanas por vertimientos de residuos domésticos.",
+      "objective": "Medir la acidez de muestras de agua con el sensor de pH, calibrado con referencias caseras, y construir un mapa de contaminación local.",
+      "grades": "6-7",
+      "ods": [
+        "ODS 6"
+      ],
+      "uses": [
+        {
+          "item": "C01-01",
+          "qty": 1
+        },
+        {
+          "item": "C01-03",
+          "qty": 1
+        },
+        {
+          "item": "C01-04",
+          "qty": 1
+        },
+        {
+          "item": "C01-08",
+          "qty": 1
+        },
+        {
+          "item": "C01-16",
+          "qty": 8
+        },
+        {
+          "item": "C01-17",
+          "qty": 1
+        },
+        {
+          "item": "C01-18",
+          "qty": 2
+        },
+        {
+          "item": "C01-19",
+          "qty": 1
+        },
+        {
+          "item": "C01-20",
+          "qty": 1
+        }
+      ],
+      "simulation": {
+        "kind": "wokwi",
+        "status": "por_actualizar",
+        "note": "Validada en agosto con salida serie; se agrega lectura en LCD.",
+        "wokwi": "https://wokwi.com/projects/471399688665162753"
+      }
+    },
+    {
+      "id": "P2",
+      "slug": "microclimas-reforestacion",
+      "title": "Microclimas y Reforestación",
+      "challenge": "Fracaso en la siembra de árboles nativos por desconocimiento de las variables microclimáticas.",
+      "objective": "Registrar presión, temperatura y humedad en distintas zonas del colegio y elegir el mejor punto de reforestación con datos guardados.",
+      "grades": "8-9",
+      "ods": [
+        "ODS 13",
+        "ODS 15"
+      ],
+      "uses": [
+        {
+          "item": "C01-01",
+          "qty": 1
+        },
+        {
+          "item": "C01-03",
+          "qty": 1
+        },
+        {
+          "item": "C01-04",
+          "qty": 1
+        },
+        {
+          "item": "C01-05",
+          "qty": 1
+        },
+        {
+          "item": "C01-06",
+          "qty": 1
+        },
+        {
+          "item": "C01-07",
+          "qty": 1
+        },
+        {
+          "item": "C01-09",
+          "qty": 1
+        },
+        {
+          "item": "C01-10",
+          "qty": 1
+        },
+        {
+          "item": "C01-12",
+          "qty": 1
+        },
+        {
+          "item": "C01-13",
+          "qty": 1
+        },
+        {
+          "item": "C01-14",
+          "qty": 1
+        },
+        {
+          "item": "C01-16",
+          "qty": 18
+        },
+        {
+          "item": "C01-20",
+          "qty": 1
+        }
+      ],
+      "simulation": {
+        "kind": "wokwi",
+        "status": "por_actualizar",
+        "note": "Validada en agosto con DHT22 + EEPROM; se actualiza a BME280 + micro SD como dice la propuesta.",
+        "wokwi": "https://wokwi.com/projects/471399019462716417"
+      }
+    },
+    {
+      "id": "P3",
+      "slug": "indice-termico",
+      "title": "Índice Térmico de Confort Escolar",
+      "challenge": "Olas de calor que provocan estrés térmico en las aulas y afectan el aprendizaje.",
+      "objective": "Construir un medidor portátil que calcule el índice de calor (temperatura + humedad) y muestre en la LCD qué aulas requieren adaptación.",
+      "grades": "8-9",
+      "ods": [
+        "ODS 3"
+      ],
+      "uses": [
+        {
+          "item": "C01-01",
+          "qty": 1
+        },
+        {
+          "item": "C01-02",
+          "qty": 1
+        },
+        {
+          "item": "C01-03",
+          "qty": 1
+        },
+        {
+          "item": "C01-04",
+          "qty": 1
+        },
+        {
+          "item": "C01-11",
+          "qty": 1
+        },
+        {
+          "item": "C01-15",
+          "qty": 1
+        },
+        {
+          "item": "C01-16",
+          "qty": 7
+        }
+      ],
+      "simulation": {
+        "kind": "wokwi",
+        "status": "validada",
+        "note": "Validada en agosto y en el banco de noviembre (11/11 comprobaciones).",
+        "wokwi": "https://wokwi.com/projects/471399019843350529"
+      }
+    }
+  ]
+}

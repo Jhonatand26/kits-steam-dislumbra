@@ -1,0 +1,58 @@
+{
+  "id": "C05",
+  "slug": "robotica-automatizacion",
+  "title": "Robótica y automatización",
+  "category": "5. Robótica y automatización",
+  "summary": "Dos plataformas listas para armar: un robot móvil para rescate y logística en el aula, y una casa inteligente para ahorro de energía y seguridad.",
+  "accent": "#C0392B",
+  "items": [
+    {"id": "C05-01", "name": "Kit de robótica KIT-RBT-01-RN (placa compatible UNO, puente H, 2 motorreductores, HC-SR04, seguidor de línea, sensor IR, SG90, chasis)", "qty": 1, "unit": "kit", "status": "en_mano", "group": "placa", "source": "I+D S202767", "note": "Al abrir: confirmar tipo de puente H, rueda loca y número de sensores del seguidor."},
+    {"id": "C05-02", "name": "Portapilas 2×18650 con interruptor + 2 celdas 18650 + cargador USB", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #8", "care": "Celdas fuera del portapilas y en estuche para transporte; nunca sueltas con objetos metálicos."},
+    {"id": "C05-03", "name": "Rueda loca de bola", "qty": 1, "unit": "und", "status": "verificar", "group": "mecanico", "source": "¿Incluida en el kit?", "note": "Comprar solo si el kit no la trae."},
+    {"id": "C05-04", "name": "Kit Smart Home IoT Keyes KEY-HOME (placa compatible UNO + shield, PIR, LCD 1602, relé, 2 servos, ventilador, HM-10, sensores)", "qty": 1, "unit": "kit", "status": "en_mano", "group": "placa", "source": "I+D S202767", "care": "Piezas de madera planas, con separadores; tornillería en bolsas rotuladas."},
+    {"id": "C05-05", "name": "Pilas AA alcalinas", "qty": 6, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #9", "care": "Empacar fuera del portapilas."},
+    {"id": "C05-06", "name": "Sensor magnético de puerta (reed switch MC-38)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "sensor", "source": "Compra lunes #19"},
+    {"id": "C05-07", "name": "Capacitor electrolítico 470 µF 16 V", "qty": 2, "unit": "und", "status": "pendiente_compra", "group": "granel", "source": "Compra lunes #21"},
+    {"id": "C05-08", "name": "Cinta aislante negra + 2 pliegos de cartulina blanca (pista)", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "consumible", "source": "Compra lunes #24"},
+    {"id": "C05-09", "name": "Arduino UNO R3 (CH340) + cable USB (placas de práctica)", "qty": 2, "unit": "und", "status": "en_mano", "group": "placa", "source": "San Nicolás 908817", "note": "Los dos kits traen su placa; estas sirven para practicar mientras se arma la mecánica."},
+    {"id": "C05-10", "name": "Caja plástica para Arduino UNO", "qty": 2, "unit": "und", "status": "en_mano", "group": "placa", "source": "San Nicolás 908817"},
+    {"id": "C05-11", "name": "Pantalla LCD 1602 azul", "qty": 2, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "San Nicolás 908817"},
+    {"id": "C05-12", "name": "Backpack I2C PCF8574 para LCD 1602", "qty": 2, "unit": "und", "status": "pendiente_compra", "group": "pantalla", "source": "Compra lunes #10"},
+    {"id": "C05-13", "name": "Cables de conexión M-M, M-H y H-H 10 cm (20 de cada uno) + M-H 20 cm ×20", "qty": 80, "unit": "und", "status": "en_mano", "group": "cableado", "source": "San Nicolás 908817 / Vistrónica"},
+    {"id": "C05-14", "name": "Material pedagógico (guía + acceso a la página de simulación)", "qty": 1, "unit": "und", "status": "interno", "group": "documento", "source": "Asesoría técnica + pedagoga", "note": "Corregir el Excel: el vehículo se programa con Arduino, no con Micro:Bit."}
+  ],
+  "projects": [
+    {
+      "id": "P1", "slug": "vehiculo-explorador", "title": "Vehículo Explorador de Rescate",
+      "challenge": "Imposibilidad de acceder a áreas colapsadas de la escuela tras simulacros o emergencias reales.",
+      "objective": "Programar el vehículo para navegar de forma autónoma esquivando obstáculos con el sensor ultrasónico, emulando un robot de búsqueda y rescate.",
+      "grades": "8-9", "ods": ["ODS 11"],
+      "uses": [{"item": "C05-01", "qty": 1}, {"item": "C05-02", "qty": 1}, {"item": "C05-03", "qty": 1}, {"item": "C05-07", "qty": 1}],
+      "simulation": {"kind": "wokwi", "status": "pendiente"}
+    },
+    {
+      "id": "P2", "slug": "domotica-ahorro", "title": "Domótica para el Ahorro",
+      "challenge": "Luces, ventiladores y dispositivos eléctricos olvidados encendidos en aulas o laboratorios.",
+      "objective": "Ensamblar la maqueta domótica y programarla para que apague luces y ventilador si el sensor PIR no detecta actividad: un 'Aula Inteligente'.",
+      "grades": "6-7", "ods": ["ODS 7", "ODS 11"],
+      "uses": [{"item": "C05-04", "qty": 1}, {"item": "C05-05", "qty": 6}],
+      "simulation": {"kind": "wokwi", "status": "pendiente"}
+    },
+    {
+      "id": "P3", "slug": "asistente-inclusivo", "title": "Asistente Inclusivo de Aula",
+      "challenge": "Dificultad para entregar materiales o mensajes a estudiantes con movilidad reducida dentro del salón.",
+      "objective": "Programar el robot para que siga una línea en el piso con el sensor infrarrojo y lleve objetos del escritorio del profesor al estudiante.",
+      "grades": "6-7", "ods": ["ODS 10", "ODS 4"],
+      "uses": [{"item": "C05-01", "qty": 1}, {"item": "C05-02", "qty": 1}, {"item": "C05-03", "qty": 1}, {"item": "C05-08", "qty": 1}],
+      "simulation": {"kind": "interactiva", "status": "pendiente", "note": "Wokwi no simula el robot sobre la pista; simulador propio del seguidor de línea."}
+    },
+    {
+      "id": "P4", "slug": "laboratorio-seguro", "title": "Laboratorio Escolar Seguro",
+      "challenge": "Ingreso no autorizado a zonas de riesgo de la escuela (laboratorios químicos, cuartos eléctricos).",
+      "objective": "Usar el sensor de puerta y el sensor de movimiento para crear una alarma programada con interrupciones que active un timbre o LED al detectar intrusos.",
+      "grades": "8-9", "ods": ["ODS 16"],
+      "uses": [{"item": "C05-04", "qty": 1}, {"item": "C05-05", "qty": 6}, {"item": "C05-06", "qty": 1}],
+      "simulation": {"kind": "wokwi", "status": "pendiente"}
+    }
+  ]
+}
