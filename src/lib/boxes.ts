@@ -103,3 +103,34 @@ export function itemsFor(box: Box, project: Project) {
 export function bandDigits(box: Box): number[] {
   return box.id.slice(1).split("").map(Number);
 }
+
+// ---- Lecciones paso a paso y firmware real ----
+export interface Lesson {
+  project: string;
+  firmware: string;
+  [k: string]: unknown;
+}
+
+const lessonModules = import.meta.glob<Lesson>("../../data/lessons/*.json", {
+  eager: true,
+  import: "default",
+});
+const firmwareModules = import.meta.glob<string>("../../firmware/**/*.ino", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+});
+
+/** Lección del proyecto (C06-P1 → data/lessons/c06-p1.json), si existe. */
+export function lessonFor(box: Box, project: Project): Lesson | undefined {
+  const key = `${box.id}-${project.id}`;
+  return Object.values(lessonModules).find((l) => l.project === key);
+}
+
+/** Código del sketch real, tal como se carga en la placa. */
+export function firmwareCode(lesson: Lesson): string {
+  const hit = Object.entries(firmwareModules).find(([path]) =>
+    path.endsWith(`/firmware/${lesson.firmware}`),
+  );
+  return hit ? hit[1] : "";
+}

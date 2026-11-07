@@ -1,0 +1,204 @@
+/* Simulador paso a paso. Usa los tokens de global.css. */
+sim-player { display: block; margin-top: 1.2rem; }
+
+.sp {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(290px, 1fr);
+  grid-template-areas:
+    "stage panel"
+    "serial panel"
+    "strip strip";
+  gap: 12px;
+}
+.sp-stage { grid-area: stage; }
+.sp-panel { grid-area: panel; }
+.sp-serial { grid-area: serial; }
+.sp-strip { grid-area: strip; }
+
+.sp-stage, .sp-panel, .sp-serial {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.sp-svg { padding: 8px 8px 0; }
+.sp-canvas { width: 100%; height: auto; display: block; touch-action: manipulation; }
+
+.sp-run {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+}
+.sp-run button, .sp-nav button {
+  font: 600 1rem var(--font-cond);
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.sp-play, .sp-next { background: var(--ink) !important; color: var(--paper) !important; }
+.sp-play:hover, .sp-next:hover:not(:disabled) { background: var(--accent) !important; border-color: var(--accent); }
+.sp-run button:disabled, .sp-nav button:disabled { opacity: 0.4; cursor: default; }
+.sp-toggle { display: inline-flex; gap: 6px; align-items: center; font-size: 0.95rem; color: var(--ink-2); }
+.sp-toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
+
+/* Panel */
+.sp-panel { display: flex; flex-direction: column; min-height: 0; }
+.sp-tabs { display: flex; border-bottom: 1px solid var(--line); }
+.sp-tabs button {
+  flex: 1;
+  font: 600 1rem var(--font-cond);
+  padding: 0.7rem 0.4rem;
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.sp-tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.sp-view { padding: 14px 16px 16px; overflow: auto; }
+.sp-view[hidden] { display: none; }
+.sp-count { margin: 0; font: 600 0.95rem var(--font-cond); color: var(--accent); }
+.sp-title { font-size: 1.55rem; margin: 0.2rem 0 0.5rem; }
+.sp-body { font-size: 1.02rem; }
+.sp-nav { display: flex; gap: 8px; margin-top: 1rem; }
+.sp-nav .sp-next { flex: 1; }
+.sp-hint { color: var(--ink-2); font-size: 0.95rem; }
+.sp-piece h3 { font-size: 1.35rem; margin-top: 0.4rem; }
+.sp-piece h4 { font: 600 1rem var(--font-cond); margin: 0.9rem 0 0.2rem; color: var(--ink-2); }
+.sp-piece p { font-size: 0.98rem; margin-bottom: 0.4rem; }
+.sp-bag { color: var(--copper); }
+
+.sp-code {
+  margin: 0;
+  max-height: 380px;
+  overflow: auto;
+  font: 0.82rem/1.5 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  counter-reset: ln;
+}
+.sp-code .ln { display: block; padding: 0 6px 0 3.2em; position: relative; white-space: pre; border-left: 3px solid transparent; }
+.sp-code .ln::before {
+  content: attr(data-n);
+  position: absolute;
+  left: 0;
+  width: 2.4em;
+  text-align: right;
+  color: var(--ink-2);
+  opacity: 0.6;
+}
+.sp-code .ln.hl { background: color-mix(in srgb, var(--accent) 14%, transparent); border-left-color: var(--accent); }
+
+/* Monitor serie */
+.sp-serial { padding: 8px 12px 10px; }
+.sp-serial-title { margin: 0 0 4px; font: 600 0.95rem var(--font-cond); color: var(--ink-2); }
+.sp-serial-out {
+  margin: 0;
+  min-height: 3.2em;
+  max-height: 8em;
+  overflow: auto;
+  font: 0.85rem/1.45 ui-monospace, Menlo, Consolas, monospace;
+  color: var(--ink);
+}
+
+/* Tira de pasos: es una secuencia real, por eso numerada */
+.sp-strip { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.sp-strip li { flex: 1 0 128px; }
+.sp-strip button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  text-align: left;
+  font: 500 0.92rem/1.25 var(--font);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.sp-strip span { font: 700 1.05rem var(--font-cond); color: var(--ink-2); }
+.sp-strip li.done button { color: var(--ink); }
+.sp-strip li.done span { color: var(--ok); }
+.sp-strip li.current button { border-color: var(--accent); color: var(--ink); box-shadow: inset 0 -3px 0 var(--accent); }
+.sp-strip li.current span { color: var(--accent); }
+
+/* ---------- Piezas SVG ---------- */
+.part { transition: opacity 260ms ease; cursor: pointer; outline: none; }
+.part.hidden { opacity: 0; pointer-events: none; }
+.part.dim { opacity: 0.55; }
+sim-player.running .part.dim { opacity: 1; }
+.part.enter { animation: sp-in 420ms ease both; }
+.part-wire.enter .wire { animation: sp-draw 650ms ease both; stroke-dasharray: 1; }
+.part.focus:not(.part-wire):not(.part-breadboard):not(.part-arduino-uno) { animation: sp-pulse 1.6s ease-in-out 2; }
+.part.selected :is(.uno-board, .bb-body, .res-body, .led-dome, .btn-base, .bz-body, .npn-body) { stroke: var(--accent); stroke-width: 2.5; }
+.part.selected .wire { stroke-width: 5.5; }
+.part:focus-visible :is(.uno-board, .bb-body, .res-body, .led-dome, .btn-base, .bz-body, .npn-body, .wire) { stroke: var(--copper); stroke-width: 3; }
+
+@keyframes sp-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes sp-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes sp-pulse { 50% { filter: drop-shadow(0 0 6px var(--accent)); } }
+
+.uno-board { fill: #1f7a8c; stroke: #145866; stroke-width: 1.5; }
+.uno-usb { fill: #b9c2c6; stroke: #7d888d; }
+.uno-jack { fill: #2a2f33; }
+.uno-chip { fill: #23282b; }
+.uno-chip-pin { fill: #c9ced1; }
+.uno-header { fill: #22272a; }
+.uno-pin { fill: #c8a150; }
+.uno-pin-label { font: 600 7px var(--font); fill: #eaf6f8; }
+.uno-logo { font: 700 30px var(--font-cond); fill: #eaf6f8; letter-spacing: 1px; }
+.uno-sub { font: 600 10px var(--font); fill: #bfe3ea; letter-spacing: 2px; }
+
+.bb-body { fill: #f7f6f1; stroke: #cfd3cc; }
+:root[data-theme="dark"] .bb-body { fill: #e9e8e2; }
+.bb-gap { fill: #e2e3dc; }
+.bb-hole { fill: #3d4447; }
+.bb-label { font: 600 7.5px var(--font); fill: #8c938f; }
+.rail-p { stroke: #d23a2e; stroke-width: 1.4; }
+.rail-n { stroke: #2f6fd0; stroke-width: 1.4; }
+
+.leg { stroke: #a6acaf; stroke-width: 1.8; fill: none; }
+.leg-foot { fill: #8f979b; }
+.res-body { fill: #e8d6b4; stroke: #b9a27a; }
+
+.led-dome { fill: rgba(255, 255, 255, 0.55); stroke: #b9c2c6; }
+.led-lens { fill: rgba(235, 240, 242, 0.7); transition: fill 80ms linear; }
+.led-glow { filter: url(#glow); opacity: 0; pointer-events: none; }
+
+.btn-base { fill: #2d3236; stroke: #1d2124; }
+.btn-cap { stroke: rgba(0, 0, 0, 0.35); stroke-width: 1.5; transition: transform 60ms ease; transform-box: fill-box; transform-origin: center; }
+.btn-cap.down { transform: scale(0.86); }
+.pressable { cursor: pointer; }
+sim-player:not(.running) .pressable { cursor: help; }
+
+.bz-body { fill: #22272a; stroke: #111; }
+.bz-hole { fill: #5b6266; }
+.bz-plus { font: 700 10px var(--font); fill: #eaeaea; }
+.bz-wave { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0; }
+.sounding .bz-wave { animation: sp-wave 0.6s ease-out infinite; }
+.sounding .bz-wave:nth-child(2) { animation-delay: 0.3s; }
+@keyframes sp-wave { from { opacity: 0.9; } to { opacity: 0; } }
+
+.npn-body { fill: #2a2f33; }
+.npn-label { font: 700 6.5px var(--font); fill: #e6e6e6; }
+
+.wire { fill: none; stroke-width: 3.6; stroke-linecap: round; }
+.wire-shadow { fill: none; stroke: rgba(0, 0, 0, 0.18); stroke-width: 5.5; stroke-linecap: round; transform: translate(1px, 1.5px); }
+.wire-end { stroke: rgba(0, 0, 0, 0.35); stroke-width: 1; }
+
+@media (max-width: 900px) {
+  .sp {
+    grid-template-columns: 1fr;
+    grid-template-areas: "stage" "panel" "serial" "strip";
+  }
+  .sp-code { max-height: 300px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .part.enter, .part-wire.enter .wire, .part.focus, .sounding .bz-wave { animation: none !important; }
+}

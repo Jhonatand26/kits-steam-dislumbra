@@ -1,0 +1,50 @@
+{
+  "arduino-uno": {
+    "name": "Arduino UNO",
+    "what": "Es el cerebro del proyecto: una pequeña computadora que lee botones y sensores y enciende luces, sonidos o motores según el programa que le cargamos.",
+    "how": "Se conecta al computador con el cable USB para cargarle el programa y recibir energía. Los pines de arriba (D0 a D13) son entradas y salidas digitales; los de abajo dan energía (5V y GND) y leen sensores analógicos (A0 a A5).",
+    "care": "Nunca conectes un pin directamente a 5V o a GND sin una resistencia o un componente en el medio. Desconecta el USB antes de cambiar cables."
+  },
+  "breadboard": {
+    "name": "Protoboard",
+    "what": "Una tabla para armar circuitos sin soldar: las piezas se insertan en los agujeros y quedan conectadas por láminas metálicas internas.",
+    "how": "Cada columna de 5 agujeros (a-e o f-j) está conectada por dentro. Las líneas largas de los bordes, roja (+) y azul (−), llevan la energía a lo largo de toda la tabla. El canal del centro separa las dos mitades.",
+    "care": "Empuja las patas hasta el fondo sin doblarlas. Si una pata queda floja, el circuito falla de forma intermitente."
+  },
+  "resistor": {
+    "name": "Resistencia",
+    "what": "Limita la corriente eléctrica para proteger otras piezas, como un grifo que deja pasar solo un poco de agua.",
+    "how": "No tiene polaridad: se puede poner en cualquier sentido. Su valor se lee con las bandas de color: naranja-naranja-café es 330 Ω y café-negro-rojo es 1 kΩ.",
+    "care": "Usa el valor indicado en cada paso: una resistencia muy pequeña puede quemar el LED."
+  },
+  "rgb-led": {
+    "name": "LED RGB",
+    "what": "Tres LED en uno: rojo, verde y azul. Mezclando sus brillos se forman otros colores, como el amarillo (rojo + verde).",
+    "how": "Tiene 4 patas. La más larga es la común y va a GND (cátodo común). Las otras tres controlan cada color, cada una con su propia resistencia.",
+    "care": "Si al probarlo no enciende con la pata larga a GND, es de ánodo común: la pata larga va a 5V y en el programa se invierte el brillo."
+  },
+  "button": {
+    "name": "Pulsador",
+    "what": "Un interruptor que conecta dos lados del circuito solo mientras lo mantienes oprimido.",
+    "how": "Se coloca sobre el canal central de la protoboard. Usando patas en diagonal se evita confundir cuáles están unidas por dentro. El Arduino usa su resistencia interna (INPUT_PULLUP): suelto lee ALTO y oprimido lee BAJO.",
+    "care": "Al oprimir, el contacto rebota y puede contar varias veces; el programa espera a que lo sueltes para contar un solo reporte."
+  },
+  "buzzer": {
+    "name": "Zumbador activo",
+    "what": "Produce un pitido cuando recibe energía. 'Activo' significa que trae su propio oscilador: basta con encenderlo y apagarlo.",
+    "how": "Tiene polaridad: la pata marcada con + va a 5V. La otra va al transistor, que funciona como un interruptor controlado por el Arduino.",
+    "care": "Si suena muy débil o no suena, revisa la polaridad y el transistor."
+  },
+  "npn": {
+    "name": "Transistor NPN 2N2222",
+    "what": "Un interruptor electrónico: una corriente pequeña desde el Arduino controla una corriente más grande para el zumbador.",
+    "how": "Mirando la cara plana, sus patas son E (emisor, a GND), B (base, al Arduino a través de 1 kΩ) y C (colector, a la pata − del zumbador).",
+    "care": "Sin la resistencia de 1 kΩ en la base, el transistor y el pin del Arduino se pueden dañar."
+  },
+  "wire": {
+    "name": "Cable de conexión",
+    "what": "Une dos puntos del circuito.",
+    "how": "Por convención: rojo para 5V, negro para GND y otros colores para señales. Esto ayuda a revisar el montaje de un vistazo.",
+    "care": "Revisa que cada punta quede en el agujero exacto que indica el paso."
+  }
+}

@@ -1,0 +1,23 @@
+---
+// Inserta el simulador de un proyecto. Datos: lección + catálogo de
+// piezas + código real del firmware (leído del repo en build).
+import "../styles/sim.css";
+import catalog from "../../data/parts.json";
+import type { Box } from "../lib/boxes";
+
+interface Props {
+  box: Box;
+  lesson: { project: string; firmware: string; [k: string]: unknown };
+  code: string;
+}
+const { box, lesson, code } = Astro.props;
+const items = Object.fromEntries(box.items.map((i) => [i.id, { name: i.name, status: i.status }]));
+const payload = JSON.stringify({ project: lesson.project, lesson, catalog, items, code });
+---
+<sim-player style={`--accent:${box.accent}`}>
+  <script type="application/json" set:html={payload} />
+  <noscript>La simulación necesita JavaScript activado.</noscript>
+</sim-player>
+<script>
+  import "../sim/player";
+</script>

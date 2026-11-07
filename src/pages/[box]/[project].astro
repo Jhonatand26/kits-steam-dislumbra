@@ -1,7 +1,8 @@
 ---
 import Base from "../../layouts/Base.astro";
 import StatusChip from "../../components/StatusChip.astro";
-import { boxes, itemsFor, SIM_LABEL, type Box, type Project } from "../../lib/boxes";
+import SimPlayer from "../../components/SimPlayer.astro";
+import { boxes, firmwareCode, itemsFor, lessonFor, SIM_LABEL, type Box, type Project } from "../../lib/boxes";
 
 export function getStaticPaths() {
   return boxes.flatMap((box) =>
@@ -15,6 +16,8 @@ interface Props { box: Box; project: Project }
 const { box, project } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const items = itemsFor(box, project);
+const lesson = lessonFor(box, project);
+const code = lesson ? firmwareCode(lesson) : "";
 const pending = items.filter((i) => i.status === "pendiente_compra" || i.status === "pendiente_no_electronico");
 const idx = box.projects.findIndex((p) => p.id === project.id);
 const prev = box.projects[idx - 1];
@@ -35,18 +38,26 @@ const next = box.projects[idx + 1];
       </div>
     </header>
 
+    {lesson ? (
+      <section class="lab" aria-labelledby="lab">
+        <h2 id="lab">Ármalo y pruébalo paso a paso</h2>
+        <p class="muted">Avanza por los pasos para ver cómo se monta, toca cualquier pieza para saber qué es y, al final, inicia la simulación y oprime los botones.</p>
+        <SimPlayer box={box} lesson={lesson} code={code} />
+      </section>
+    ) : (
     <section class="sim sheet" aria-labelledby="sim">
-      <div>
-        <h2 id="sim">Verlo funcionar</h2>
-        <p class={`sim-status s-${project.simulation.status}`}>{SIM_LABEL[project.simulation.status]}</p>
-        {project.simulation.note && <p class="muted">{project.simulation.note}</p>}
-      </div>
-      {project.simulation.wokwi ? (
-        <a class="btn" href={project.simulation.wokwi} target="_blank" rel="noopener">Abrir la simulación en Wokwi</a>
-      ) : (
-        <p class="muted soon">La simulación de este proyecto se está preparando.</p>
-      )}
-    </section>
+        <div>
+          <h2 id="sim">Verlo funcionar</h2>
+          <p class={`sim-status s-${project.simulation.status}`}>{SIM_LABEL[project.simulation.status]}</p>
+          {project.simulation.note && <p class="muted">{project.simulation.note}</p>}
+        </div>
+        {project.simulation.wokwi ? (
+          <a class="btn" href={project.simulation.wokwi} target="_blank" rel="noopener">Abrir la simulación en Wokwi</a>
+        ) : (
+          <p class="muted soon">La simulación de este proyecto se está preparando.</p>
+        )}
+      </section>
+    )}
 
     <section aria-labelledby="piezas">
       <h2 id="piezas">Piezas que usa de la caja</h2>
@@ -84,7 +95,9 @@ const next = box.projects[idx + 1];
 
     <section aria-labelledby="armado">
       <h2 id="armado">Cómo se arma</h2>
-      {project.steps?.length ? (
+      {lesson ? (
+        <p class="muted">El armado completo está en el simulador de arriba: un paso por cada grupo de piezas, con el agujero exacto de cada pata.</p>
+      ) : project.steps?.length ? (
         <ol class="steps">{project.steps.map((s) => <li><h3>{s.title}</h3><p>{s.detail}</p></li>)}</ol>
       ) : (
         <p class="muted">Los pasos de armado se publican con la versión final del montaje.</p>
@@ -124,6 +137,7 @@ const next = box.projects[idx + 1];
   .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; }
   .label { font-size: 1.15rem; color: var(--ink-2); margin-bottom: 0.2rem; }
   section { margin-top: 2.5rem; }
+  .lab { margin-top: 2rem; }
   .sim {
     display: flex;
     justify-content: space-between;
