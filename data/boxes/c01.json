@@ -32,17 +32,17 @@
       "status": "en_mano",
       "group": "pantalla",
       "source": "San Nicolás 908817",
-      "note": "Llega sin I2C; se suelda el backpack C01-04."
+      "note": "Llegó sin I2C; el backpack C01-04 ya está soldado."
     },
     {
       "id": "C01-04",
       "name": "Backpack I2C PCF8574 para LCD 1602",
       "qty": 1,
       "unit": "und",
-      "status": "pendiente_compra",
+      "status": "en_mano",
       "group": "pantalla",
-      "source": "Compra lunes #10",
-      "note": "Soldar a la LCD antes de empacar."
+      "source": "Compra oficina (soldado a la LCD, 7-nov)",
+      "note": "Ya soldado a la LCD."
     },
     {
       "id": "C01-05",

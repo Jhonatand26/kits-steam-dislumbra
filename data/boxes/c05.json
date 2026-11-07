@@ -17,7 +17,7 @@
     {"id": "C05-09", "name": "Arduino UNO R3 (CH340) + cable USB (placas de práctica)", "qty": 2, "unit": "und", "status": "en_mano", "group": "placa", "source": "San Nicolás 908817", "note": "Los dos kits traen su placa; estas sirven para practicar mientras se arma la mecánica."},
     {"id": "C05-10", "name": "Caja plástica para Arduino UNO", "qty": 2, "unit": "und", "status": "en_mano", "group": "placa", "source": "San Nicolás 908817"},
     {"id": "C05-11", "name": "Pantalla LCD 1602 azul", "qty": 2, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "San Nicolás 908817"},
-    {"id": "C05-12", "name": "Backpack I2C PCF8574 para LCD 1602", "qty": 2, "unit": "und", "status": "pendiente_compra", "group": "pantalla", "source": "Compra lunes #10"},
+    {"id": "C05-12", "name": "Backpack I2C PCF8574 para LCD 1602", "qty": 2, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "Compra oficina (soldado a la LCD, 7-nov)"},
     {"id": "C05-13", "name": "Cables de conexión M-M, M-H y H-H 10 cm (20 de cada uno) + M-H 20 cm ×20", "qty": 80, "unit": "und", "status": "en_mano", "group": "cableado", "source": "San Nicolás 908817 / Vistrónica"},
     {"id": "C05-14", "name": "Material pedagógico (guía + acceso a la página de simulación)", "qty": 1, "unit": "und", "status": "interno", "group": "documento", "source": "Asesoría técnica + pedagoga", "note": "Corregir el Excel: el vehículo se programa con Arduino, no con Micro:Bit."}
   ],

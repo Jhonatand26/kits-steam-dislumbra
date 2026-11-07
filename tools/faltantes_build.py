@@ -9,7 +9,10 @@ from openpyxl.formatting.rule import CellIsRule, FormulaRule
 EXPORTS = Path(__file__).resolve().parent.parent / "exports"
 # Filas de Compra lunes ya resueltas sin comprar. Se conserva la
 # numeración original para no romper las referencias "#N".
-RESUELTO = {1}  # Panel: RTM020M 20 W de Dislumbra (7-nov)
+RESUELTO = {
+    1,   # Panel: RTM020M 20 W de Dislumbra (7-nov)
+    10,  # Backpack I2C: comprados y soldados a las 5 LCD (7-nov)
+}
 
 F = "Arial"
 HDR = PatternFill("solid", fgColor="1F4E5F")
@@ -57,7 +60,7 @@ lines = [
     ("Cómo diligenciar", True),
     ("Celdas amarillas = para llenar en tienda: 'Comprado' (Sí/No) y 'Precio real'. El subtotal real se calcula solo.", False),
     ("Texto azul = mejor precio REAL encontrado en línea el 7-nov-2026 (puede no ser en Cali). Celda vacía = no se encontró precio.", False),
-    ("Ejemplo de diligenciamiento: fila 'Backpack I2C' → Comprado: Sí · Precio real: 7500.", False),
+    ("Ejemplo de diligenciamiento: fila 'Conversor de nivel lógico' → Comprado: Sí · Precio real: 5000.", False),
 ]
 for i, (t, b) in enumerate(lines, 1):
     c = ws.cell(row=i, column=1, value=t)
@@ -238,7 +241,7 @@ inv = {
   ("Bata de laboratorio",1,0,"—","Falta · no electrónico",""),
   ("Arduino UNO R3 + cable",1,1,SN,"En mano","1 de 5."),
   ("Caja para Arduino UNO",1,1,SN,"En mano","Plástica, no acrílica como dice el Excel."),
-  ("LCD 1602 con I2C",1,1,SN,"En mano ⚠","Sin I2C → backpack (Compra lunes)."),
+  ("LCD 1602 con I2C",1,1,SN,"En mano","Llegó sin I2C; backpack PCF8574 ya soldado (7-nov)."),
   ("Kit protoboard con fuente MB102",1,1,OF,"En mano · verificar","Confirmar si trae protoboard. Falta adaptador 9 V."),
   ("Cables de conexión (M-M, M-H, H-H)",40,40,SN+" / "+VS,"En mano","Se compraron 150 paquetes ×10: sobran para todas las cajas."),
   ("Módulo micro SD",1,1,VS,"En mano",""),
@@ -266,7 +269,7 @@ inv = {
   ("Kit Smart Home IoT Keyes (KEY-HOME)",1,1,ID,"En mano ⚠","Placa compatible UNO + shield, PIR, LCD 1602, relé, 2 servos, Bluetooth HM-10. Portapilas 6×AA SIN pilas."),
   ("Arduino UNO R3 + cable",2,2,SN,"En mano · redundante","Ambos kits traen su propia placa; quedan como placa extra para practicar."),
   ("Caja para Arduino UNO",2,2,SN,"En mano",""),
-  ("LCD 1602 con I2C",2,2,SN,"En mano ⚠","Sin I2C; el Smart Home ya trae su LCD."),
+  ("LCD 1602 con I2C",2,2,SN,"En mano","Backpack I2C ya soldado (7-nov). El Smart Home trae además su propia LCD."),
   ("Kit protoboard con fuente MB102",2,0,"—","No requerido","Las 3 MB102 van a C01, C06 y C09; los kits de robótica se alimentan solos."),
   ("Cables de conexión",80,80,SN,"En mano",""),
   ("Caja contenedora personalizada",1,0,"Dislumbra","Interno",""),
@@ -285,7 +288,7 @@ inv = {
   ("Resistencias surtidas",600,380,SN,"En mano","19 valores ×20. Se reparten entre las cajas C01, C06 y C09."),
   ("Arduino UNO R3 + cable",1,1,SN,"En mano",""),
   ("Caja para Arduino UNO",1,1,SN,"En mano",""),
-  ("LCD 1602 con I2C",1,1,SN,"En mano ⚠","Sin I2C → backpack."),
+  ("LCD 1602 con I2C",1,1,SN,"En mano","Llegó sin I2C; backpack PCF8574 ya soldado (7-nov)."),
   ("Kit protoboard con fuente MB102",1,1,OF,"En mano · verificar",""),
   ("Cables de conexión",40,40,SN,"En mano",""),
   ("Sensor UV GUVA-S12SD",2,0,"—","Falta · comprar lunes","CRÍTICO: nadie lo cotizó."),
@@ -298,7 +301,7 @@ inv = {
  "C09 · Biotecnología": [
   ("Arduino UNO R3 + cable",1,1,SN,"En mano",""),
   ("Caja para Arduino UNO",1,1,SN,"En mano",""),
-  ("LCD 1602 con I2C",1,1,SN,"En mano ⚠","Sin I2C → backpack. Muestra la temperatura de la incubadora."),
+  ("LCD 1602 con I2C",1,1,SN,"En mano","Backpack I2C ya soldado (7-nov). Muestra la temperatura de la incubadora."),
   ("Kit protoboard con fuente MB102",1,1,OF,"En mano · verificar",""),
   ("Cables de conexión",40,40,SN,"En mano",""),
   ("Levaduras y cultivos (S. cerevisiae, yogur, L. lactis)",3,0,"—","Falta · no electrónico","Perecederos: entregar aparte o como reposición, no dentro de la caja por meses."),

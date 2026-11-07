@@ -38,9 +38,9 @@
       "name": "Backpack I2C PCF8574 para LCD 1602",
       "qty": 1,
       "unit": "und",
-      "status": "pendiente_compra",
+      "status": "en_mano",
       "group": "pantalla",
-      "source": "Compra lunes #10"
+      "source": "Compra oficina (soldado a la LCD, 7-nov)"
     },
     {
       "id": "C06-05",
