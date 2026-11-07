@@ -1,0 +1,454 @@
+% Ilustraciones de referencia de cada faltante.
+% Uso: \ilus{<clave>}. Todas comparten lienzo (4 x 3 unidades),
+% paleta y grosor de línea para que el informe se vea uniforme.
+% Si existe fotos/<id>.jpg, la plantilla usa la foto en su lugar.
+
+\definecolor{pcbazul}{HTML}{1E5AA8}
+\definecolor{pcbverde}{HTML}{2E7D32}
+\definecolor{pcbrojo}{HTML}{B03A2E}
+\definecolor{pcbnegro}{HTML}{2B2B2B}
+\definecolor{metal}{HTML}{A7B1BC}
+\definecolor{oro}{HTML}{D4A017}
+\definecolor{trazo}{HTML}{1F2933}
+\definecolor{vidrio}{HTML}{DCEFF7}
+\definecolor{icopor}{HTML}{F4F6F8}
+
+\tikzset{
+  ilus/.style={x=0.82cm, y=0.82cm, line width=0.6pt, draw=trazo,
+               line join=round, line cap=round},
+  pieza/.style={draw=trazo, line width=0.6pt},
+}
+
+% Placa de circuito con agujeros en las esquinas.
+% #1 x0, #2 y0, #3 x1, #4 y1, #5 color
+\newcommand{\pcb}[5]{%
+  \draw[pieza, fill=#5, rounded corners=1.5pt] (#1,#2) rectangle (#3,#4);
+  \fill[white] (#1+0.14,#2+0.14) circle (0.06);
+  \fill[white] (#3-0.14,#2+0.14) circle (0.06);
+  \fill[white] (#1+0.14,#4-0.14) circle (0.06);
+  \fill[white] (#3-0.14,#4-0.14) circle (0.06);%
+}
+% Fila de pines hacia abajo. #1 x inicial, #2 y, #3 cantidad
+\newcommand{\pines}[3]{%
+  \foreach \i in {1,...,#3}{%
+    \draw[line width=0.9pt, draw=oro] (#1+\i*0.28-0.28,#2)
+      -- ++(0,-0.45);}%
+  \fill[pcbnegro] (#1-0.1,#2-0.12) rectangle (#1+#3*0.28-0.18,#2+0.04);%
+}
+
+\newcommand{\ilus}[1]{%
+  \ifcsname ilus@#1\endcsname\csname ilus@#1\endcsname
+  \else\ilus@generico\fi}
+
+% ---------------------------------------------------------------
+\expandafter\def\csname ilus@generico\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=gray!15, rounded corners] (0.4,0.4) rectangle (3.6,2.6);
+  \node at (2,1.5) {\sffamily\small sin imagen};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@guva\endcsname{%
+\begin{tikzpicture}[ilus]
+  \pcb{0.9}{0.9}{3.1}{2.7}{pcbazul}
+  \fill[pcbnegro] (1.7,1.75) rectangle (2.3,2.35);
+  \fill[violet!70] (2,2.05) circle (0.14);
+  \fill[white!80!pcbazul] (1.15,1.15) rectangle (1.35,1.55);
+  \node[white, font=\sffamily\tiny] at (2,1.3) {GUVA-S12SD};
+  \pines{1.65}{0.9}{3}
+  \draw[violet, ->, line width=0.8pt] (1.5,3.0) -- (1.85,2.5);
+  \draw[violet, ->, line width=0.8pt] (2.5,3.0) -- (2.15,2.5);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@tcrt\endcsname{%
+\begin{tikzpicture}[ilus]
+  \pcb{0.3}{1.0}{3.7}{2.2}{pcbazul}
+  \fill[pcbnegro] (2.9,1.2) rectangle (3.55,2.0);
+  \fill[blue!60] (3.08,1.6) circle (0.15);
+  \fill[black] (3.38,1.6) circle (0.15);
+  \draw[pieza, fill=blue!40] (1.9,1.6) circle (0.22);
+  \draw[white, line width=0.8pt] (1.9,1.6) -- ++(45:0.18);
+  \fill[red!80] (1.25,1.85) circle (0.06);
+  \fill[green!70!black] (1.25,1.35) circle (0.06);
+  \draw[line width=0.9pt, draw=oro] (0.3,1.3) -- (-0.15,1.3);
+  \draw[line width=0.9pt, draw=oro] (0.3,1.5) -- (-0.15,1.5);
+  \draw[line width=0.9pt, draw=oro] (0.3,1.7) -- (-0.15,1.7);
+  \draw[line width=0.9pt, draw=oro] (0.3,1.9) -- (-0.15,1.9);
+  \fill[pcbnegro] (0.18,1.15) rectangle (0.36,2.05);
+  \node[font=\sffamily\tiny] at (2,0.55) {TCRT5000};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@rele\endcsname{%
+\begin{tikzpicture}[ilus]
+  \pcb{0.4}{0.7}{3.6}{2.5}{pcbazul}
+  \draw[pieza, fill=blue!55!cyan, rounded corners=1pt] (1.25,0.95) rectangle (2.75,2.3);
+  \node[white, font=\sffamily\tiny, align=center] at (2,1.62) {SRD\\05VDC};
+  \draw[pieza, fill=pcbverde!70!cyan] (2.95,0.9) rectangle (3.5,2.35);
+  \foreach \y in {1.15,1.62,2.1}{\draw[pieza, fill=metal] (3.22,\y) circle (0.13);
+    \draw (3.13,\y) -- (3.31,\y);}
+  \fill[pcbnegro] (0.6,1.0) rectangle (1.0,1.4);
+  \fill[red!80] (0.8,2.05) circle (0.07);
+  \pines{0.6}{0.7}{3}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@ds18b20\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, top color=metal!40, bottom color=metal, rounded corners=3pt]
+    (0.3,1.25) rectangle (1.8,1.75);
+  \draw[pieza, fill=metal!70] (1.8,1.3) rectangle (2.0,1.7);
+  \draw[line width=3pt, draw=pcbnegro] (2.0,1.5) .. controls (2.6,1.5)
+    and (2.4,2.5) .. (3.0,2.4);
+  \draw[line width=1pt, red] (3.0,2.45) -- (3.7,2.75);
+  \draw[line width=1pt, yellow!80!orange] (3.0,2.4) -- (3.7,2.4);
+  \draw[line width=1pt, black] (3.0,2.35) -- (3.7,2.05);
+  \node[font=\sffamily\tiny] at (1.05,0.9) {acero inoxidable};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@suelo\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=pcbnegro, rounded corners=1pt]
+    (1.4,2.8) -- (2.6,2.8) -- (2.6,0.75) -- (2.0,0.25) -- (1.4,0.75) -- cycle;
+  \fill[white] (1.4,1.55) rectangle (2.6,1.65);
+  \fill[pcbnegro!70] (1.7,2.1) rectangle (2.3,2.5);
+  \node[white, font=\sffamily\tiny] at (2,1.15) {v1.2};
+  \draw[pieza, fill=white] (1.7,2.8) rectangle (2.3,3.05);
+  \draw[line width=1pt, red] (1.8,3.05) -- (1.6,3.4);
+  \draw[line width=1pt, black] (2.0,3.05) -- (2.0,3.4);
+  \draw[line width=1pt, yellow!80!orange] (2.2,3.05) -- (2.4,3.4);
+  \fill[brown!50] (0.6,0.25) rectangle (3.4,0.95);
+  \fill[brown!70] (0.6,0.95) -- (3.4,0.95) -- (3.4,0.85) -- (0.6,0.85);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@nivel\endcsname{%
+\begin{tikzpicture}[ilus]
+  \pcb{0.9}{0.8}{3.1}{2.6}{pcbrojo}
+  \foreach \y in {1.2,1.55,1.9,2.25}{\fill[pcbnegro] (1.8,\y-0.08) rectangle (2.2,\y+0.08);}
+  \foreach \y in {0.95,...,2.55}{\fill[oro] (1.05,\y) circle (0.06);
+    \fill[oro] (2.95,\y) circle (0.06);}
+  \node[white, font=\sffamily\tiny] at (1.3,2.75) {LV};
+  \node[white, font=\sffamily\tiny] at (2.7,2.75) {HV};
+  \node[font=\sffamily\tiny] at (2,0.45) {3,3 V $\leftrightarrow$ 5 V};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@microsd\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=gray!20, rounded corners=2pt]
+    (1.9,0.5) -- (3.6,0.5) -- (3.6,2.6) -- (2.3,2.6) -- (1.9,2.2) -- cycle;
+  \node[font=\sffamily\tiny, rotate=90] at (3.3,1.55) {adaptador SD};
+  \draw[pieza, fill=pcbnegro, rounded corners=1.5pt]
+    (0.5,0.8) -- (1.6,0.8) -- (1.6,2.4) -- (0.85,2.4) -- (0.85,2.05)
+    -- (0.5,1.95) -- cycle;
+  \fill[red!75] (0.6,1.1) rectangle (1.5,1.6);
+  \node[white, font=\sffamily\bfseries\scriptsize] at (1.05,1.35) {16GB};
+  \foreach \x in {0.95,1.1,...,1.5}{\fill[oro] (\x,2.15) rectangle (\x+0.08,2.35);}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@mc38\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=white, rounded corners=2pt] (0.4,1.2) rectangle (1.8,1.9);
+  \draw[pieza, fill=white, rounded corners=2pt] (2.0,1.2) rectangle (3.4,1.9);
+  \foreach \x in {0.6,1.6,2.2,3.2}{\draw[pieza, fill=metal] (\x,1.55) circle (0.09);}
+  \draw[line width=1pt, draw=gray!60] (0.4,1.55) .. controls (0.0,1.55)
+    and (0.2,0.6) .. (0.6,0.6);
+  \draw[line width=1pt, draw=gray!60] (0.45,1.45) .. controls (0.1,1.4)
+    and (0.3,0.5) .. (0.7,0.45);
+  \node[font=\sffamily\tiny] at (1.1,2.15) {reed};
+  \node[font=\sffamily\tiny] at (2.7,2.15) {imán};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@transistor\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=pcbnegro] (1.3,1.6) -- (2.7,1.6) -- (2.7,2.2)
+    arc (0:180:0.7 and 0.55) -- cycle;
+  \node[white, font=\sffamily\tiny] at (2,1.95) {2N2222};
+  \foreach \x/\l in {1.55/E,2/B,2.45/C}{\draw[line width=1pt, draw=metal]
+    (\x,1.6) -- (\x,0.45); \node[font=\sffamily\tiny] at (\x,0.25) {\l};}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@capacitor\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=blue!65, rounded corners=3pt] (1.4,1.2) rectangle (2.6,2.8);
+  \fill[blue!20] (2.25,1.25) rectangle (2.45,2.75);
+  \foreach \y in {1.5,1.85,2.2,2.55}{\node[font=\sffamily\tiny, blue!60!black] at (2.35,\y) {$-$};}
+  \node[white, font=\sffamily\tiny, rotate=90] at (1.8,2.0) {470\,µF 16\,V};
+  \draw[line width=1pt, draw=metal] (1.75,1.2) -- (1.75,0.3);
+  \draw[line width=1pt, draw=metal] (2.25,1.2) -- (2.25,0.5);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@protoboard\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=white, rounded corners=2pt] (0.2,0.5) rectangle (3.8,2.7);
+  \draw[red, line width=0.8pt] (0.35,2.55) -- (3.65,2.55);
+  \draw[blue, line width=0.8pt] (0.35,2.3) -- (3.65,2.3);
+  \draw[red, line width=0.8pt] (0.35,0.9) -- (3.65,0.9);
+  \draw[blue, line width=0.8pt] (0.35,0.65) -- (3.65,0.65);
+  \foreach \x in {0.45,0.62,...,3.6}{
+    \foreach \y in {1.15,1.3,1.45,1.82,1.97,2.12}{\fill[gray!55] (\x,\y) circle (0.025);}}
+  \fill[gray!25] (0.3,1.58) rectangle (3.7,1.68);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@pila18650\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=pcbnegro, rounded corners=2pt] (0.3,1.1) rectangle (3.0,2.7);
+  \draw[pieza, fill=blue!60, rounded corners=3pt] (0.45,1.95) rectangle (2.85,2.55);
+  \draw[pieza, fill=green!55!black, rounded corners=3pt] (0.45,1.25) rectangle (2.85,1.85);
+  \node[white, font=\sffamily\tiny] at (1.65,2.25) {18650 3,7 V};
+  \node[white, font=\sffamily\tiny] at (1.65,1.55) {18650 3,7 V};
+  \draw[line width=1pt, red] (3.0,2.4) -- (3.6,2.6);
+  \draw[line width=1pt, black] (3.0,2.2) -- (3.6,2.3);
+  \pcb{2.6}{0.3}{3.75}{0.9}{pcbazul}
+  \draw[pieza, fill=metal] (3.5,0.45) rectangle (3.8,0.75);
+  \node[font=\sffamily\tiny] at (1.4,0.6) {cargador};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@pilaaa\endcsname{%
+\begin{tikzpicture}[ilus]
+  \foreach \x in {0.6,1.6,2.6}{
+    \draw[pieza, fill=pcbnegro, rounded corners=2pt] (\x,0.5) rectangle (\x+0.75,2.4);
+    \fill[oro] (\x,1.6) rectangle (\x+0.75,2.4);
+    \draw[pieza, fill=metal] (\x+0.25,2.4) rectangle (\x+0.5,2.55);
+    \node[font=\sffamily\tiny, white, rotate=90] at (\x+0.38,1.05) {1,5 V AA};}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@adaptador\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=pcbnegro, rounded corners=3pt] (0.4,1.2) rectangle (1.9,2.6);
+  \draw[line width=1.2pt, draw=metal] (0.75,2.6) -- (0.75,2.95);
+  \draw[line width=1.2pt, draw=metal] (1.55,2.6) -- (1.55,2.95);
+  \node[white, font=\sffamily\tiny] at (1.15,1.9) {DC};
+  \draw[line width=1.8pt, draw=pcbnegro] (1.15,1.2) .. controls (1.2,0.3)
+    and (2.6,0.4) .. (2.9,1.4);
+  \draw[pieza, fill=pcbnegro] (2.75,1.4) rectangle (3.05,1.95);
+  \draw[pieza, fill=metal] (2.82,1.95) rectangle (2.98,2.3);
+  \node[font=\sffamily\tiny] at (3.3,2.55) {5,5$\times$2,1};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@bombillo\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=vidrio] (2,2.3) circle (0.7);
+  \draw[orange, line width=0.9pt] (1.75,1.95) -- (1.8,2.4) -- (1.9,2.2)
+    -- (2.0,2.4) -- (2.1,2.2) -- (2.2,2.4) -- (2.25,1.95);
+  \draw[pieza, fill=oro!70] (1.6,1.0) rectangle (2.4,1.75);
+  \foreach \y in {1.15,1.35,1.55}{\draw (1.6,\y) -- (2.4,\y);}
+  \fill[metal] (1.85,0.85) rectangle (2.15,1.0);
+  \foreach \a in {20,45,70,110,135,160}{\draw[orange!80, line width=0.7pt]
+    (2,2.3) ++(\a:0.85) -- ++(\a:0.25);}
+  \node[font=\sffamily\tiny] at (2,0.45) {12 V 21 W};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@fusible\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[line width=1.6pt, red!80] (0.2,1.6) -- (1.1,1.6);
+  \draw[line width=1.6pt, red!80] (2.9,1.6) -- (3.8,1.6);
+  \draw[pieza, fill=pcbnegro, rounded corners=3pt] (1.1,1.3) rectangle (2.9,1.9);
+  \draw[pieza, fill=vidrio] (1.4,0.5) rectangle (2.6,0.85);
+  \fill[metal] (1.25,0.5) rectangle (1.4,0.85);
+  \fill[metal] (2.6,0.5) rectangle (2.75,0.85);
+  \draw[gray] (1.4,0.68) -- (2.6,0.68);
+  \node[white, font=\sffamily\tiny] at (2,1.6) {10 A};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@reductor\endcsname{%
+\begin{tikzpicture}[ilus]
+  \pcb{0.3}{0.5}{3.7}{2.6}{pcbazul}
+  \draw[pieza, fill=pcbnegro, rounded corners=2pt] (1.3,1.1) rectangle (2.3,2.1);
+  \draw[pieza, fill=gray!40] (2.5,1.0) rectangle (3.1,2.3);
+  \foreach \y in {1.15,1.35,...,2.15}{\draw (2.5,\y) -- (3.1,\y);}
+  \draw[pieza, fill=blue!30] (0.95,2.15) rectangle (1.25,2.45);
+  \foreach \x/\y in {0.55/0.8,0.55/1.25,3.45/0.8,3.45/1.25}{\draw[pieza, fill=pcbverde!60!cyan]
+    (\x-0.17,\y-0.17) rectangle (\x+0.17,\y+0.17);}
+  \node[white, font=\sffamily\tiny] at (1.8,1.6) {XL4016};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@usb\endcsname{%
+\begin{tikzpicture}[ilus]
+  \pcb{0.9}{0.9}{3.1}{2.5}{pcbverde}
+  \draw[pieza, fill=metal!60] (1.4,1.5) rectangle (3.4,2.3);
+  \fill[white] (1.6,1.75) rectangle (3.3,2.05);
+  \fill[oro] (1.75,1.95) rectangle (3.2,2.05);
+  \foreach \x in {1.2,1.5,1.8,2.1}{\fill[oro] (\x,1.15) circle (0.07);}
+  \node[white, font=\sffamily\tiny] at (2.1,0.65) {USB A};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@toma12\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=pcbnegro] (2,1.7) circle (0.85);
+  \draw[pieza, fill=gray!70] (2,1.7) circle (0.55);
+  \fill[metal] (2,1.7) circle (0.13);
+  \draw[pieza, fill=pcbnegro] (2.75,2.35) arc (40:-40:0.25 and 0.9) -- cycle;
+  \draw[line width=1.2pt, red] (1.2,1.1) -- (0.4,0.5);
+  \draw[line width=1.2pt, black] (1.35,0.95) -- (0.65,0.3);
+  \node[font=\sffamily\tiny] at (2.6,0.55) {12 V};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@cable\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[line width=2.2pt, red!80] (0.3,1.0) .. controls (1.5,3.2) and (2.5,-0.6) .. (3.4,1.9);
+  \draw[line width=2.2pt, black] (0.4,0.85) .. controls (1.6,3.05) and (2.6,-0.75) .. (3.5,1.75);
+  \draw[pieza, fill=metal] (3.55,2.15) circle (0.2);
+  \fill[white] (3.55,2.15) circle (0.08);
+  \draw[pieza, fill=metal] (0.12,0.65) rectangle (0.32,1.05);
+  \node[font=\sffamily\tiny] at (2.2,2.55) {2$\times$14 AWG};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@ledcarga\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=white] (0.2,1.3) rectangle (3.8,1.9);
+  \foreach \x in {0.55,1.25,...,3.6}{\draw[pieza, fill=yellow!70] (\x-0.15,1.45) rectangle (\x+0.15,1.75);
+    \foreach \a in {60,90,120}{\draw[yellow!70!orange] (\x,1.95) -- ++(\a:0.3);}}
+  \draw[line width=1pt, red] (0.2,1.7) -- (-0.2,1.2);
+  \draw[line width=1pt, black] (0.2,1.5) -- (-0.1,1.0);
+  \node[font=\sffamily\tiny] at (2,0.8) {cinta LED 12 V};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@caiman\endcsname{%
+\begin{tikzpicture}[ilus]
+  \foreach \c/\y in {red!80/2.0,black/1.0}{
+    \draw[pieza, fill=\c] (0.5,\y) -- (1.7,\y+0.25) -- (1.7,\y-0.25) -- cycle;
+    \draw[pieza, fill=metal] (1.7,\y+0.2) -- (2.6,\y+0.12) -- (2.6,\y-0.12) -- (1.7,\y-0.2) -- cycle;
+    \foreach \x in {1.9,2.1,2.3,2.5}{\draw (\x,\y+0.12) -- (\x+0.05,\y-0.05);}
+    \draw[line width=1.4pt, draw=\c] (0.5,\y) -- (0.0,\y);}
+  \draw[line width=1.4pt, red!80] (2.6,2.0) .. controls (3.4,2.0) and (3.4,1.0) .. (2.6,1.0);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@tubos\endcsname{%
+\begin{tikzpicture}[ilus]
+  \foreach \x/\l in {0.9/0.9,1.6/1.4,2.3/1.1,3.0/1.6}{
+    \draw[pieza, fill=vidrio] (\x-0.2,2.8) -- (\x-0.2,0.9) arc (180:360:0.2) -- (\x+0.2,2.8);
+    \fill[cyan!40] (\x-0.18,\l) -- (\x-0.18,0.9) arc (180:360:0.18) -- (\x+0.18,\l) -- cycle;}
+  \draw[pieza, fill=white] (0.3,1.7) rectangle (3.6,1.95);
+  \draw[pieza, fill=white] (0.3,0.4) rectangle (3.6,0.6);
+  \draw (0.4,0.6) -- (0.4,1.7); \draw (3.5,0.6) -- (3.5,1.7);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@vaso\endcsname{%
+\begin{tikzpicture}[ilus]
+  \fill[cyan!25] (1.15,0.5) rectangle (2.85,1.5);
+  \draw[pieza, fill=none] (1.0,2.75) -- (1.15,2.6) -- (1.15,0.5) -- (2.85,0.5)
+    -- (2.85,2.6) -- (2.85,2.75);
+  \foreach \y/\t in {1.0/25,1.5/50,2.0/75}{\draw (2.85,\y) -- (2.6,\y);
+    \node[font=\sffamily\tiny, anchor=east] at (2.55,\y) {\t};}
+  \node[font=\sffamily\tiny] at (2,2.3) {100 ml PP};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@agitador\endcsname{%
+\begin{tikzpicture}[ilus]
+  \foreach \d in {0,0.35,0.7}{
+    \draw[pieza, fill=white, rotate around={-30:(2,1.5)}] (0.5,1.4+\d) rectangle (3.2,1.52+\d);
+    \draw[pieza, fill=white, rotate around={-30:(2,1.5)}] (3.2,1.33+\d) rectangle (3.6,1.6+\d);}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@bata\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=white] (1.4,2.8) -- (0.8,2.6) -- (0.3,1.2) -- (0.75,1.1)
+    -- (1.1,2.0) -- (1.1,0.3) -- (2.9,0.3) -- (2.9,2.0) -- (3.25,1.1)
+    -- (3.7,1.2) -- (3.2,2.6) -- (2.6,2.8) -- (2,2.3) -- cycle;
+  \draw (2,2.3) -- (2,0.3);
+  \foreach \y in {0.8,1.3,1.8}{\fill[gray] (2.1,\y) circle (0.05);}
+  \draw (1.3,0.9) rectangle (1.75,1.25); \draw (2.25,0.9) rectangle (2.7,1.25);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@petri\endcsname{%
+\begin{tikzpicture}[ilus]
+  \foreach \x/\y in {1.3/1.0,2.5/1.9}{
+    \draw[pieza, fill=vidrio] (\x,\y) ellipse (1.0 and 0.35);
+    \draw[pieza] (\x-1.0,\y) -- (\x-1.0,\y-0.2) arc (180:360:1.0 and 0.35) -- (\x+1.0,\y);
+    \draw[pieza, fill=vidrio!60] (\x,\y) ellipse (0.92 and 0.3);}
+  \foreach \p in {(1.0,1.0),(1.4,0.9),(1.6,1.08)}{\fill[brown!60] \p ellipse (0.08 and 0.05);}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@levadura\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=oro!35, rounded corners=3pt] (1.1,0.4) rectangle (2.9,2.3);
+  \draw[pieza, fill=red!70, rounded corners=1pt] (1.0,2.3) rectangle (3.0,2.75);
+  \node[font=\sffamily\bfseries\scriptsize] at (2,1.65) {levadura};
+  \foreach \x/\y in {1.4/0.8,1.8/0.95,2.2/0.75,2.55/0.95,1.6/1.15,2.4/1.2}{\fill[oro!80!brown] (\x,\y) circle (0.06);}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@yogur\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=white] (1.2,2.5) -- (1.4,0.5) -- (2.6,0.5) -- (2.8,2.5) -- cycle;
+  \draw[pieza, fill=metal!50] (1.1,2.5) rectangle (2.9,2.7);
+  \fill[blue!20] (1.3,1.2) -- (2.7,1.2) -- (2.62,1.9) -- (1.38,1.9) -- cycle;
+  \node[font=\sffamily\tiny] at (2,1.55) {natural};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@goteroazul\endcsname{\ilus@gotero{blue!70}{azul de metileno}}
+\expandafter\def\csname ilus@goterorojo\endcsname{\ilus@gotero{red!75}{rojo de fenol}}
+\newcommand{\ilus@gotero}[2]{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=white, rounded corners=3pt] (1.3,0.4) rectangle (2.7,2.0);
+  \fill[#1] (1.35,0.45) rectangle (2.65,1.3);
+  \draw[pieza, fill=white] (1.75,2.0) rectangle (2.25,2.3);
+  \draw[pieza, fill=pcbnegro] (1.85,2.3) -- (2.15,2.3) -- (2.05,2.9) -- (1.95,2.9) -- cycle;
+  \node[font=\sffamily\tiny, align=center] at (2,1.65) {#2};
+  \fill[#1] (2,3.05) circle (0.06);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@suero\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=vidrio, rounded corners=4pt] (0.7,0.4) rectangle (2.1,2.4);
+  \draw[pieza, fill=vidrio] (1.15,2.4) rectangle (1.65,2.75);
+  \node[font=\sffamily\tiny, align=center] at (1.4,1.4) {NaCl\\0,9\,\%};
+  \draw[pieza, fill=white] (2.5,0.4) -- (2.6,1.4) -- (3.5,1.4) -- (3.6,0.4) -- cycle;
+  \node[font=\sffamily\tiny] at (3.05,0.85) {9\,g/L};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@papelph\endcsname{%
+\begin{tikzpicture}[ilus]
+  \foreach \i/\c in {0/red,1/orange,2/yellow,3/green!70,4/teal,5/blue!70,6/violet}{
+    \fill[\c] (0.4+\i*0.45,2.1) rectangle (0.8+\i*0.45,2.6);}
+  \node[font=\sffamily\tiny] at (0.6,1.85) {0}; \node[font=\sffamily\tiny] at (3.3,1.85) {14};
+  \draw[pieza, fill=oro!20] (0.9,0.5) rectangle (3.1,0.85);
+  \fill[green!60] (2.6,0.5) rectangle (3.1,0.85);
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@icopor\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=icopor] (0.6,0.5) -- (3.0,0.5) -- (3.6,0.9) -- (3.6,2.0)
+    -- (1.2,2.0) -- (0.6,1.6) -- cycle;
+  \draw (0.6,1.6) -- (3.0,1.6) -- (3.0,0.5); \draw (3.0,1.6) -- (3.6,2.0);
+  \draw[pieza, fill=white] (0.5,1.75) -- (2.95,1.75) -- (3.7,2.25) -- (1.25,2.25) -- cycle;
+  \foreach \x/\y in {1.2/1.0,2.1/0.8,2.6/1.2,3.3/1.4,1.6/1.3}{\fill[gray!35] (\x,\y) circle (0.04);}
+  \node[font=\sffamily\tiny] at (1.8,1.1) {10 L};
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@semillas\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=pcbverde!25] (0.5,0.4) rectangle (2.3,2.7);
+  \draw[pieza, fill=white] (0.7,1.6) rectangle (2.1,2.5);
+  \draw[pcbverde, line width=1pt] (1.4,1.7) -- (1.4,2.2);
+  \fill[pcbverde] (1.4,2.2) ellipse (0.2 and 0.1);
+  \foreach \x/\y/\c in {2.8/0.7/brown,3.2/0.9/oro,3.0/1.3/orange!70,3.4/1.5/brown!60,2.7/1.7/oro}{
+    \fill[\c] (\x,\y) ellipse (0.13 and 0.08);}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@destornilladores\endcsname{%
+\begin{tikzpicture}[ilus]
+  \foreach \x/\c in {0.9/red!70,1.6/blue!60,2.3/oro,3.0/pcbverde!70}{
+    \draw[pieza, fill=\c, rounded corners=2pt] (\x-0.18,1.6) rectangle (\x+0.18,2.8);
+    \draw[line width=1.6pt, draw=metal] (\x,1.6) -- (\x,0.5);}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@pelacables\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=red!70, rounded corners=3pt] (0.3,0.6) -- (1.8,1.4) -- (1.7,1.6) -- (0.2,0.9) -- cycle;
+  \draw[pieza, fill=red!70, rounded corners=3pt] (0.3,2.4) -- (1.8,1.6) -- (1.7,1.4) -- (0.2,2.1) -- cycle;
+  \draw[pieza, fill=metal] (1.75,1.5) -- (3.6,1.85) -- (3.7,1.55) -- (1.8,1.4) -- cycle;
+  \draw[pieza, fill=metal] (1.75,1.5) -- (3.6,1.15) -- (3.7,1.45) -- (1.8,1.6) -- cycle;
+  \draw[pieza, fill=gray] (1.78,1.5) circle (0.1);
+  \foreach \x in {2.6,2.9,3.2}{\fill[white] (\x,1.5) circle (0.04);}
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@cinta\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=pcbnegro] (1.8,1.6) circle (1.0);
+  \draw[pieza, fill=white] (1.8,1.6) circle (0.5);
+  \draw[pieza, fill=pcbnegro] (2.6,1.0) -- (3.7,0.5) -- (3.75,0.75) -- (2.75,1.25) -- cycle;
+\end{tikzpicture}}
+
+\expandafter\def\csname ilus@cartulina\endcsname{%
+\begin{tikzpicture}[ilus]
+  \draw[pieza, fill=white] (0.2,0.4) rectangle (3.8,2.7);
+  \draw[line width=3pt, pcbnegro, rounded corners=12pt]
+    (0.6,0.8) -- (0.6,2.3) -- (2.0,2.3) -- (2.0,1.0) -- (3.4,1.0) -- (3.4,2.3);
+\end{tikzpicture}}

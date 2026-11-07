@@ -1,0 +1,344 @@
+%% Plantilla Jinja del informe. Se compila con XeLaTeX.
+%% Variables: \VAR{...}; bloques: \BLOCK{...}. Datos: faltantes.json.
+\documentclass[10pt]{article}
+\usepackage[letterpaper, top=2.2cm, bottom=2cm, left=1.8cm, right=1.8cm,
+  headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{Barlow}[
+  Path=../fuentes/, Extension=.ttf,
+  UprightFont=*_400Regular, BoldFont=*_600SemiBold,
+  ItalicFont=*_400Regular_Italic, BoldItalicFont=*_600SemiBold]
+\newfontfamily\condensada{BarlowCondensed}[
+  Path=../fuentes/, Extension=.ttf, WordSpace=1.5,
+  UprightFont=*_500Medium, BoldFont=*_700Bold]
+\usepackage{polyglossia}
+\setdefaultlanguage{spanish}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs, xltabular, array, colortbl}
+\usepackage{fancyhdr}
+\usepackage{qrcode}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\usepackage{titlesec}
+\usepackage{microtype}
+
+\definecolor{tinta}{HTML}{1F2933}
+\definecolor{suave}{HTML}{5B6670}
+\definecolor{linea}{HTML}{D5DBE1}
+\definecolor{fondo}{HTML}{F5F7F9}
+\definecolor{marca}{HTML}{1F4E5F}
+\definecolor{ambar}{HTML}{E8A317}
+\definecolor{p1}{HTML}{C0392B}
+\definecolor{p2}{HTML}{D68910}
+\definecolor{p3}{HTML}{7F8C8D}
+\color{tinta}
+%% Colores de cada caja, tomados de data/boxes/*.json.
+\BLOCK{for id, caja in cajas.items()}
+\definecolor{caja\VAR{id}}{HTML}{\VAR{caja.accent[1:]|upper}}
+\BLOCK{endfor}
+
+
+\makeatletter
+\input{../ilustraciones.tex}
+\makeatother
+%% En las fichas las ilustraciones van un poco más pequeñas.
+\tikzset{ilus/.append style={x=0.68cm, y=0.68cm}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\setlist{nosep, leftmargin=1.1em, label={\color{suave}\textbullet}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\titleformat{\section}{\condensada\bfseries\LARGE\color{marca}}{}{0pt}{}
+  [\vspace{2pt}{\color{ambar}\rule{2.2cm}{2.5pt}}]
+\titlespacing*{\section}{0pt}{6pt}{10pt}
+\titleformat{\subsection}{\condensada\bfseries\large\color{marca}}{}{0pt}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{linea}\hrule height\headrulewidth}}
+\fancyhead[L]{\condensada\small\color{suave}KITS STEAM · DISLUMBRA}
+\fancyhead[R]{\condensada\small\color{suave}Elementos faltantes · corte \VAR{c.corte}}
+\fancyfoot[C]{\condensada\small\color{suave}\thepage}
+
+%% Etiquetas pequeñas de color (caja, prioridad).
+\newtcbox{\chip}[1]{on line, colback=#1, colframe=#1, coltext=white,
+  boxrule=0pt, arc=2pt, left=3pt, right=3pt, top=1pt, bottom=1pt,
+  fontupper=\condensada\footnotesize\bfseries}
+\newtcbox{\chipsuave}[1]{on line, colback=#1!12, colframe=#1!12,
+  coltext=#1!80!black, boxrule=0pt, arc=2pt, left=3pt, right=3pt,
+  top=1pt, bottom=1pt, fontupper=\condensada\footnotesize}
+\newcommand{\prio}[1]{\ifcase#1\or\chip{p1}{1 · IMPRESCINDIBLE}%
+  \or\chip{p2}{2 · NECESARIO}\or\chip{p3}{3 · RECOMENDADO}\fi}
+\newcommand{\rotulo}[1]{{\condensada\bfseries\small\color{marca}\MakeUppercase{#1}}\par}
+
+\begin{document}
+
+%% ---------------------------------------------------------------- Portada
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[marca] (current page.north west) rectangle
+    ([yshift=-11.5cm]current page.north east);
+  \fill[ambar] ([yshift=-11.5cm]current page.north west) rectangle
+    ([yshift=-11.8cm]current page.north east);
+  \node[anchor=north west, text width=16cm, white, align=left]
+    at ([xshift=1.8cm, yshift=-2.4cm]current page.north west) {%
+    \raggedright
+    {\condensada\large KITS STEAM · DISLUMBRA SAS · CENTROS DE INTERÉS}\\[14pt]
+    {\condensada\bfseries\fontsize{40}{42}\selectfont\spaceskip=0.3em plus 0.1em \VAR{c.titulo|e}}\\[12pt]
+    {\Large \VAR{c.subtitulo|e}}\\[20pt]
+    {\condensada\large Corte: \VAR{c.corte} · Precios consultados en las tiendas ese día}};
+\end{tikzpicture}
+\vspace*{10.6cm}
+
+\begin{tcbraster}[raster columns=4, raster equal height, raster column skip=8pt,
+  colback=fondo, colframe=fondo, boxrule=0pt, arc=3pt, halign=center,
+  valign=center, top=8pt, bottom=8pt]
+\begin{tcolorbox}{\condensada\bfseries\fontsize{28}{30}\selectfont\color{marca}\VAR{total.items}}\\[2pt]{\small faltantes en total}\end{tcolorbox}
+\begin{tcolorbox}{\condensada\bfseries\fontsize{28}{30}\selectfont\color{p1}\VAR{por_prioridad[0].items}}\\[2pt]{\small imprescindibles}\end{tcolorbox}
+\begin{tcolorbox}{\condensada\bfseries\fontsize{22}{30}\selectfont\color{marca}\VAR{por_responsable[0].valor|pesos}}\\[2pt]{\small compras del lunes}\end{tcolorbox}
+\begin{tcolorbox}{\condensada\bfseries\fontsize{22}{30}\selectfont\color{suave}\VAR{por_responsable[1].valor|pesos}}\\[2pt]{\small otra persona}\end{tcolorbox}
+\end{tcbraster}
+
+\vspace{14pt}
+\rotulo{Cajas incluidas}
+\BLOCK{for id, caja in cajas.items()}
+\chip{caja\VAR{id}}{\VAR{id}} \VAR{caja.title|e}\hspace{1.2em}
+\BLOCK{endfor}
+
+\vspace{14pt}
+\rotulo{Qué trae este informe}
+\begin{itemize}
+  \item Un resumen del costo por prioridad, por tipo de elemento y por responsable.
+  \item La lista de compra completa, separada entre lo que se compra el lunes y lo que consigue otra persona.
+  \item Las tiendas físicas de Cali y las de envío nacional.
+  \item Una ficha por elemento: para qué proyecto es, por qué hace falta, sus características técnicas, dónde conseguirlo, precio aproximado y alternativa.
+\end{itemize}
+
+\vfill
+{\small\color{suave}Las imágenes son ilustraciones de referencia. El código QR de cada ficha abre la página del producto, con la foto real. Los precios son aproximados: no incluyen envío y pueden cambiar.}
+
+\newpage
+%% ---------------------------------------------------------------- Resumen
+\section{Resumen}
+
+\begin{tcolorbox}[colback=fondo, colframe=fondo, boxrule=0pt, arc=3pt]
+\rotulo{Cómo leer las prioridades}
+\begin{tabular}{@{}l p{13.2cm}@{}}
+\prio{1} & Sin esto, un proyecto no cumple su objetivo. Se compra primero.\\[3pt]
+\prio{2} & Necesario por seguridad o porque el Excel del cliente lo promete.\\[3pt]
+\prio{3} & Barato y con impacto: mejora el resultado o evita fallos.\\
+\end{tabular}
+\end{tcolorbox}
+
+\vspace{6pt}
+\begin{minipage}[t]{0.48\linewidth}
+\rotulo{Por responsable}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l r r@{}}
+\toprule
+& \textbf{Ítems} & \textbf{Costo aprox.}\\
+\midrule
+\BLOCK{for t in por_responsable}
+\VAR{t.etiqueta|e} & \VAR{t.items} & \VAR{t.valor|pesos}\\
+\BLOCK{endfor}
+\midrule
+\textbf{Total} & \textbf{\VAR{total.items}} & \textbf{\VAR{total.valor|pesos}}\\
+\bottomrule
+\end{tabular*}
+
+\vspace{12pt}
+\rotulo{Por prioridad}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l r r@{}}
+\toprule
+& \textbf{Ítems} & \textbf{Costo aprox.}\\
+\midrule
+\BLOCK{for t in por_prioridad}
+\VAR{t.etiqueta|e} & \VAR{t.items} & \VAR{t.valor|pesos}\\
+\BLOCK{endfor}
+\bottomrule
+\end{tabular*}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\rotulo{Por tipo de elemento}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l r r@{}}
+\toprule
+& \textbf{Ítems} & \textbf{Costo aprox.}\\
+\midrule
+\BLOCK{for t in por_categoria}
+\VAR{t.etiqueta|e} & \VAR{t.items} & \VAR{t.valor|pesos}\\
+\BLOCK{endfor}
+\bottomrule
+\end{tabular*}
+
+\vspace{12pt}
+\begin{tcolorbox}[colback=ambar!10, colframe=ambar, boxrule=0pt, leftrule=3pt, arc=0pt]
+\small \textbf{\VAR{total.sin_precio} elemento(s) sin precio en línea.} Sus costos no están en los totales: se cotizan en la tienda. Revisa en cada ficha el campo \emph{Precio aproximado}.
+\end{tcolorbox}
+\end{minipage}
+
+\vspace{14pt}
+\begin{tcolorbox}[colback=marca!6, colframe=marca!6, boxrule=0pt, arc=3pt]
+\small\textbf{Para el martes 10 de noviembre.} Las tiendas de Bogotá y Medellín tardan de 2 a 3 días en entregar. Lo de prioridad 1 conviene buscarlo el lunes en las tiendas físicas de Cali, y dejar los envíos para lo que no se consiga allí. El material de laboratorio y los perecederos los consigue otra persona; los perecederos (levadura, yogur) se entregan aparte de la caja, no guardados en ella.
+\end{tcolorbox}
+
+%% --------------------------------------------------------- Lista de compra
+\newpage
+\section{Lista de compra}
+
+\BLOCK{for resp, titulo in [("compras", "Compras del lunes · electrónica y energía"), ("otra persona", "Lo consigue otra persona · laboratorio, biología, herramientas y papelería")]}
+\subsection{\VAR{titulo}}
+{\small
+\begin{xltabular}{\linewidth}{@{}l L r l c r r@{}}
+\toprule
+\textbf{ID} & \textbf{Elemento} & \textbf{Cant.} & \textbf{Cajas} & \textbf{P} & \textbf{Precio ref.} & \textbf{Subtotal}\\
+\midrule
+\endhead
+\BLOCK{for nombre, fichas in grupos}
+\BLOCK{for f in fichas if f.item.responsable == resp}
+\texttt{\VAR{f.item.id}} & \VAR{f.item.nombre|e} & \VAR{f.item.cantidad} & \BLOCK{for u in f.usos|unique(attribute='caja')}\chipsuave{caja\VAR{u.caja}}{\VAR{u.caja}}\BLOCK{endfor} & \textcolor{p\VAR{f.item.prioridad}}{\textbf{\VAR{f.item.prioridad}}} & \VAR{f.item.precio.valor|pesos} & \VAR{f.item.precio.subtotal|pesos}\\
+\BLOCK{endfor}
+\BLOCK{endfor}
+\bottomrule
+\end{xltabular}}
+\vspace{4pt}
+\BLOCK{endfor}
+
+{\footnotesize\color{suave}\emph{Precio ref.} es el precio por presentación (unidad, paquete o juego, según la ficha). \emph{Subtotal} = precio × presentaciones a comprar.}
+
+%% ------------------------------------------------------------- Tiendas
+\newpage
+\section{Dónde comprar}
+\subsection{Tiendas físicas en Cali}
+{\small
+\begin{xltabular}{\linewidth}{@{}>{\bfseries\raggedright\arraybackslash}p{4.6cm} >{\raggedright\arraybackslash}p{4.2cm} L@{}}
+\toprule
+\textbf{Tienda} & \textbf{Dirección} & \textbf{Nota}\\
+\midrule
+\BLOCK{for t in c.tiendas_cali}
+\VAR{t.nombre|e} & \VAR{t.direccion|e}\BLOCK{if t.contacto}\newline{\color{suave}\VAR{t.contacto|e}}\BLOCK{endif} & \VAR{t.nota|e}\\
+\BLOCK{endfor}
+\bottomrule
+\end{xltabular}}
+
+\subsection{Tiendas con envío a Cali}
+{\small
+\begin{xltabular}{\linewidth}{@{}>{\bfseries\raggedright\arraybackslash}p{4.6cm} >{\raggedright\arraybackslash}p{4.2cm} L@{}}
+\toprule
+\textbf{Tienda} & \textbf{Ciudad} & \textbf{Nota}\\
+\midrule
+\BLOCK{for t in c.tiendas_envio}
+\VAR{t.nombre|e} & \VAR{t.ciudad|e} & \VAR{t.nota|e}\\
+\BLOCK{endfor}
+\bottomrule
+\end{xltabular}}
+
+\begin{tcolorbox}[colback=fondo, colframe=fondo, boxrule=0pt, arc=3pt]
+\small\textbf{Ruta sugerida para el lunes.} (1) Carrera 6 entre Calles 15 y 17: módulos, transistores, capacitores, adaptadores, caimanes, puerto USB y cable. (2) Innovatronics (confirmar antes por WhatsApp): DS18B20, protoboards, relé y reductor. (3) Almacén de repuestos automotrices: bombillo 1156 con socket, toma de 12 V y portafusible. Lo que no aparezca se pide por envío a Zamux o Electronilab.
+\end{tcolorbox}
+
+%% -------------------------------------------------------------- Fichas
+\BLOCK{for nombre, fichas in grupos}
+\newpage
+\section{\VAR{nombre|e}}
+\BLOCK{for f in fichas}
+\BLOCK{set it = f.item}
+\begin{tcolorbox}[enhanced, unbreakable, colback=white, colframe=linea,
+  boxrule=0.6pt, arc=4pt, left=0pt, right=8pt, top=4pt, bottom=4pt,
+  sidebyside, sidebyside align=top seam, lefthand width=3.7cm,
+  segmentation style={draw=linea, line width=0.6pt},
+  before skip=0pt, after skip=8pt]
+\centering
+\BLOCK{if f.foto}
+\includegraphics[width=3.2cm, height=2.4cm, keepaspectratio]{../fotos/\VAR{f.foto}}
+\BLOCK{else}
+\ilus{\VAR{it.ilustracion}}
+\BLOCK{endif}
+
+\vspace{4pt}
+\BLOCK{if it.precio.url}
+\qrcode[height=1.3cm]{\VAR{it.precio.url|qr}}\\[2pt]
+{\condensada\scriptsize\color{suave}Foto real y ficha:\\\href{\VAR{it.precio.url|link}}{\VAR{it.precio.url|dominio}}}
+\BLOCK{elif it.precio.valor == 0}
+{\condensada\scriptsize\color{suave}Se prepara en el aula}
+\BLOCK{else}
+{\condensada\scriptsize\color{suave}Sin página de producto:\\cotizar en tienda}
+\BLOCK{endif}
+\tcblower
+\raggedright
+{\condensada\bfseries\Large\color{marca}\VAR{it.nombre|e}}\hfill{\condensada\small\color{suave}\VAR{it.id|upper}}\par
+\vspace{2pt}
+\prio{\VAR{it.prioridad}} \chipsuave{marca}{\VAR{it.cantidad} \VAR{it.unidad|e}} \chipsuave{marca}{\BLOCK{if it.responsable == "compras"}Compra del lunes\BLOCK{else}Lo consigue otra persona\BLOCK{endif}}\par
+\vspace{2pt}
+\BLOCK{for u in f.usos}
+\chip{caja\VAR{u.caja}}{\VAR{u.caja}\BLOCK{if u.proyecto} · \VAR{u.proyecto}\BLOCK{endif}}~{\small \VAR{(u.proyecto_titulo or u.caja_titulo)|e}}\hspace{0.8em}
+\BLOCK{endfor}
+
+\vspace{3pt}
+\rotulo{Por qué se necesita}
+{\small \VAR{it.porque|e}}
+
+\begin{minipage}[t]{0.52\linewidth}
+\rotulo{Características técnicas}
+{\footnotesize\raggedright\begin{itemize}
+\BLOCK{for s in it.specs}
+  \item \VAR{s|e}
+\BLOCK{endfor}
+\end{itemize}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.44\linewidth}
+\rotulo{Dónde conseguirlo}
+{\footnotesize\raggedright\begin{itemize}
+\BLOCK{for d in it.donde}
+  \item \VAR{d|e}
+\BLOCK{endfor}
+\end{itemize}}
+\end{minipage}
+
+\vspace{4pt}
+\begin{tcolorbox}[colback=fondo, colframe=fondo, boxrule=0pt, arc=2pt, left=5pt, right=5pt, top=3pt, bottom=3pt]
+\small\textbf{Precio aproximado:}
+\BLOCK{if it.precio.valor is none}
+por confirmar en tienda (\VAR{it.precio.presentacion|e}).
+\BLOCK{elif it.precio.valor == 0}
+sin costo (\VAR{it.precio.presentacion|e}).
+\BLOCK{else}
+\VAR{it.precio.valor|pesos} \VAR{it.precio.presentacion|e}\BLOCK{if it.precio.compra > 1} × \VAR{it.precio.compra} = \textbf{\VAR{it.precio.subtotal|pesos}}\BLOCK{endif}.
+{\color{suave}Fuente: \VAR{it.precio.tienda|e}.}
+\BLOCK{endif}
+\end{tcolorbox}
+\BLOCK{if it.alternativa}
+{\small\textbf{Alternativa:} \VAR{it.alternativa|e}}
+\BLOCK{endif}
+\end{tcolorbox}
+\BLOCK{endfor}
+\BLOCK{endfor}
+
+%% --------------------------------------------------------------- Anexo
+\newpage
+\section{Anexo: fuentes de precio}
+{\small Páginas consultadas el \VAR{c.corte}. Los precios cambian; confirma antes de comprar.}
+
+{\footnotesize
+\begin{xltabular}{\linewidth}{@{}l >{\raggedright\arraybackslash}p{3.4cm} X@{}}
+\toprule
+\textbf{ID} & \textbf{Tienda} & \textbf{Página}\\
+\midrule
+\endhead
+\BLOCK{for nombre, fichas in grupos}
+\BLOCK{for f in fichas if f.item.precio.url}
+\texttt{\VAR{f.item.id}} & \VAR{f.item.precio.tienda|e} & \url{\VAR{f.item.precio.url|link}}\\
+\BLOCK{endfor}
+\BLOCK{endfor}
+\bottomrule
+\end{xltabular}}
+
+\subsection{Cómo poner fotos reales}
+{\small Guarda la foto como \texttt{reports/informe-faltantes/fotos/<ID>.jpg} (por ejemplo \texttt{e01.jpg}) y vuelve a generar el informe con \texttt{uv run informe} desde \texttt{tools/informe}. La ficha usa la foto en lugar de la ilustración, sin cambiar el código. Este informe tiene \VAR{con_foto} foto(s) real(es).}
+
+\end{document}

@@ -21,6 +21,9 @@ data/parts.json          ← qué es, cómo se conecta y cómo se cuida cada tip
 firmware/<proyecto>/     ← sketch real que se carga en la placa (y que muestra la página)
 tools/inventario/        ← Python (uv): valida y genera el Excel físico
 tools/faltantes_build.py ← genera el Excel de faltantes y compra del lunes
+tools/informe/           ← Python (uv): informe PDF de faltantes (LaTeX)
+data/compras/faltantes.json ← contrato del informe: por qué, specs, tiendas, precio
+reports/informe-faltantes/  ← plantilla LaTeX, ilustraciones TikZ, fuentes Barlow, fotos/
 exports/                 ← Excel de separación, Excel de faltantes y
                            precios_reales.csv (generados)
 ```
@@ -39,6 +42,18 @@ uv run pytest        # pruebas de reglas y de contrato
 uv run inventario    # genera exports/Separacion_por_caja.xlsx
 uv run python ../faltantes_build.py   # genera exports/Faltantes_BOM_Kits_STEAM.xlsx
 ```
+
+Informe PDF de faltantes (requiere XeLaTeX y latexmk):
+
+```sh
+cd tools/informe
+uv run pytest        # contrato de datos y lógica de totales
+uv run informe       # genera exports/Informe_Faltantes_Kits_STEAM.pdf
+```
+
+Para poner la foto real de un ítem se guarda como
+`reports/informe-faltantes/fotos/<id>.jpg` (por ejemplo `e01.jpg`) y se
+vuelve a generar: la ficha usa la foto en lugar de la ilustración.
 
 El script de faltantes usa el entorno de `tools/inventario` (ya trae
 `openpyxl`). Lee los precios de `exports/precios_reales.csv`. Una fila de
@@ -63,6 +78,10 @@ dicen cosas distintas.
 | Simulación en Wokwi enlazada (proyectos aún sin lección) | Los proyectos de Arduino ya se validaron en Wokwi (agosto 2026). Energía solar y seguidor de línea no se pueden simular en Wokwi: llevan simulador propio. |
 | Excel generado, no editado | Evita que el inventario físico y la página se desincronicen. |
 | Panel de C03 de 20 W (RTM020M), no de 80 W | Ya estaba en Dislumbra. Con el controlador PWM el panel trabaja al voltaje de la batería y entrega su corriente: ~1 A ≈ 0,14C, carga sana para la batería de 7 Ah. Uno de 80 W daría ~4,5 A (0,6C) y la calentaría. Repone ~45–55 Wh por día de sol y cabe en la caja. Ahorro: $120.960. |
+| Informe en LaTeX generado desde JSON | El contenido vive en `data/compras/faltantes.json` (validado con Pydantic) y la presentación en `plantilla.tex.j2`. Cambiar un precio no toca LaTeX, y cambiar el diseño no toca datos. Los ítems citan proyectos como `"C09-P3"` y el generador toma los nombres de `data/boxes`, así no se repiten. |
+| Jinja con `\VAR{}` y `\BLOCK{}` | Los delimitadores por defecto (`{{ }}`, `{% %}`) chocan con las llaves de LaTeX. Con estos, la plantilla sigue siendo LaTeX legible. |
+| Ilustraciones TikZ + QR, fotos opcionales | Desde el entorno de desarrollo no se pueden descargar fotos de las tiendas. Las ilustraciones comparten estilo, el QR lleva a la foto real, y una foto en `fotos/<id>.jpg` reemplaza la ilustración sin tocar código. |
+| XeLaTeX con Barlow | Misma tipografía que la página web (identidad visual). Las fuentes van en el repo (licencia OFL) para que compile igual en cualquier equipo. |
 | Numeración fija en la compra del lunes | Las cajas y las hojas citan los ítems como "Compra lunes #N". Quitar una fila con `RESUELTO` no renumera las demás. |
 | Identidad visual por código de colores | Cada caja se reconoce por un resistor cuyas bandas son su número de categoría (C06 = negro, azul). |
 | Separación de rigor | Se dejó el formato pesado del repo EHS-Dislumbra (LaTeX, actas de 14 pruebas) para cumplir la entrega del 10-nov; cada proyecto conserva código, simulación, piezas, armado, fallos y prueba de funcionamiento. |
@@ -75,6 +94,8 @@ dicen cosas distintas.
 | `KITS_DATA_DIR` | `data/boxes` (por defecto) | no aplica |
 | `KITS_SCHEMA` | `schema/box.schema.json` | no aplica |
 | `KITS_INVENTORY_OUT` | `exports/Separacion_por_caja.xlsx` | no aplica |
+| `KITS_FALTANTES` | `data/compras/faltantes.json` | no aplica |
+| `KITS_INFORME_OUT` | `exports/Informe_Faltantes_Kits_STEAM.pdf` | no aplica |
 
 Ver `.env.example`. No hay credenciales en el proyecto.
 
@@ -95,4 +116,17 @@ Ver `.env.example`. No hay credenciales en el proyecto.
 | `arduino-cli` no se instala en el contenedor | downloads.arduino.cc está bloqueado por la red | `apt install gcc-avr avr-libc` + clonar `arduino/ArduinoCore-avr` desde GitHub y usar `scripts/compile-firmware.sh` |
 | El LED RGB del simulador no cambiaba de color | Una regla CSS con `fill` pisa el atributo `fill` del SVG | Cambiar el color con `element.style.fill` |
 | El monitor serie mostraba todo duplicado | `start()` saltaba al último paso y ese paso volvía a llamar `start()` | Bandera `starting` que evita la doble ejecución |
+| El título de la portada salía sin espacios entre palabras | El nodo TikZ justificaba el texto de 40 pt en un ancho fijo | `\raggedright` dentro del nodo y `\spaceskip` explícito |
+| `Missing character: ↔` en el log de XeLaTeX | Barlow no tiene la flecha doble | Escribir "3,3 V – 5 V" en los datos; en ilustraciones usar `$\leftrightarrow$` (fuente matemática) |
+| URLs larguísimas desbordaban el anexo | `\url` no corta en cualquier carácter | Paquete `xurl` |
+| No se pudieron leer precios de MercadoLibre ni descargar imágenes | MercadoLibre bloquea lectores automáticos (`robots`) y la red del entorno solo permite GitHub y registros de paquetes | Precios de tiendas con página consultable; Barlow vía npm (`@expo-google-fonts/barlow`) |
 | `faltantes_build.py` fallaba con `FileNotFoundError` en un clon nuevo | Rutas absolutas fijas a la carpeta de trabajo donde se escribió el script | Rutas relativas al repo con `Path(__file__).resolve().parent.parent / "exports"` |
+
+## Deuda técnica conocida
+
+- `tools/faltantes_build.py` (Excel de la compra del lunes) y
+  `data/compras/faltantes.json` (informe PDF) repiten precios y tiendas.
+  El siguiente paso es que el script del Excel lea el JSON, para que
+  haya una sola fuente de precios.
+- El script del Excel enlaza filas con precios por número de fila
+  (`_map`); con la fuente única desaparece.

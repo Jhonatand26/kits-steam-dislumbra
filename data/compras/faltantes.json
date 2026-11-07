@@ -1,0 +1,1290 @@
+{
+  "corte": "2026-11-07",
+  "titulo": "Elementos faltantes de los kits STEAM",
+  "subtitulo": "Qué falta, para qué sirve, dónde conseguirlo en Cali y cuánto cuesta",
+  "tiendas_cali": [
+    {
+      "nombre": "Innovatronics",
+      "direccion": "Calle 71C #3A-2N-32",
+      "contacto": "WhatsApp 312 704 1758",
+      "nota": "Confirmar que atiende al público antes de ir."
+    },
+    {
+      "nombre": "Electrónica San Nicolás",
+      "direccion": "Carrera 6 #16-56",
+      "contacto": "",
+      "nota": "Ya se le compró (cotización 908817)."
+    },
+    {
+      "nombre": "Imperio Electronic",
+      "direccion": "Carrera 6 #15-54",
+      "contacto": "",
+      "nota": ""
+    },
+    {
+      "nombre": "Electrónica Digital",
+      "direccion": "Carrera 6 #15-85",
+      "contacto": "",
+      "nota": ""
+    },
+    {
+      "nombre": "Zona de electrónica del centro",
+      "direccion": "Carrera 6 entre Calles 15 y 17",
+      "contacto": "",
+      "nota": "Concentra los locales: sirve para cotizar varios ítems en una sola salida."
+    },
+    {
+      "nombre": "Homecenter, Éxito, Farmatodo, Panamericana",
+      "direccion": "Sedes en Cali",
+      "contacto": "",
+      "nota": "Herramientas, papelería, semillas, levadura, icopor y farmacia."
+    }
+  ],
+  "tiendas_envio": [
+    {
+      "nombre": "Zamux",
+      "ciudad": "Bogotá",
+      "nota": "Mejores precios en módulos; requiere envío."
+    },
+    {
+      "nombre": "Electronilab",
+      "ciudad": "Bogotá",
+      "nota": "Único con GUVA-S12SD encontrado; requiere envío."
+    },
+    {
+      "nombre": "La Casa del Científico",
+      "ciudad": "Bogotá",
+      "nota": "Material de laboratorio; WhatsApp 321 995 9655; envío nacional."
+    },
+    {
+      "nombre": "GreenForest",
+      "ciudad": "Medellín",
+      "nota": "Material de laboratorio; envío nacional."
+    }
+  ],
+  "items": [
+    {
+      "id": "e01",
+      "ilustracion": "guva",
+      "categoria": "electronica",
+      "nombre": "Sensor UV analógico GUVA-S12SD",
+      "usos": [
+        "C06-P2"
+      ],
+      "prioridad": 1,
+      "cantidad": 2,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Es el único sensor del Semáforo UV y nadie lo cotizó. Sin él, el proyecto no puede medir la radiación ni encender el semáforo según la escala de la OMS.",
+      "specs": [
+        "Fotodiodo de nitruro de galio, respuesta 240–370 nm (UV-A y UV-B)",
+        "Alimentación 2,5–5 V",
+        "Salida analógica proporcional al índice UV (0–1 V aprox.)",
+        "3 pines: +, −, OUT; módulo de ~20×15 mm"
+      ],
+      "donde": [
+        "Electronilab (Bogotá, envío): quedaban 2 unidades el 7-nov",
+        "En Cali: preguntar en la Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 18900,
+        "presentacion": "por unidad",
+        "compra": 2,
+        "tienda": "Electronilab",
+        "url": "https://electronilab.co/tienda/guva-s12sd-sensor-de-luz-uv-luz-ultravioleta-analogico/"
+      },
+      "alternativa": "Módulo ML8511 (salida analógica, 3,3 V); requiere ajustar el firmware."
+    },
+    {
+      "id": "e02",
+      "ilustracion": "tcrt",
+      "categoria": "electronica",
+      "nombre": "Módulo seguidor de línea TCRT5000",
+      "usos": [
+        "C05-P3"
+      ],
+      "prioridad": 1,
+      "cantidad": 2,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "El kit de robótica no trae seguidor de línea (verificado al abrirlo). Con dos módulos, uno a cada lado de la línea, la lógica es la más simple para grados 6–7: si un sensor ve negro, el robot gira hacia ese lado.",
+      "specs": [
+        "Emisor infrarrojo + fototransistor reflectivo",
+        "Alimentación 3,3–5 V",
+        "Salida digital (con umbral ajustable por potenciómetro) y analógica",
+        "Detección de 1 a 25 mm, típica 12 mm; módulo de 37×14 mm"
+      ],
+      "donde": [
+        "Didácticas Electrónicas I+D (donde se compró el kit), referencia TAR-TCRT5000",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 5900,
+        "presentacion": "por unidad",
+        "compra": 2,
+        "tienda": "Zamux (referencia de precio)",
+        "url": "https://www.zamux.co/sensor-distancia-seguidor-de-linea-infrarrojo-tcrt5000"
+      },
+      "alternativa": "Un solo módulo siguiendo el borde de la línea: funciona, pero zigzaguea más."
+    },
+    {
+      "id": "e03",
+      "ilustracion": "rele",
+      "categoria": "electronica",
+      "nombre": "Módulo relé 5 V de 1 canal con optoacoplador",
+      "usos": [
+        "C09-P3"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "La incubadora enciende y apaga una fuente de calor para mantener 37 °C. El Arduino no puede alimentar esa carga directamente; el relé la conmuta de forma aislada.",
+      "specs": [
+        "Bobina de 5 V, activación con señal de 3,3–5 V",
+        "Contactos de 10 A a 250 VAC / 30 VDC (aquí se usa solo a 12 V)",
+        "Optoacoplador y LED indicador",
+        "Bornera de 3 tornillos: COM, NO, NC"
+      ],
+      "donde": [
+        "Innovatronics, Calle 71C #3A-2N-32 ($7.500)",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 4500,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/modulo-rele-1-canales"
+      },
+      "alternativa": "MOSFET logic-level IRLZ44N con resistencia de 1 kΩ."
+    },
+    {
+      "id": "e04",
+      "ilustracion": "ds18b20",
+      "categoria": "electronica",
+      "nombre": "Sensor de temperatura DS18B20 sumergible",
+      "usos": [
+        "C09-P1"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Hay que medir la temperatura del líquido en fermentación. El DHT22 solo mide aire y no se puede mojar. Usa la resistencia de 4,7 kΩ que ya está en la caja.",
+      "specs": [
+        "Rango −55 a 125 °C; precisión ±0,5 °C entre −10 y 85 °C",
+        "Bus digital 1-Wire, resolución configurable de 9 a 12 bits",
+        "Alimentación 3,0–5,5 V",
+        "Sonda de acero inoxidable con cable de ~1 m"
+      ],
+      "donde": [
+        "Innovatronics, Calle 71C #3A-2N-32"
+      ],
+      "precio": {
+        "valor": 8500,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Innovatronics",
+        "url": "https://innovatronics.com.co/productos/sensor-ds18b20-temperatura-a-prueba-de-agua-para-arduino/"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "e05",
+      "ilustracion": "suelo",
+      "categoria": "electronica",
+      "nombre": "Sensor de humedad de suelo capacitivo v1.2",
+      "usos": [
+        "C09-P2"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "La propuesta pide medir la humedad del sustrato donde germinan las semillas. El capacitivo no tiene metal expuesto y no se corroe con el riego, a diferencia del resistivo.",
+      "specs": [
+        "Medición capacitiva, sin electrodos expuestos",
+        "Alimentación 3,3–5,5 V",
+        "Salida analógica (más humedad = menor voltaje)",
+        "Conector de 3 pines: VCC, GND, AOUT"
+      ],
+      "donde": [
+        "Innovatronics ($7.000), pero ese es resistivo: preguntar por el capacitivo",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 6900,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/en/sensor-capacitivo-humedad-de-suelo-sen0193"
+      },
+      "alternativa": "Sensor resistivo YL-69/FC-28: más barato, pero se corroe en semanas."
+    },
+    {
+      "id": "e06",
+      "ilustracion": "nivel",
+      "categoria": "electronica",
+      "nombre": "Conversor de nivel lógico bidireccional 3,3 V – 5 V",
+      "usos": [
+        "C01-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "El BME280 que llegó es la versión de 3,3 V y comparte el bus I2C con la LCD de 5 V. Sin conversor, el sensor recibe señales de 5 V y se puede dañar.",
+      "specs": [
+        "4 canales bidireccionales (transistores BSS138)",
+        "Lado bajo 1,8–3,3 V; lado alto 5 V",
+        "Apto para I2C, SPI y UART",
+        "Pines HV, LV, GND y 4 pares de datos"
+      ],
+      "donde": [
+        "Carrera 6 entre Calles 15 y 17",
+        "Innovatronics"
+      ],
+      "precio": {
+        "valor": 4500,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/en/conversor-nivel-logico-bidireccional-4-canales"
+      },
+      "alternativa": "Módulo BME280 versión 5 V (con regulador)."
+    },
+    {
+      "id": "e07",
+      "ilustracion": "microsd",
+      "categoria": "electronica",
+      "nombre": "Memoria microSD 16 GB con adaptador",
+      "usos": [
+        "C01-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Está en el Excel y el módulo SD ya llegó. El cliente la va a buscar en la caja. Guarda las mediciones del datalogger en un archivo que se abre en el computador.",
+      "specs": [
+        "16 GB, clase 10",
+        "Formatear en FAT32 antes de empacar",
+        "Incluye adaptador SD"
+      ],
+      "donde": [
+        "Cualquier tienda de tecnología o la Carrera 6"
+      ],
+      "precio": {
+        "valor": 25000,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/memoria-micro-sd-sandisk-16-gb-clase-10-adaptador-sd"
+      },
+      "alternativa": "Retirar módulo y tarjeta y usar la EEPROM interna del Arduino (decisión de agosto)."
+    },
+    {
+      "id": "e08",
+      "ilustracion": "mc38",
+      "categoria": "electronica",
+      "nombre": "Sensor magnético de puerta MC-38",
+      "usos": [
+        "C05-P4"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "La propuesta pide sensores de puerta y ventana. El Smart Home solo trae PIR. Es el ejemplo ideal para enseñar interrupciones.",
+      "specs": [
+        "Interruptor reed con imán, contacto normalmente cerrado con el imán cerca",
+        "Distancia de activación de 15 a 25 mm",
+        "Dos piezas plásticas con cables y tornillos de fijación"
+      ],
+      "donde": [
+        "Carrera 6 entre Calles 15 y 17",
+        "Tiendas de alarmas y seguridad"
+      ],
+      "precio": {
+        "valor": 6900,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Electronilab",
+        "url": "https://electronilab.co/tienda/sensor-magnetico-puerta-ventana/"
+      },
+      "alternativa": "Usar un pulsador como \"puerta\" (menos realista)."
+    },
+    {
+      "id": "e09",
+      "ilustracion": "transistor",
+      "categoria": "electronica",
+      "nombre": "Transistor NPN 2N2222",
+      "usos": [
+        "C06-P1",
+        "C09-P3"
+      ],
+      "prioridad": 3,
+      "cantidad": 10,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "El buzzer conectado directo al pin puede sonar débil. Con un transistor y una resistencia de 1 kΩ (ya comprada) suena fuerte y protege el Arduino. Se compran 10 por si alguno se quema.",
+      "specs": [
+        "NPN en encapsulado TO-92",
+        "Corriente de colector hasta 600 mA",
+        "Voltaje colector-emisor 40 V",
+        "Patas E-B-C"
+      ],
+      "donde": [
+        "Cualquier local de la Carrera 6"
+      ],
+      "precio": {
+        "valor": 106,
+        "presentacion": "por unidad",
+        "compra": 10,
+        "tienda": "Electronilab",
+        "url": "https://electronilab.co/tienda/2n2222-transistor-npn-to-92/"
+      },
+      "alternativa": "BC547 o BC337."
+    },
+    {
+      "id": "e10",
+      "ilustracion": "capacitor",
+      "categoria": "electronica",
+      "nombre": "Capacitor electrolítico 470 µF 16 V",
+      "usos": [
+        "C06-P3",
+        "C05-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 4,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Los servos generan picos de corriente que reinician el Arduino. Un capacitor en la alimentación del servo evita esos fallos \"misteriosos\".",
+      "specs": [
+        "470 µF, 16 V",
+        "Polarizado: la franja marca el negativo",
+        "Montaje en protoboard"
+      ],
+      "donde": [
+        "Cualquier local de la Carrera 6"
+      ],
+      "precio": {
+        "valor": 400,
+        "presentacion": "por unidad",
+        "compra": 4,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/condensador-electrolitico-330uf-16v-25v-50v-1"
+      },
+      "alternativa": "1000 µF 16 V."
+    },
+    {
+      "id": "e11",
+      "ilustracion": "protoboard",
+      "categoria": "electronica",
+      "nombre": "Protoboard de 830 puntos de una sola pieza",
+      "usos": [
+        "C01",
+        "C06",
+        "C09"
+      ],
+      "prioridad": 2,
+      "cantidad": 3,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Las MB102 llegaron con protoboard en tramos pequeños que se unen. En las uniones las líneas de alimentación quedan cortadas y los tramos se sueltan: fallos difíciles de ver para alguien no técnico. Las lecciones de la página están dibujadas sobre una de 830.",
+      "specs": [
+        "830 puntos: 630 de montaje + 200 de alimentación",
+        "Filas a–j y columnas 1–63",
+        "Dos líneas de alimentación (+ y −) por lado, continuas",
+        "Compatible con la fuente MB102"
+      ],
+      "donde": [
+        "Innovatronics, Calle 71C #3A-2N-32",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 8000,
+        "presentacion": "por unidad",
+        "compra": 3,
+        "tienda": "Innovatronics",
+        "url": "https://innovatronics.com.co/productos/protoboard-mediana-blanca-mb102/"
+      },
+      "alternativa": "Usar los tramos y puentear las líneas + y − con un cable en cada unión."
+    },
+    {
+      "id": "n01",
+      "ilustracion": "pila18650",
+      "categoria": "energia",
+      "nombre": "Portapilas 2×18650 con interruptor, 2 celdas 18650 y cargador",
+      "usos": [
+        "C05-P1",
+        "C05-P3"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "juego",
+      "responsable": "compras",
+      "porque": "El kit de robótica no trae baterías ni portapilas: sin esto el robot no se mueve. Su puente H es un L298N, que pierde unos 2 V; con 7,4 V los motores reciben ~5,4 V. Con 4 pilas AA quedarían débiles.",
+      "specs": [
+        "2 celdas de litio 18650 en serie: 7,4 V nominal, 8,4 V cargadas",
+        "Portapilas con interruptor y cables",
+        "Cargador USB TP4056 (1 A, corte a 4,2 V por celda)",
+        "Las celdas se cargan por separado"
+      ],
+      "donde": [
+        "Innovatronics (cargador TP4056 a $4.500)",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 33200,
+        "presentacion": "por el juego (portapilas, 2 celdas y cargador)",
+        "compra": 1,
+        "tienda": "Zamux (combinado)",
+        "url": "https://www.zamux.co/porta-pila-para-2-baterias-18650"
+      },
+      "alternativa": "Portapilas de 6×AA con interruptor y 6 pilas AA."
+    },
+    {
+      "id": "n02",
+      "ilustracion": "pilaaa",
+      "categoria": "energia",
+      "nombre": "Pilas AA alcalinas",
+      "usos": [
+        "C05-P2",
+        "C05-P4"
+      ],
+      "prioridad": 1,
+      "cantidad": 6,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "El Smart Home trae un portapilas de 6×AA sin pilas.",
+      "specs": [
+        "1,5 V cada una; 9 V en total en el portapilas",
+        "Alcalinas",
+        "Empacar fuera del portapilas"
+      ],
+      "donde": [
+        "Cualquier supermercado o droguería"
+      ],
+      "precio": {
+        "valor": 2900,
+        "presentacion": "por unidad",
+        "compra": 6,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/bateria-aa-15v-economica"
+      },
+      "alternativa": "Adaptador de 9 V 1 A, si la placa del Smart Home lo acepta."
+    },
+    {
+      "id": "n03",
+      "ilustracion": "adaptador",
+      "categoria": "energia",
+      "nombre": "Adaptador de 9 V 1 A, plug 5,5×2,1 mm",
+      "usos": [
+        "C01",
+        "C06",
+        "C09"
+      ],
+      "prioridad": 2,
+      "cantidad": 3,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Las 3 fuentes MB102 llegaron sin adaptador. Con 9 V en vez de 12 V el regulador de la MB102 se calienta casi la mitad.",
+      "specs": [
+        "Entrada 100–240 VAC",
+        "Salida 9 VDC, 1 A",
+        "Plug 5,5×2,1 mm, centro positivo"
+      ],
+      "donde": [
+        "Carrera 6 entre Calles 15 y 17",
+        "Innovatronics"
+      ],
+      "precio": {
+        "valor": 11900,
+        "presentacion": "por unidad",
+        "compra": 3,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/fuente-de-voltaje-adaptador-9v-1a-dc"
+      },
+      "alternativa": "Alimentar la MB102 por USB desde un cargador de celular de 5 V, si la variante lo permite."
+    },
+    {
+      "id": "n04",
+      "ilustracion": "adaptador",
+      "categoria": "energia",
+      "nombre": "Adaptador de 12 V 2 A, plug 5,5×2,1 mm",
+      "usos": [
+        "C09-P3"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Alimenta el bombillo calefactor, que consume ~1,75 A. Ninguna compra incluye fuentes, y la batería de la caja de energía no se presta.",
+      "specs": [
+        "Entrada 100–240 VAC",
+        "Salida 12 VDC, 2 A (24 W)",
+        "Plug 5,5×2,1 mm, centro positivo"
+      ],
+      "donde": [
+        "Innovatronics ($39.000, versión de 5 A)",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 15900,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/herramientas/fuentes"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "n05",
+      "ilustracion": "bombillo",
+      "categoria": "energia",
+      "nombre": "Bombillo 12 V 21 W (tipo 1156) con socket",
+      "usos": [
+        "C09-P3"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "juego",
+      "responsable": "compras",
+      "porque": "Es la fuente de calor de la incubadora: funciona a 12 V (sin 110 V en el aula) y además se ve encender, lo que sirve como evidencia ante el cliente.",
+      "specs": [
+        "Incandescente, 12 V, 21 W (~1,75 A)",
+        "Base BA15S (un contacto)",
+        "Socket con dos cables para conectar al relé"
+      ],
+      "donde": [
+        "Almacenes de repuestos automotrices y de motos",
+        "El socket se pide junto con el bombillo"
+      ],
+      "precio": {
+        "valor": 19900,
+        "presentacion": "por el par de bombillos (socket aparte, sin precio)",
+        "compra": 1,
+        "tienda": "Tienda Osram Colombia",
+        "url": "https://tienda.osram.com.co/productos/7506-bli-2/"
+      },
+      "alternativa": "2 resistencias cerámicas de 10 Ω 10 W en paralelo (calor sin luz)."
+    },
+    {
+      "id": "n06",
+      "ilustracion": "fusible",
+      "categoria": "energia",
+      "nombre": "Portafusible en línea con fusible de 10 A (+2 de repuesto)",
+      "usos": [
+        "C03-P1",
+        "C03-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "juego",
+      "responsable": "compras",
+      "porque": "Una batería de 7 Ah en cortocircuito puede quemar los cables. Es la protección mínima en un kit escolar. Va siempre en el positivo de la batería.",
+      "specs": [
+        "Portafusible en línea con cable",
+        "Fusible de 10 A",
+        "2 fusibles de repuesto"
+      ],
+      "donde": [
+        "Carrera 6 o almacenes de repuestos automotrices"
+      ],
+      "precio": {
+        "valor": 2200,
+        "presentacion": "por juego",
+        "compra": 1,
+        "tienda": "Zamux (combinado)",
+        "url": "https://www.zamux.co/fusible-largo"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "n07",
+      "ilustracion": "reductor",
+      "categoria": "energia",
+      "nombre": "Módulo reductor de voltaje XL4016",
+      "usos": [
+        "C03-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Es el \"módulo regulador\" del Excel. El estudiante gira el potenciómetro hasta obtener 5,0 V y lo comprueba con el multímetro: ese es el objetivo del proyecto.",
+      "specs": [
+        "Entrada 4–40 V, salida ajustable 1,25–36 V",
+        "Hasta 8 A pico; ~5 A continuos con disipador",
+        "Potenciómetro multivuelta para ajustar la salida",
+        "Bornas de tornillo de entrada y salida"
+      ],
+      "donde": [
+        "Innovatronics: LM2596 a $7.500 (alternativa)",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 27965,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Sigma Electrónica",
+        "url": "https://www.sigmaelectronica.net/producto/tarjeta-xl4016/"
+      },
+      "alternativa": "Módulo LM2596 (3 A): más común y barato; sobra para cargar un celular."
+    },
+    {
+      "id": "n08",
+      "ilustracion": "usb",
+      "categoria": "energia",
+      "nombre": "Puerto USB hembra tipo A (para soldar o con bornera)",
+      "usos": [
+        "C03-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Es la salida donde se conecta el cable del celular, después del regulador ajustado a 5 V.",
+      "specs": [
+        "USB tipo A hembra",
+        "Pines VBUS y GND (datos sin usar)"
+      ],
+      "donde": [
+        "Cualquier local de la Carrera 6"
+      ],
+      "precio": {
+        "valor": 1500,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/conector-usb-chasis-hembra-para-ensamble-1"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "n09",
+      "ilustracion": "toma12",
+      "categoria": "energia",
+      "nombre": "Toma hembra de 12 V tipo encendedor con cables",
+      "usos": [
+        "C03-P1"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Está en el Excel: es el punto de consumo de 12 V del banco de energía, donde se conectan cargadores o accesorios de carro.",
+      "specs": [
+        "Toma hembra de encendedor para 12–24 V",
+        "Con tapa y cables para atornillar o soldar",
+        "Se protege con el fusible de 10 A"
+      ],
+      "donde": [
+        "Almacenes de accesorios para carro y moto",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": null,
+        "presentacion": "no se encontró precio en línea",
+        "compra": 1,
+        "tienda": "Preguntar en tienda",
+        "url": null
+      },
+      "alternativa": "Bornera de 2 polos."
+    },
+    {
+      "id": "n10",
+      "ilustracion": "cable",
+      "categoria": "energia",
+      "nombre": "Cable dúplex 2×14 AWG rojo/negro (3 m) con terminales",
+      "usos": [
+        "C03-P1",
+        "C03-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "juego",
+      "responsable": "compras",
+      "porque": "Es el \"juego de cables y accesorios para kit solar\" del Excel: une el panel, el controlador y la batería con un calibre que soporta la corriente sin calentarse.",
+      "specs": [
+        "2×14 AWG encauchetado, rojo y negro, 3 m",
+        "Soporta ~15 A",
+        "Terminales de ojo para la batería y de pala para borneras"
+      ],
+      "donde": [
+        "Ferreterías y almacenes eléctricos",
+        "Carrera 6"
+      ],
+      "precio": {
+        "valor": 16400,
+        "presentacion": "por el juego (cable y terminales)",
+        "compra": 1,
+        "tienda": "Zamux (combinado)",
+        "url": "https://www.zamux.co/cable-duplex-2x14-awg"
+      },
+      "alternativa": "Cable 2×16 AWG."
+    },
+    {
+      "id": "n11",
+      "ilustracion": "ledcarga",
+      "categoria": "energia",
+      "nombre": "Carga de prueba de 12 V (cinta LED o bombillo LED de 3–5 W)",
+      "usos": [
+        "C03-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Sirve para mostrar que el banco alimenta algo durante un \"apagón\" y para medir el consumo con el multímetro.",
+      "specs": [
+        "12 V, 3–5 W",
+        "Cinta LED de 50 cm–1 m o bombillo LED con socket"
+      ],
+      "donde": [
+        "Carrera 6 o almacenes de iluminación"
+      ],
+      "precio": {
+        "valor": 7500,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/cinta-led-3528-blanca-o-azul-1mtr"
+      },
+      "alternativa": "Ventilador de 12 V de computador."
+    },
+    {
+      "id": "n12",
+      "ilustracion": "caiman",
+      "categoria": "energia",
+      "nombre": "Cables con pinzas caimán (juego ×10)",
+      "usos": [
+        "C03-P1",
+        "C03-P2"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "juego",
+      "responsable": "compras",
+      "porque": "Permiten medir con el multímetro y conectar sin herramientas ni soldadura.",
+      "specs": [
+        "10 cables de ~50 cm con caimán en ambos extremos",
+        "Colores surtidos"
+      ],
+      "donde": [
+        "Cualquier local de la Carrera 6"
+      ],
+      "precio": {
+        "valor": 8000,
+        "presentacion": "por paquete de 10",
+        "compra": 1,
+        "tienda": "Zamux",
+        "url": "https://www.zamux.co/caimanes-medianos-paquete-10-unidades-1"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "l01",
+      "ilustracion": "tubos",
+      "categoria": "laboratorio",
+      "nombre": "Tubos de ensayo de 15 ml ×5 con gradilla",
+      "usos": [
+        "C01-P1"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "juego",
+      "responsable": "otra persona",
+      "porque": "Para tomar y comparar las muestras de agua al medir el pH. La gradilla los mantiene de pie y evita derrames sobre la electrónica.",
+      "specs": [
+        "Vidrio borosilicato 16×150 mm, 15 ml, resistentes al calor",
+        "Gradilla plástica de 6 cavidades (~210×70×80 mm)"
+      ],
+      "donde": [
+        "La Casa del Científico (Bogotá, envío)",
+        "GreenForest (Medellín, envío)",
+        "En Cali: distribuidoras de químicos del centro (confirmar)"
+      ],
+      "precio": {
+        "valor": 50000,
+        "presentacion": "por 5 tubos ($5.000 c/u) y la gradilla ($25.000)",
+        "compra": 1,
+        "tienda": "La Casa del Científico + GreenForest",
+        "url": "https://lacasadelcientifico.com.co/producto/tubos-de-ensayo-16-x-150-mm-15ml-en-vidrio-con-borde-liso-y-con-fondo-redondeado-resistentes-al-calor"
+      },
+      "alternativa": "Tubos plásticos con tapa (más seguros para grados 6–7)."
+    },
+    {
+      "id": "l02",
+      "ilustracion": "vaso",
+      "categoria": "laboratorio",
+      "nombre": "Vasos de precipitado de 100 ml en polipropileno",
+      "usos": [
+        "C01-P1"
+      ],
+      "prioridad": 2,
+      "cantidad": 2,
+      "unidad": "und",
+      "responsable": "otra persona",
+      "porque": "Para enjuagar la sonda de pH entre muestras y preparar las referencias caseras de calibración. El plástico no se rompe en el aula.",
+      "specs": [
+        "Polipropileno, 100 ml, graduado",
+        "Resiste de −20 a 135 °C"
+      ],
+      "donde": [
+        "GreenForest (Medellín, envío)",
+        "La Casa del Científico (Bogotá, envío)"
+      ],
+      "precio": {
+        "valor": 25000,
+        "presentacion": "por unidad",
+        "compra": 2,
+        "tienda": "GreenForest (agotado el 7-nov)",
+        "url": "https://greenforest.com.co/producto/beaker-plastico-de-polipropileno-100ml-eisco/"
+      },
+      "alternativa": "Vasos plásticos transparentes marcados a mano."
+    },
+    {
+      "id": "l03",
+      "ilustracion": "agitador",
+      "categoria": "laboratorio",
+      "nombre": "Agitadores plásticos",
+      "usos": [
+        "C01-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 3,
+      "unidad": "und",
+      "responsable": "otra persona",
+      "porque": "La propuesta los pide (no están en el Excel) para mezclar las muestras antes de medir.",
+      "specs": [
+        "Varilla plástica de 244 mm con punta en paleta"
+      ],
+      "donde": [
+        "La Casa del Científico (Bogotá, envío)"
+      ],
+      "precio": {
+        "valor": 11000,
+        "presentacion": "por unidad",
+        "compra": 3,
+        "tienda": "La Casa del Científico",
+        "url": "https://lacasadelcientifico.com.co/producto/varilla-agitadora-plastica-longitud-244-mm-con-punta-en-paleta"
+      },
+      "alternativa": "Paletas de madera o cucharas plásticas desechables."
+    },
+    {
+      "id": "l04",
+      "ilustracion": "bata",
+      "categoria": "laboratorio",
+      "nombre": "Bata de laboratorio",
+      "usos": [
+        "C01"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "otra persona",
+      "porque": "Está en el Excel: protege la ropa del estudiante al manipular muestras y reactivos.",
+      "specs": [
+        "Tela antifluido, blanca, manga larga",
+        "Botones, 3 bolsillos, largo a medio muslo",
+        "Talla S"
+      ],
+      "donde": [
+        "La Casa del Científico (Bogotá, envío)",
+        "Almacenes de dotación y uniformes en Cali"
+      ],
+      "precio": {
+        "valor": 55000,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "La Casa del Científico",
+        "url": "https://lacasadelcientifico.com.co/categoria-producto/batas"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "l05",
+      "ilustracion": "petri",
+      "categoria": "laboratorio",
+      "nombre": "Cajas de Petri plásticas con tapa",
+      "usos": [
+        "C09-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 20,
+      "unidad": "und",
+      "responsable": "otra persona",
+      "porque": "Están en el Excel: son los recipientes donde germinan las semillas sobre algodón o papel húmedo.",
+      "specs": [
+        "Poliestireno, 90×15 mm, desechables",
+        "El Excel pide 60×15 mm; la de 90 mm da más espacio para germinar"
+      ],
+      "donde": [
+        "La Casa del Científico (Bogotá, envío)"
+      ],
+      "precio": {
+        "valor": 10000,
+        "presentacion": "por paquete de 10",
+        "compra": 2,
+        "tienda": "La Casa del Científico",
+        "url": "https://lacasadelcientifico.com.co/producto/caja-petri-plastica-90x15mm-3-secciones-desechable-paquete-x-10-und"
+      },
+      "alternativa": "Tapas plásticas de frascos o recipientes desechables con tapa."
+    },
+    {
+      "id": "l06",
+      "ilustracion": "levadura",
+      "categoria": "laboratorio",
+      "nombre": "Levadura seca activa (Saccharomyces cerevisiae)",
+      "usos": [
+        "C09-P1"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "frasco",
+      "responsable": "otra persona",
+      "porque": "Es el organismo que fermenta en el proyecto. Es perecedera: se entrega aparte de la caja, no guardada por meses.",
+      "specs": [
+        "Levadura panadera seca activa, 80 g",
+        "Equivale a unos 10 sobres de 8 g"
+      ],
+      "donde": [
+        "Supermercados (Éxito, Olímpica, Jumbo)"
+      ],
+      "precio": {
+        "valor": 8610,
+        "presentacion": "por frasco de 80 g",
+        "compra": 1,
+        "tienda": "Éxito",
+        "url": "https://www.exito.com/levadura-activa-seca-166341/p"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "l07",
+      "ilustracion": "yogur",
+      "categoria": "laboratorio",
+      "nombre": "Cultivo láctico (yogur natural o kumis)",
+      "usos": [
+        "C09-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "otra persona",
+      "porque": "El Excel pide cultivo de yogur y Lactococcus lactis. Un yogur natural sin azúcar contiene las bacterias lácticas vivas que se necesitan para mostrar la fermentación de la leche. L. lactis puro solo se consigue como cultivo iniciador en tiendas de insumos lácteos.",
+      "specs": [
+        "Yogur natural sin azúcar, con cultivos vivos",
+        "Perecedero: se compra cerca de la fecha de uso"
+      ],
+      "donde": [
+        "Supermercados"
+      ],
+      "precio": {
+        "valor": 4100,
+        "presentacion": "por vaso de 200 g",
+        "compra": 1,
+        "tienda": "Éxito",
+        "url": "https://www.exito.com/yogurt-natural-sin-azucar-x-200-gr-621476/p"
+      },
+      "alternativa": "Cultivo iniciador liofilizado (tiendas de insumos para lácteos)."
+    },
+    {
+      "id": "l08",
+      "ilustracion": "goteroazul",
+      "categoria": "laboratorio",
+      "nombre": "Azul de metileno al 1 %",
+      "usos": [
+        "C09-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "frasco",
+      "responsable": "otra persona",
+      "porque": "Tiñe las levaduras muertas: así se ve cuántas siguen vivas durante la fermentación.",
+      "specs": [
+        "Solución acuosa al 1 %, frasco gotero de 20 ml"
+      ],
+      "donde": [
+        "Farmatodo y droguerías (puede pedir fórmula)",
+        "Tiendas de acuarios (se vende para peces)"
+      ],
+      "precio": {
+        "valor": 2250,
+        "presentacion": "por frasco de 20 ml",
+        "compra": 1,
+        "tienda": "Farmatodo",
+        "url": "https://www.farmatodo.com.co/producto/1035749-azul-de-metileno-drofarma-frasco-x-20-ml"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "l09",
+      "ilustracion": "suero",
+      "categoria": "laboratorio",
+      "nombre": "Solución salina (NaCl al 0,9 %)",
+      "usos": [
+        "C09-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "frasco",
+      "responsable": "otra persona",
+      "porque": "Sirve para diluir muestras sin dañar las células. Se puede preparar en el aula, lo que además es una actividad del proyecto.",
+      "specs": [
+        "9 g de sal por litro de agua hervida y fría",
+        "O suero fisiológico de farmacia en bolsa de 500 ml"
+      ],
+      "donde": [
+        "Preparación casera (costo casi nulo)",
+        "Farmatodo: $6.150 la bolsa de 500 ml, pide fórmula médica"
+      ],
+      "precio": {
+        "valor": 0,
+        "presentacion": "preparada en el aula",
+        "compra": 1,
+        "tienda": "Preparación casera",
+        "url": null
+      },
+      "alternativa": null
+    },
+    {
+      "id": "l10",
+      "ilustracion": "papelph",
+      "categoria": "laboratorio",
+      "nombre": "Papel indicador de pH 0–14",
+      "usos": [
+        "C09-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "paquete",
+      "responsable": "otra persona",
+      "porque": "Muestra con colores cómo baja el pH durante la fermentación. Sirve para comparar con el sensor de pH electrónico.",
+      "specs": [
+        "Rango 0–14, 80 papeletas",
+        "Escala de colores en el empaque"
+      ],
+      "donde": [
+        "La Casa del Científico (Bogotá, envío)"
+      ],
+      "precio": {
+        "valor": 25000,
+        "presentacion": "por paquete de 80",
+        "compra": 1,
+        "tienda": "La Casa del Científico",
+        "url": "https://lacasadelcientifico.com.co/producto/papel-indicador-de-ph-014-tipo-papeleta-80-unidades"
+      },
+      "alternativa": "Indicador casero de repollo morado."
+    },
+    {
+      "id": "l11",
+      "ilustracion": "goterorojo",
+      "categoria": "laboratorio",
+      "nombre": "Rojo de fenol (indicador)",
+      "usos": [
+        "C09-P1"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "frasco",
+      "responsable": "otra persona",
+      "porque": "Cambia de rojo a amarillo cuando el medio se acidifica: es una forma visual de ver la fermentación.",
+      "specs": [
+        "Vira de amarillo (pH 6,8) a rojo (pH 8,2)",
+        "Grado laboratorio en frasco de 250 ml",
+        "El reactivo de pH para piscinas es rojo de fenol y sirve para el aula"
+      ],
+      "donde": [
+        "Tiendas de piscinas (reactivo de pH)",
+        "Qualityquim (Bogotá, grado laboratorio)"
+      ],
+      "precio": {
+        "valor": 114900,
+        "presentacion": "por frasco de 250 ml (grado laboratorio)",
+        "compra": 1,
+        "tienda": "Qualityquim",
+        "url": "https://qualityquim.com.co/producto/rojo-de-fenol-solucion-2/"
+      },
+      "alternativa": "Reactivo de pH para piscina (mucho más barato; precio por confirmar)."
+    },
+    {
+      "id": "l12",
+      "ilustracion": "icopor",
+      "categoria": "laboratorio",
+      "nombre": "Caja térmica de icopor de 10 L",
+      "usos": [
+        "C09-P3"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "otra persona",
+      "porque": "Es el cuerpo de la incubadora: aísla el calor del bombillo para mantener 37 °C. La propuesta la llama \"maleta técnica\". No está en el Excel.",
+      "specs": [
+        "Icopor, 10 L, con tapa",
+        "Se le abre un paso para los cables del sensor y del bombillo"
+      ],
+      "donde": [
+        "Homecenter (sedes en Cali)",
+        "Supermercados y misceláneas"
+      ],
+      "precio": {
+        "valor": 14900,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Homecenter",
+        "url": "https://www.homecenter.com.co/homecenter-co/k/nevera-de-icopor"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "l13",
+      "ilustracion": "semillas",
+      "categoria": "laboratorio",
+      "nombre": "Semillas: fríjol, tomate, ahuyama, cilantro y maíz",
+      "usos": [
+        "C09-P2"
+      ],
+      "prioridad": 2,
+      "cantidad": 5,
+      "unidad": "sobres",
+      "responsable": "otra persona",
+      "porque": "Están en el Excel: son semillas locales para comparar la germinación según la humedad del sustrato.",
+      "specs": [
+        "Fríjol 5 g ($4.500), tomate 1,5 g ($6.300), ahuyama 10 g ($6.300), cilantro 3 g ($5.800)",
+        "Maíz: en tiendas agrícolas o maíz pira de mercado"
+      ],
+      "donde": [
+        "Homecenter (sedes en Cali)",
+        "Almacenes agropecuarios de Cali"
+      ],
+      "precio": {
+        "valor": 22900,
+        "presentacion": "por 4 sobres (sin el maíz)",
+        "compra": 1,
+        "tienda": "Homecenter",
+        "url": "https://www.homecenter.com.co/homecenter-co/category/cat1690120/semillas-y-bulbos/"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "h01",
+      "ilustracion": "destornilladores",
+      "categoria": "herramientas",
+      "nombre": "Juego de 6 destornilladores de precisión",
+      "usos": [
+        "C03"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "juego",
+      "responsable": "otra persona",
+      "porque": "Están en el Excel: sirven para apretar las borneras del controlador, del regulador y del relé.",
+      "specs": [
+        "2 de estrella (#0 y #1) y 4 de pala (1,4; 2; 2,4 y 3 mm)"
+      ],
+      "donde": [
+        "Homecenter (sedes en Cali)",
+        "Ferreterías"
+      ],
+      "precio": {
+        "valor": 7900,
+        "presentacion": "por juego",
+        "compra": 1,
+        "tienda": "Homecenter (Wolfox)",
+        "url": "https://www.homecenter.com.co/homecenter-co/product/456192/destornilladores-de-precision-juego-de-6-piezas/456192/"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "h02",
+      "ilustracion": "pelacables",
+      "categoria": "herramientas",
+      "nombre": "Alicate pelacables",
+      "usos": [
+        "C03"
+      ],
+      "prioridad": 2,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "otra persona",
+      "porque": "Está en el Excel (\"cortador\"): corta y pela el cable 2×14 AWG para hacer las conexiones del kit solar.",
+      "specs": [
+        "Alicate de 8,5\" (215 mm)",
+        "Pela 7 calibres de cable y corta"
+      ],
+      "donde": [
+        "Homecenter (sedes en Cali)",
+        "Ferreterías"
+      ],
+      "precio": {
+        "valor": 12900,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Homecenter (Total Tools)",
+        "url": "https://www.homecenter.com.co/homecenter-co/product/655764/alicate-pelacables-85-215mm-en-blister/655764/"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "h03",
+      "ilustracion": "cinta",
+      "categoria": "herramientas",
+      "nombre": "Cinta aislante negra",
+      "usos": [
+        "C05-P3"
+      ],
+      "prioridad": 3,
+      "cantidad": 1,
+      "unidad": "rollo",
+      "responsable": "otra persona",
+      "porque": "Se pega sobre la cartulina blanca para hacer la línea que sigue el robot. También sirve para aislar las puntas de los cables del panel.",
+      "specs": [
+        "PVC, 19 mm × 18 m, negra"
+      ],
+      "donde": [
+        "Homecenter, ferreterías, papelerías"
+      ],
+      "precio": {
+        "valor": 6700,
+        "presentacion": "por rollo",
+        "compra": 1,
+        "tienda": "Homecenter (3M Temflex)",
+        "url": "https://www.homecenter.com.co/homecenter-co/product/310552/cinta-aislante-temflex-165-negra-18mts/310552/"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "h04",
+      "ilustracion": "cartulina",
+      "categoria": "herramientas",
+      "nombre": "Cartulina blanca de pliego",
+      "usos": [
+        "C05-P3"
+      ],
+      "prioridad": 3,
+      "cantidad": 2,
+      "unidad": "pliegos",
+      "responsable": "otra persona",
+      "porque": "Es el fondo blanco de la pista: el sensor distingue mejor la línea negra sobre blanco que sobre el piso del aula.",
+      "specs": [
+        "70×100 cm, blanca"
+      ],
+      "donde": [
+        "Papelerías, Panamericana, Éxito"
+      ],
+      "precio": {
+        "valor": 3400,
+        "presentacion": "por pliego",
+        "compra": 2,
+        "tienda": "Éxito",
+        "url": "https://www.exito.com/cartulina-pliego-70x100-blanco-formas-y-colores-413681-163936/p"
+      },
+      "alternativa": "Cinta negra directamente sobre un piso claro."
+    }
+  ]
+}
