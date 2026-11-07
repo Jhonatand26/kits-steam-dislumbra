@@ -56,9 +56,9 @@
       "name": "Protoboard 830 puntos",
       "qty": 1,
       "unit": "und",
-      "status": "verificar",
+      "status": "pendiente_compra",
       "group": "energia",
-      "source": "¿Incluida con la MB102?"
+      "source": "Compra lunes #26", "note": "La MB102 trae protoboard en tramos pequeños; se compra la de 830 de una sola pieza."
     },
     {
       "id": "C06-07",
@@ -71,7 +71,7 @@
     },
     {
       "id": "C06-08",
-      "name": "LED RGB 5 mm (verificar cátodo común)",
+      "name": "LED RGB 5 mm (ánodo común según el proveedor; falta probar)",
       "qty": 100,
       "unit": "und",
       "status": "verificar",
@@ -129,17 +129,17 @@
       "name": "Tapas A14 para pulsador (amarillo, azul, blanco, rojo ×50)",
       "qty": 200,
       "unit": "und",
-      "status": "verificar",
+      "status": "en_mano",
       "group": "granel",
       "source": "Vistrónica 4733-26",
-      "note": "Verificar que encajan en el B3F-4050."
+      "note": "Encajan en el B3F (verificado 7-nov)."
     },
     {
       "id": "C06-15",
-      "name": "Buzzer BS3 5–15 V (verificar que es activo)",
+      "name": "Buzzer activo BS3 5–15 V",
       "qty": 6,
       "unit": "und",
-      "status": "verificar",
+      "status": "en_mano",
       "group": "actuador",
       "source": "San Nicolás 908817"
     },

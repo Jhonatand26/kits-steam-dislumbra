@@ -12,6 +12,7 @@ EXPORTS = Path(__file__).resolve().parent.parent / "exports"
 RESUELTO = {
     1,   # Panel: RTM020M 20 W de Dislumbra (7-nov)
     10,  # Backpack I2C: comprados y soldados a las 5 LCD (7-nov)
+    25,  # Rueda loca: el kit de robótica sí la trae (7-nov)
 }
 
 F = "Arial"
@@ -98,7 +99,7 @@ buy = [
   "La propuesta pide 'sensores básicos de humedad' del sustrato; el DHT22 solo mide aire. El capacitivo no se corroe con el riego.",
   "Sensor resistivo YL-69/FC-28 (más barato, se corroe en semanas)."),
  (1,"C05","P1, P3 Robot","Portapilas 2×18650 con interruptor + 2 celdas 18650 + cargador USB 18650",1,45000,
-  "El kit de robótica no trae baterías ni portapilas. Sin esto el robot no se mueve. Confirmar antes el puente H (ver 'Verificar al abrir').",
+  "El kit de robótica no trae baterías ni portapilas. Sin esto el robot no se mueve. Puente H confirmado: L298N, que pierde ~2 V; con 7,4 V los motores reciben ~5,4 V.",
   "Portapilas 6×AA con interruptor + 6 pilas AA."),
  (1,"C05","P2, P4 Domótica","Pilas AA alcalinas",6,2500,
   "El Smart Home trae portapilas 6×AA sin pilas.",
@@ -151,9 +152,12 @@ buy = [
  (3,"C05","P1, P3 Robot","Rueda loca de bola — SOLO si el kit de robótica no la trae",1,4900,
   "Tercer apoyo del chasis; sin ella el robot arrastra la base.",
   "Rueda loca plástica con bola."),
- (3,"C01, C06, C09","Todos","Protoboard 830 puntos — SOLO si las MB102 no trajeron protoboard",3,10000,
-  "Base del montaje en las 3 cajas con Arduino.",
-  "—"),
+ (2,"C01, C06, C09","Todos","Protoboard 830 puntos de una sola pieza",3,10000,
+  "Las MB102 llegaron con protoboard en tramos pequeños que se unen. Al unirlos, las líneas de alimentación quedan cortadas y los tramos se sueltan: fallos difíciles de ver para un usuario no técnico. Una sola pieza de 830 coincide con las lecciones de la página (filas a–j, columnas 1–63).",
+  "Usar los tramos unidos y puentear las líneas + y − con un cable en cada unión."),
+ (1,"C05","P3 Asistente (seguidor)","Módulo seguidor de línea TCRT5000 (1 canal, salida digital, ref. I+D TAR-TCRT5000)",2,None,
+  "El kit de robótica NO trae seguidor de línea (verificado al abrir). Sin él, P3 no cumple su objetivo. Con 2 módulos (izquierda y derecha) la lógica es la más simple para grados 6–7: si uno ve negro, girar hacia ese lado.",
+  "1 solo módulo siguiendo el borde de la línea (funciona, pero zigzaguea más)."),
 ]
 import csv
 from collections import defaultdict
@@ -164,6 +168,12 @@ for _r in csv.DictReader(open(EXPORTS / "precios_reales.csv", encoding="utf-8"))
 _map = {i: str(i) for i in range(1, 24)}
 _map[25] = "25"   # rueda loca (row 25 in my list after insert)
 _map[26] = "24"   # protoboard
+_MANUAL = {
+    # Precio sin confirmar: preguntar en I+D, donde se compró el kit.
+    27: (None, "Didácticas Electrónicas I+D · ref. TAR-TCRT5000 (precio por confirmar)",
+         "Didácticas Electrónicas I+D o Cra 6 entre Calles 15 y 17",
+         "https://www.didacticaselectronicas.com/shop/tar-tcrt5000-modulo-seguidor-de-linea-4243"),
+}
 _composite = {8: 33200, 14: 2200, 18: 16400}
 def _ok(r):
     return r["precio_unit_cop"] and "agotado" not in r["disponibilidad"].lower() and "sin stock" not in r["disponibilidad"].lower()
@@ -182,6 +192,7 @@ for row_i, num in _map.items():
     cali = _cali_all
     cali_best = min(cali, key=lambda r: float(r["precio_unit_cop"])) if cali else None
     REAL[row_i] = (_composite.get(row_i, int(float(best["precio_unit_cop"]))), _fmt(best), _fmt(cali_best) + (" · " + cali_best["direccion"] if cali_best and cali_best["direccion"] else "") if cali_best else "—", best["url"])
+REAL.update(_MANUAL)
 n = 0
 for i, (p, caja, proj, item, q, price, why, alt) in enumerate(buy, 1):
     if i in RESUELTO:
@@ -242,7 +253,7 @@ inv = {
   ("Arduino UNO R3 + cable",1,1,SN,"En mano","1 de 5."),
   ("Caja para Arduino UNO",1,1,SN,"En mano","Plástica, no acrílica como dice el Excel."),
   ("LCD 1602 con I2C",1,1,SN,"En mano","Llegó sin I2C; backpack PCF8574 ya soldado (7-nov)."),
-  ("Kit protoboard con fuente MB102",1,1,OF,"En mano · verificar","Confirmar si trae protoboard. Falta adaptador 9 V."),
+  ("Kit protoboard con fuente MB102",1,1,OF,"En mano ⚠","Trae protoboard en tramos pequeños: se compra la de 830 de una pieza (#26). Falta adaptador 9 V."),
   ("Cables de conexión (M-M, M-H, H-H)",40,40,SN+" / "+VS,"En mano","Se compraron 150 paquetes ×10: sobran para todas las cajas."),
   ("Módulo micro SD",1,1,VS,"En mano",""),
   ("Memoria micro SD 16 GB",1,0,"—","Falta · comprar lunes","O retirar módulo + tarjeta y dejar EEPROM."),
@@ -265,7 +276,7 @@ inv = {
   ("Material pedagógico",1,0,"Asesoría + pedagoga","Interno",""),
  ],
  "C05 · Robótica y automatización": [
-  ("Kit de robótica con sensores (KIT-RBT-01-RN)",1,1,ID,"En mano ⚠","Trae tarjeta UNO, puente H, 2 motores, HC-SR04, seguidor de línea, IR, SG90. SIN baterías ni portapilas."),
+  ("Kit de robótica con sensores (KIT-RBT-01-RN)",1,1,ID,"En mano ⚠","Abierto 7-nov: tarjeta UNO, puente H L298N, 2 motores, rueda loca, HC-SR04, IR, SG90. NO trae seguidor de línea (comprar 2 TCRT5000) ni baterías/portapilas."),
   ("Kit Smart Home IoT Keyes (KEY-HOME)",1,1,ID,"En mano ⚠","Placa compatible UNO + shield, PIR, LCD 1602, relé, 2 servos, Bluetooth HM-10. Portapilas 6×AA SIN pilas."),
   ("Arduino UNO R3 + cable",2,2,SN,"En mano · redundante","Ambos kits traen su propia placa; quedan como placa extra para practicar."),
   ("Caja para Arduino UNO",2,2,SN,"En mano",""),
@@ -276,20 +287,20 @@ inv = {
   ("Material pedagógico",1,0,"Asesoría + pedagoga","Interno","Corregir el Excel: dice Micro:Bit; es Arduino."),
  ],
  "C06 · Diseño de software y aplicaciones": [
-  ("Buzzer activo 5 V",6,6,SN,"En mano · verificar","BS3 5–15 V. Confirmar que es activo (ver Verificar al abrir)."),
+  ("Buzzer activo 5 V",6,6,SN,"En mano","BS3 5–15 V. Verificado activo (7-nov)."),
   ("Fotorresistencia LDR",6,6,SN,"En mano",""),
   ("LED amarillo 5 mm",100,100,SN,"En mano",""),
   ("LED azul 5 mm",100,100,VS,"En mano",""),
   ("LED verde 5 mm",100,100,SN,"En mano ⚠","Son de 3 mm. Funciona igual; corregir el Excel."),
   ("LED rojo 5 mm",100,100,SN,"En mano",""),
-  ("LED RGB 5 mm cátodo común",100,100,VS,"En mano · verificar","La cotización no dice si es cátodo o ánodo común."),
+  ("LED RGB 5 mm cátodo común",100,100,VS,"En mano ⚠","Según el proveedor es de ÁNODO común (falta probarlo). Cambia el cableado del Tablero: la pata larga va a 5 V y el programa invierte el brillo."),
   ("Pulsador 12×12 B3F",10,10,VS,"En mano",""),
-  ("Botones A14 (4 colores ×50)",200,200,VS,"En mano","Verificar que encajan en el B3F-4050."),
+  ("Botones A14 (4 colores ×50)",200,200,VS,"En mano","Encajan en el B3F (verificado 7-nov)."),
   ("Resistencias surtidas",600,380,SN,"En mano","19 valores ×20. Se reparten entre las cajas C01, C06 y C09."),
   ("Arduino UNO R3 + cable",1,1,SN,"En mano",""),
   ("Caja para Arduino UNO",1,1,SN,"En mano",""),
   ("LCD 1602 con I2C",1,1,SN,"En mano","Llegó sin I2C; backpack PCF8574 ya soldado (7-nov)."),
-  ("Kit protoboard con fuente MB102",1,1,OF,"En mano · verificar",""),
+  ("Kit protoboard con fuente MB102",1,1,OF,"En mano ⚠","Trae protoboard en tramos pequeños: se compra la de 830 de una pieza (#26)."),
   ("Cables de conexión",40,40,SN,"En mano",""),
   ("Sensor UV GUVA-S12SD",2,0,"—","Falta · comprar lunes","CRÍTICO: nadie lo cotizó."),
   ("Sensor de presión BMP180",2,2,SN,"En mano",""),
@@ -302,7 +313,7 @@ inv = {
   ("Arduino UNO R3 + cable",1,1,SN,"En mano",""),
   ("Caja para Arduino UNO",1,1,SN,"En mano",""),
   ("LCD 1602 con I2C",1,1,SN,"En mano","Backpack I2C ya soldado (7-nov). Muestra la temperatura de la incubadora."),
-  ("Kit protoboard con fuente MB102",1,1,OF,"En mano · verificar",""),
+  ("Kit protoboard con fuente MB102",1,1,OF,"En mano ⚠","Trae protoboard en tramos pequeños: se compra la de 830 de una pieza (#26)."),
   ("Cables de conexión",40,40,SN,"En mano",""),
   ("Levaduras y cultivos (S. cerevisiae, yogur, L. lactis)",3,0,"—","Falta · no electrónico","Perecederos: entregar aparte o como reposición, no dentro de la caja por meses."),
   ("Reactivos (azul de metileno, NaCl, papel pH, rojo de fenol)",4,0,"—","Falta · no electrónico","En empaque secundario a prueba de derrames, lejos de la electrónica."),
@@ -340,7 +351,7 @@ chk = [
  ("¿Las 3 MB102 trajeron protoboard?", "Mirar el empaque.", "Comprar 3 protoboard 830 (ítem #26 de Compra lunes)."),
  ("Puente H del robot: ¿L298N (disipador negro grande) o L9110S (pequeño)?", "Leer la serigrafía del chip/tarjeta.", "L298N → 2×18650 (7.4 V). L9110S → 4×AA (6 V) para no pasar los 6 V de los motores."),
  ("¿El robot trae rueda loca (tercera rueda)?", "Revisar bolsa de piezas.", "Comprar la rueda loca (ítem #25 de Compra lunes)."),
- ("Seguidor de línea del robot: ¿cuántos sensores (1, 2, 3 o 5)?", "Contar los pares emisor/receptor.", "Con 1 sensor se sigue el borde de la línea (sirve para el objetivo). Con 3+ se puede hacer el PID de la propuesta."),
+ ("Seguidor de línea del robot: ¿viene y cuántos sensores (1, 2, 3 o 5)?", "Buscarlo en la bolsa y contar los pares emisor/receptor.", "Con 1 sensor se sigue el borde de la línea (sirve para el objetivo). Con 3+ se puede hacer el PID de la propuesta."),
  ("Buzzer BS3: ¿activo?", "Conectar sus patas a 5 V y GND de la MB102 (+ a la pata larga o marcada).", "Si no suena continuo, es pasivo: el firmware usará tone() y no se necesita transistor de potencia."),
  ("LED RGB: ¿cátodo común?", "Pata más larga a GND, otra pata a 5 V con 680 Ω.", "Si enciende → cátodo común. Si no, es ánodo común (pata larga a 5 V): se invierte la lógica en el firmware."),
  ("LCD del Smart Home: ¿ya trae I2C?", "Ver si tiene una plaquita de 4 pines atrás.", "Sin cambio en la compra; solo para la guía."),
@@ -349,8 +360,21 @@ chk = [
  ("Panel RTM020M al sol (antes de empacar)", "Sol directo, sin conectar nada. UT33C+ en V DC entre los dos cables: debe marcar 20–23 V. Luego en la escala 10 A (punta roja en el borne 10A) y por pocos segundos: ~1 A.", "Si marca mucho menos con sol pleno, revisar sombra o suciedad. Si no marca nada, revisar continuidad del cable. Anotar qué cable es el + y marcarlo con cinta roja."),
  ("Botones A14: ¿encajan en el pulsador B3F-4050?", "Poner uno.", "Si no encajan, usar los pulsadores sin tapa y retirar las tapas del Excel."),
 ]
+RESULTADOS = {  # Revisión al abrir las cajas, 7-nov-2026
+    1: "Sí, pero en tramos pequeños unibles → comprar 830 de una pieza (#26)",
+    2: "L298N → se mantiene 2×18650 (#8)",
+    3: "Sí la trae → #25 retirado",
+    4: "NO trae seguidor → comprar 2 TCRT5000 (#27)",
+    5: "Activo",
+    6: "Ánodo común según el proveedor; falta probar",
+    7: "Sí trae I2C",
+    8: "Sí trae regulador → no hace falta conversor",
+    9: "Sí, con capuchón húmedo",
+    10: "Funciona",
+    11: "Sí encajan",
+}
 for i, (a, b, c) in enumerate(chk, 1):
-    put(wv, i + 1, [i, a, b, c, None], fill_cols=(5,))
+    put(wv, i + 1, [i, a, b, c, RESULTADOS.get(i)], fill_cols=(5,))
 
 for s in wb.worksheets:
     s.sheet_view.showGridLines = s.title == "Leeme" and False

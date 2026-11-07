@@ -58,10 +58,9 @@
       "name": "Protoboard 830 puntos",
       "qty": 1,
       "unit": "und",
-      "status": "verificar",
+      "status": "pendiente_compra",
       "group": "energia",
-      "source": "¿Incluida con la MB102?",
-      "note": "Si no vino con la MB102, Compra lunes #25."
+      "source": "Compra lunes #26", "note": "La MB102 trae protoboard en tramos pequeños; se compra la de 830 de una sola pieza."
     },
     {
       "id": "C01-07",

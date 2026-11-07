@@ -11,7 +11,7 @@
     {"id": "C09-03", "name": "Pantalla LCD 1602 azul", "qty": 1, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "San Nicolás 908817"},
     {"id": "C09-04", "name": "Backpack I2C PCF8574 para LCD 1602", "qty": 1, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "Compra oficina (soldado a la LCD, 7-nov)"},
     {"id": "C09-05", "name": "Módulo MB102 (fuente de protoboard)", "qty": 1, "unit": "und", "status": "en_mano", "group": "energia", "source": "Compra oficina"},
-    {"id": "C09-06", "name": "Protoboard 830 puntos", "qty": 1, "unit": "und", "status": "verificar", "group": "energia", "source": "¿Incluida con la MB102?"},
+    {"id": "C09-06", "name": "Protoboard 830 puntos", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #26", "note": "La MB102 trae protoboard en tramos pequeños; se compra la de 830 de una sola pieza."},
     {"id": "C09-07", "name": "Adaptador 9 V 1 A plug 5.5×2.1", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #12"},
     {"id": "C09-08", "name": "Sensor de pH analógico DFRobot (sonda BNC + tarjeta)", "qty": 1, "unit": "und", "status": "en_mano", "group": "sensor", "source": "Vistrónica 4733-26", "care": "Sonda siempre con su capuchón húmedo y de pie. Lavar con agua destilada después de cada fermentación."},
     {"id": "C09-09", "name": "Módulo sensor DHT22 / AM2302", "qty": 1, "unit": "und", "status": "en_mano", "group": "sensor", "source": "San Nicolás 908817"},
