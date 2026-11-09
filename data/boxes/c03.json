@@ -9,12 +9,10 @@
     {"id": "C03-01", "name": "Panel solar 12 V 20 W RTM020M (45×35 cm)", "qty": 1, "unit": "und", "status": "en_mano", "group": "energia", "source": "Dislumbra (en oficina, nuevo)", "note": "Reemplaza el de 80 W del Excel: con el PWM entrega ~1 A, carga sana (0,14C) para la batería de 7 Ah; 80 W daría ~4,5 A (0,6C). Cables de salida pelados.", "care": "Proteger el vidrio con cartón o espuma; transportar de canto. Puntas de los cables aisladas por separado con cinta."},
     {"id": "C03-02", "name": "Controlador de carga solar PWM 12/24 V 30 A con display y 2 USB", "qty": 1, "unit": "und", "status": "en_mano", "group": "energia", "source": "San Nicolás 908817 (PSC-5030)", "note": "El Excel pedía 10 A; el comprado es superior."},
     {"id": "C03-03", "name": "Batería sellada 12 V 7 Ah", "qty": 1, "unit": "und", "status": "en_mano", "group": "energia", "source": "San Nicolás 908817", "care": "Empacar cargada, con bornes tapados, en compartimento propio lejos de herramientas metálicas. Recargar cada 3 meses."},
-    {"id": "C03-04", "name": "Portafusible en línea + fusible 10 A (+2 de repuesto)", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #14", "note": "Va siempre en el positivo de la batería."},
-    {"id": "C03-05", "name": "Cable dúplex 2×14 AWG rojo/negro (3 m) + terminales de ojo y pala", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "cableado", "source": "Compra lunes #18 · Excel 4.4"},
-    {"id": "C03-06", "name": "Toma hembra automotriz 12 V con cables", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #17 · Excel línea 3"},
-    {"id": "C03-07", "name": "Carga de prueba 12 V (bombillo LED 3–5 W con socket o tira LED)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "actuador", "source": "Compra lunes #22"},
-    {"id": "C03-08", "name": "Módulo reductor XL4016 (XH-M401) — o LM2596", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #15 · Excel línea 5"},
-    {"id": "C03-09", "name": "Módulo puerto USB hembra tipo A", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #16"},
+    {"id": "C03-04", "name": "Portafusible en línea con cable + fusible de cuchilla 10 A (+2 de repuesto)", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #14", "note": "Va siempre en el positivo de la batería."},
+    {"id": "C03-05", "name": "Cable dúplex 2×16 AWG rojo/negro (3 m) + 2 terminales faston 6,3 mm (ponchados en tienda)", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "cableado", "source": "Compra lunes #18 · Excel 4.4"},
+    {"id": "C03-07", "name": "Bombillo 12 V 3 W con socket E10 (carga de prueba)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "actuador", "source": "Compra lunes #22"},
+    {"id": "C03-08", "name": "Reductor USB 5 V 3 A de 2 puertos (entrada 6–40 V por bornera)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #15 · Excel línea 5"},
     {"id": "C03-10", "name": "Multímetro digital UNI-T UT33C+ con puntas", "qty": 1, "unit": "und", "status": "en_mano", "group": "herramienta", "source": "San Nicolás 908817", "care": "Sacar la batería del multímetro si se guarda más de un mes."},
     {"id": "C03-11", "name": "Cables con pinzas caimán (juego ×10)", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "cableado", "source": "Compra lunes #23"},
     {"id": "C03-12", "name": "Juego de 6 destornilladores", "qty": 1, "unit": "juego", "status": "pendiente_no_electronico", "group": "herramienta", "source": "Excel línea 6"},
@@ -28,7 +26,7 @@
       "challenge": "Cortes de energía frecuentes o falta de infraestructura eléctrica estable en zonas rurales.",
       "objective": "Construir una estación de almacenamiento con el panel, la batería y el controlador, verificando las cargas de forma segura con el multímetro.",
       "grades": "8-9", "ods": ["ODS 7", "ODS 9"],
-      "uses": [{"item": "C03-01", "qty": 1}, {"item": "C03-02", "qty": 1}, {"item": "C03-03", "qty": 1}, {"item": "C03-04", "qty": 1}, {"item": "C03-05", "qty": 1}, {"item": "C03-06", "qty": 1}, {"item": "C03-07", "qty": 1}, {"item": "C03-10", "qty": 1}, {"item": "C03-11", "qty": 1}, {"item": "C03-12", "qty": 1}, {"item": "C03-13", "qty": 1}],
+      "uses": [{"item": "C03-01", "qty": 1}, {"item": "C03-02", "qty": 1}, {"item": "C03-03", "qty": 1}, {"item": "C03-04", "qty": 1}, {"item": "C03-05", "qty": 1}, {"item": "C03-07", "qty": 1}, {"item": "C03-10", "qty": 1}, {"item": "C03-11", "qty": 1}, {"item": "C03-12", "qty": 1}, {"item": "C03-13", "qty": 1}],
       "simulation": {"kind": "interactiva", "status": "pendiente", "note": "Simulador propio del balance panel → controlador → batería → carga (Wokwi no simula energía solar)."}
     },
     {
@@ -36,7 +34,7 @@
       "challenge": "Carencia de puntos de carga seguros para celulares o dispositivos médicos portátiles en la vereda.",
       "objective": "Construir un punto comunitario de carga USB estabilizado con el kit solar y el regulador, midiendo con el multímetro que la salida sea exactamente 5 V.",
       "grades": "6-7", "ods": ["ODS 3", "ODS 9"],
-      "uses": [{"item": "C03-01", "qty": 1}, {"item": "C03-02", "qty": 1}, {"item": "C03-03", "qty": 1}, {"item": "C03-04", "qty": 1}, {"item": "C03-05", "qty": 1}, {"item": "C03-08", "qty": 1}, {"item": "C03-09", "qty": 1}, {"item": "C03-10", "qty": 1}, {"item": "C03-11", "qty": 1}, {"item": "C03-12", "qty": 1}],
+      "uses": [{"item": "C03-01", "qty": 1}, {"item": "C03-02", "qty": 1}, {"item": "C03-03", "qty": 1}, {"item": "C03-04", "qty": 1}, {"item": "C03-05", "qty": 1}, {"item": "C03-08", "qty": 1}, {"item": "C03-10", "qty": 1}, {"item": "C03-11", "qty": 1}, {"item": "C03-12", "qty": 1}],
       "simulation": {"kind": "interactiva", "status": "pendiente", "note": "Simulador del regulador: girar el potenciómetro y leer la salida en un multímetro virtual."}
     }
   ]

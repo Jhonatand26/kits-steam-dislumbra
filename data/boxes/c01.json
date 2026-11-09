@@ -64,7 +64,7 @@
     },
     {
       "id": "C01-07",
-      "name": "Adaptador 9 V 1 A plug 5.5×2.1",
+      "name": "Adaptador 9 V 2 A plug 5.5×2.1",
       "qty": 1,
       "unit": "und",
       "status": "pendiente_compra",
@@ -94,12 +94,12 @@
     },
     {
       "id": "C01-10",
-      "name": "Conversor de nivel lógico 4 canales 3.3 V ↔ 5 V",
+      "name": "Sonda BME280 3,3–5 V con cable de 1 m (reemplaza el conversor de nivel)",
       "qty": 1,
       "unit": "und",
       "status": "pendiente_compra",
       "group": "sensor",
-      "source": "Compra lunes #11"
+      "source": "Informe de faltantes (9-nov) · e06"
     },
     {
       "id": "C01-11",

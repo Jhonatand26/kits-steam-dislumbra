@@ -1,5 +1,5 @@
 {
-  "corte": "2026-11-07",
+  "corte": "2026-11-09",
   "titulo": "Elementos faltantes de los kits STEAM",
   "subtitulo": "Qué falta, para qué sirve, dónde conseguirlo en Cali y cuánto cuesta",
   "tiendas_cali": [
@@ -42,6 +42,11 @@
   ],
   "tiendas_envio": [
     {
+      "nombre": "Didácticas Electrónicas I+D",
+      "ciudad": "Pedido en línea, envío nacional",
+      "nota": "Ya se le compró el kit de robótica y el Smart Home. Tiene casi toda la electrónica de este informe; precios con IVA."
+    },
+    {
       "nombre": "Zamux",
       "ciudad": "Bogotá",
       "nota": "Mejores precios en módulos; requiere envío."
@@ -75,7 +80,7 @@
       "cantidad": 2,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "Es el único sensor del Semáforo UV y nadie lo cotizó. Sin él, el proyecto no puede medir la radiación ni encender el semáforo según la escala de la OMS.",
+      "porque": "Es el único sensor del Semáforo UV. Es un módulo de 3 pines (+, −, señal) que va directo al Arduino, sin componentes extra.",
       "specs": [
         "Fotodiodo de nitruro de galio, respuesta 240–370 nm (UV-A y UV-B)",
         "Alimentación 2,5–5 V",
@@ -83,15 +88,15 @@
         "3 pines: +, −, OUT; módulo de ~20×15 mm"
       ],
       "donde": [
-        "Electronilab (Bogotá, envío): quedaban 2 unidades el 7-nov",
-        "En Cali: preguntar en la Carrera 6 entre Calles 15 y 17"
+        "Didácticas Electrónicas I+D (ref. GUVA-S12SD)",
+        "Electronilab (Bogotá, envío)"
       ],
       "precio": {
-        "valor": 18900,
+        "valor": 7745,
         "presentacion": "por unidad",
         "compra": 2,
-        "tienda": "Electronilab",
-        "url": "https://electronilab.co/tienda/guva-s12sd-sensor-de-luz-uv-luz-ultravioleta-analogico/"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/guva-s12sd-modulo-sensor-de-deteccion-uv-s12sd-53806"
       },
       "alternativa": "Módulo ML8511 (salida analógica, 3,3 V); requiere ajustar el firmware."
     },
@@ -99,39 +104,39 @@
       "id": "e02",
       "ilustracion": "tcrt",
       "categoria": "electronica",
-      "nombre": "Módulo seguidor de línea TCRT5000",
+      "nombre": "Módulo seguidor de línea de 3 sensores TCRT5000 (TAR-TCRT5000)",
       "usos": [
         "C05-P3"
       ],
       "prioridad": 1,
-      "cantidad": 2,
+      "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "El kit de robótica no trae seguidor de línea (verificado al abrirlo). Con dos módulos, uno a cada lado de la línea, la lógica es la más simple para grados 6–7: si un sensor ve negro, el robot gira hacia ese lado.",
+      "porque": "El kit de robótica no trae seguidor de línea. Este módulo trae los tres sensores (izquierda, centro y derecha) en una sola placa: se conecta con 5 cables y la lógica es fácil de explicar: si el del centro ve la línea, avanza; si la ve el de un lado, gira hacia ese lado.",
       "specs": [
-        "Emisor infrarrojo + fototransistor reflectivo",
-        "Alimentación 3,3–5 V",
-        "Salida digital (con umbral ajustable por potenciómetro) y analógica",
-        "Detección de 1 a 25 mm, típica 12 mm; módulo de 37×14 mm"
+        "Tres sensores TCRT5000 en una sola placa",
+        "Alimentación 5 V",
+        "Detección hasta 10 mm del piso",
+        "Una salida digital por sensor: 5 cables (VCC, GND y 3 señales)",
+        "Peso 11 g"
       ],
       "donde": [
-        "Didácticas Electrónicas I+D (donde se compró el kit), referencia TAR-TCRT5000",
-        "Carrera 6 entre Calles 15 y 17"
+        "Didácticas Electrónicas I+D (ref. TAR-TCRT5000), 5 unidades en stock el 9-nov"
       ],
       "precio": {
-        "valor": 5900,
+        "valor": 7435,
         "presentacion": "por unidad",
-        "compra": 2,
-        "tienda": "Zamux (referencia de precio)",
-        "url": "https://www.zamux.co/sensor-distancia-seguidor-de-linea-infrarrojo-tcrt5000"
+        "compra": 1,
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/tar-tcrt5000-modulo-seguidor-de-linea-4243"
       },
-      "alternativa": "Un solo módulo siguiendo el borde de la línea: funciona, pero zigzaguea más."
+      "alternativa": "Módulo de 2 canales SEN-TRACK-2CH de la misma tienda."
     },
     {
       "id": "e03",
       "ilustracion": "rele",
       "categoria": "electronica",
-      "nombre": "Módulo relé 5 V de 1 canal con optoacoplador",
+      "nombre": "Tarjeta de 2 relés optoacoplada 5 V (activación en alto)",
       "usos": [
         "C09-P3"
       ],
@@ -139,31 +144,31 @@
       "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "La incubadora enciende y apaga una fuente de calor para mantener 37 °C. El Arduino no puede alimentar esa carga directamente; el relé la conmuta de forma aislada.",
+      "porque": "La incubadora enciende y apaga el bombillo para mantener 37 °C. La tarjeta trae los relés, los optoacopladores y un LED por canal: se conectan 3 cables al Arduino y la carga va a tornillo. El segundo relé queda libre para un ventilador u otra carga.",
       "specs": [
-        "Bobina de 5 V, activación con señal de 3,3–5 V",
-        "Contactos de 10 A a 250 VAC / 30 VDC (aquí se usa solo a 12 V)",
-        "Optoacoplador y LED indicador",
-        "Bornera de 3 tornillos: COM, NO, NC"
+        "2 relés de 10 A a 250 VAC / 30 VDC (aquí se usa a 12 V)",
+        "Activación con 5 V (en alto)",
+        "Optoacopladores y LED indicador por canal",
+        "Bornera de tornillo para la carga"
       ],
       "donde": [
-        "Innovatronics, Calle 71C #3A-2N-32 ($7.500)",
+        "Didácticas Electrónicas I+D (ref. TRELE2-O-5V10A-H)",
         "Carrera 6 entre Calles 15 y 17"
       ],
       "precio": {
-        "valor": 4500,
+        "valor": 8482,
         "presentacion": "por unidad",
         "compra": 1,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/modulo-rele-1-canales"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/trele2-o-5v10a-h-tarjeta-con-2-relevos-optocoplada-5v-activacion-en-alto-43713"
       },
-      "alternativa": "MOSFET logic-level IRLZ44N con resistencia de 1 kΩ."
+      "alternativa": "Módulo de 1 relé genérico (Zamux, $4.500)."
     },
     {
       "id": "e04",
       "ilustracion": "ds18b20",
       "categoria": "electronica",
-      "nombre": "Sensor de temperatura DS18B20 sumergible",
+      "nombre": "Sensor de temperatura DS18B20 sumergible (DFRobot DFR0198)",
       "usos": [
         "C09-P1"
       ],
@@ -171,24 +176,25 @@
       "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "Hay que medir la temperatura del líquido en fermentación. El DHT22 solo mide aire y no se puede mojar. Usa la resistencia de 4,7 kΩ que ya está en la caja.",
+      "porque": "Mide la temperatura del líquido en fermentación (el DHT22 solo mide aire). Trae cable de 1 m y punta de acero; solo necesita la resistencia de 4,7 kΩ que ya está en la caja.",
       "specs": [
-        "Rango −55 a 125 °C; precisión ±0,5 °C entre −10 y 85 °C",
-        "Bus digital 1-Wire, resolución configurable de 9 a 12 bits",
+        "Rango −55 a 125 °C; ±0,5 °C entre −10 y 85 °C",
+        "Bus digital 1-Wire: un solo cable de datos",
         "Alimentación 3,0–5,5 V",
-        "Sonda de acero inoxidable con cable de ~1 m"
+        "Sonda de acero inoxidable impermeable, cable de 1 m"
       ],
       "donde": [
-        "Innovatronics, Calle 71C #3A-2N-32"
+        "Didácticas Electrónicas I+D (ref. DFR0198)",
+        "Innovatronics, Calle 71C #3A-2N-32 (genérico, $8.500)"
       ],
       "precio": {
-        "valor": 8500,
+        "valor": 11310,
         "presentacion": "por unidad",
         "compra": 1,
-        "tienda": "Innovatronics",
-        "url": "https://innovatronics.com.co/productos/sensor-ds18b20-temperatura-a-prueba-de-agua-para-arduino/"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/dfr0198-sensor-de-temperatura-a-prueba-de-agua-ds18b20-2308"
       },
-      "alternativa": null
+      "alternativa": "DS18B20 genérico de Innovatronics ($8.500)."
     },
     {
       "id": "e05",
@@ -202,12 +208,12 @@
       "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "La propuesta pide medir la humedad del sustrato donde germinan las semillas. El capacitivo no tiene metal expuesto y no se corroe con el riego, a diferencia del resistivo.",
+      "porque": "La propuesta pide medir la humedad del sustrato. Trae su cable de 3 pines con conector: se enchufa y se conecta directo al Arduino. Al ser capacitivo no tiene metal expuesto y no se corroe con el riego.",
       "specs": [
         "Medición capacitiva, sin electrodos expuestos",
         "Alimentación 3,3–5,5 V",
         "Salida analógica (más humedad = menor voltaje)",
-        "Conector de 3 pines: VCC, GND, AOUT"
+        "Cable de 3 pines incluido (VCC, GND, AOUT)"
       ],
       "donde": [
         "Innovatronics ($7.000), pero ese es resistivo: preguntar por el capacitivo",
@@ -226,7 +232,7 @@
       "id": "e06",
       "ilustracion": "nivel",
       "categoria": "electronica",
-      "nombre": "Conversor de nivel lógico bidireccional 3,3 V – 5 V",
+      "nombre": "Sonda BME280 con cable de 1 m (temperatura, humedad y presión)",
       "usos": [
         "C01-P2"
       ],
@@ -234,25 +240,23 @@
       "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "El BME280 que llegó es la versión de 3,3 V y comparte el bus I2C con la LCD de 5 V. Sin conversor, el sensor recibe señales de 5 V y se puede dañar.",
+      "porque": "El BME280 que llegó es de 3,3 V: para usarlo con el Arduino y la LCD de 5 V haría falta un conversor de nivel (más cables y riesgo de quemarlo). Esta sonda funciona a 3,3–5 V, se conecta con 4 cables directo al Arduino y su carcasa de acero permite medir afuera, que es el objetivo de Microclimas. El BME280 de 3,3 V queda como repuesto.",
       "specs": [
-        "4 canales bidireccionales (transistores BSS138)",
-        "Lado bajo 1,8–3,3 V; lado alto 5 V",
-        "Apto para I2C, SPI y UART",
-        "Pines HV, LV, GND y 4 pares de datos"
+        "Alimentación 3,3–5 V, bus I2C (4 cables)",
+        "Temperatura −45 a 85 °C (±0,5 °C); humedad 0–100 % HR; presión 300–1100 hPa",
+        "Carcasa de acero inoxidable y cable de 1 m"
       ],
       "donde": [
-        "Carrera 6 entre Calles 15 y 17",
-        "Innovatronics"
+        "Didácticas Electrónicas I+D (ref. CA-BME280)"
       ],
       "precio": {
-        "valor": 4500,
+        "valor": 38896,
         "presentacion": "por unidad",
         "compra": 1,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/en/conversor-nivel-logico-bidireccional-4-canales"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/ca-bme280-sensor-de-temperatura-humedad-y-presion-bme280-cable-de-1-metro-46967"
       },
-      "alternativa": "Módulo BME280 versión 5 V (con regulador)."
+      "alternativa": "Conversor de nivel lógico de 4 canales ($4.500) con el BME280 de 3,3 V que ya llegó (más cables)."
     },
     {
       "id": "e07",
@@ -288,7 +292,7 @@
       "id": "e08",
       "ilustracion": "mc38",
       "categoria": "electronica",
-      "nombre": "Sensor magnético de puerta MC-38",
+      "nombre": "Sensor magnético de puerta (normalmente cerrado)",
       "usos": [
         "C05-P4"
       ],
@@ -296,56 +300,55 @@
       "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "La propuesta pide sensores de puerta y ventana. El Smart Home solo trae PIR. Es el ejemplo ideal para enseñar interrupciones.",
+      "porque": "La propuesta pide sensores de puerta y ventana y el Smart Home solo trae PIR. Son dos piezas (sensor e imán) con dos cables: uno a un pin y otro a GND, sin resistencias.",
       "specs": [
-        "Interruptor reed con imán, contacto normalmente cerrado con el imán cerca",
+        "Interruptor reed con imán, normalmente cerrado",
         "Distancia de activación de 15 a 25 mm",
-        "Dos piezas plásticas con cables y tornillos de fijación"
+        "Dos piezas plásticas con cables y tornillos"
       ],
       "donde": [
-        "Carrera 6 entre Calles 15 y 17",
+        "Didácticas Electrónicas I+D (ref. S-DOOR-MAG-NC)",
         "Tiendas de alarmas y seguridad"
       ],
       "precio": {
-        "valor": 6900,
+        "valor": 11624,
         "presentacion": "por unidad",
         "compra": 1,
-        "tienda": "Electronilab",
-        "url": "https://electronilab.co/tienda/sensor-magnetico-puerta-ventana/"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/s-door-mag-nc-sensor-magnetico-nc-para-puerta-7092"
       },
-      "alternativa": "Usar un pulsador como \"puerta\" (menos realista)."
+      "alternativa": "Sensor MC-38 genérico (Electronilab, $6.900)."
     },
     {
       "id": "e09",
       "ilustracion": "transistor",
       "categoria": "electronica",
-      "nombre": "Transistor NPN 2N2222",
+      "nombre": "Módulo buzzer activo (3 pines)",
       "usos": [
-        "C06-P1",
-        "C09-P3"
+        "C06-P1"
       ],
       "prioridad": 3,
-      "cantidad": 10,
+      "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "El buzzer conectado directo al pin puede sonar débil. Con un transistor y una resistencia de 1 kΩ (ya comprada) suena fuerte y protege el Arduino. Se compran 10 por si alguno se quema.",
+      "porque": "Reemplaza al buzzer suelto con transistor 2N2222 y resistencia de 1 kΩ: el módulo ya trae todo y se conecta con 3 cables (VCC, GND y señal). Menos piezas y menos errores de montaje en el Tablero de Convivencia.",
       "specs": [
-        "NPN en encapsulado TO-92",
-        "Corriente de colector hasta 600 mA",
-        "Voltaje colector-emisor 40 V",
-        "Patas E-B-C"
+        "Buzzer activo sobre placa, suena con un nivel digital",
+        "Alimentación 3,3–5 V",
+        "3 pines: VCC, GND, I/O",
+        "Verificar al recibirlo si se activa en alto o en bajo (el programa tiene el parámetro)"
       ],
       "donde": [
-        "Cualquier local de la Carrera 6"
+        "Didácticas Electrónicas I+D (ref. TAR-BUZZER-ACT)"
       ],
       "precio": {
-        "valor": 106,
+        "valor": 3168,
         "presentacion": "por unidad",
-        "compra": 10,
-        "tienda": "Electronilab",
-        "url": "https://electronilab.co/tienda/2n2222-transistor-npn-to-92/"
+        "compra": 1,
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/tar-buzzer-act-modulo-buzzer-activo-52753"
       },
-      "alternativa": "BC547 o BC337."
+      "alternativa": "Buzzer BS3 que ya está en la caja + transistor 2N2222 + resistencia de 1 kΩ."
     },
     {
       "id": "e10",
@@ -360,21 +363,22 @@
       "cantidad": 4,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "Los servos generan picos de corriente que reinician el Arduino. Un capacitor en la alimentación del servo evita esos fallos \"misteriosos\".",
+      "porque": "Los servos generan picos de corriente que reinician el Arduino. El capacitor se inserta directo en las líneas + y − de la protoboard (2 patas, franja al negativo).",
       "specs": [
         "470 µF, 16 V",
         "Polarizado: la franja marca el negativo",
         "Montaje en protoboard"
       ],
       "donde": [
+        "Didácticas Electrónicas I+D (ref. CE470UF16V)",
         "Cualquier local de la Carrera 6"
       ],
       "precio": {
-        "valor": 400,
+        "valor": 238,
         "presentacion": "por unidad",
         "compra": 4,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/condensador-electrolitico-330uf-16v-25v-50v-1"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/ce470uf16v-capacitor-electrolitico-aluminio-470uf-16v-9547"
       },
       "alternativa": "1000 µF 16 V."
     },
@@ -400,15 +404,15 @@
         "Compatible con la fuente MB102"
       ],
       "donde": [
-        "Innovatronics, Calle 71C #3A-2N-32",
-        "Carrera 6 entre Calles 15 y 17"
+        "Didácticas Electrónicas I+D (ref. PROTO102W)",
+        "Innovatronics, Calle 71C #3A-2N-32"
       ],
       "precio": {
-        "valor": 8000,
+        "valor": 7749,
         "presentacion": "por unidad",
         "compra": 3,
-        "tienda": "Innovatronics",
-        "url": "https://innovatronics.com.co/productos/protoboard-mediana-blanca-mb102/"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/proto102w-protoboard-blanco-830-puntos-de-insercion-9943"
       },
       "alternativa": "Usar los tramos y puentear las líneas + y − con un cable en cada unión."
     },
@@ -416,7 +420,7 @@
       "id": "n01",
       "ilustracion": "pila18650",
       "categoria": "energia",
-      "nombre": "Portapilas 2×18650 con interruptor, 2 celdas 18650 y cargador",
+      "nombre": "Portapilas 2×18650 en serie, 2 baterías 18650 y cargador de pared",
       "usos": [
         "C05-P1",
         "C05-P3"
@@ -425,25 +429,24 @@
       "cantidad": 1,
       "unidad": "juego",
       "responsable": "compras",
-      "porque": "El kit de robótica no trae baterías ni portapilas: sin esto el robot no se mueve. Su puente H es un L298N, que pierde unos 2 V; con 7,4 V los motores reciben ~5,4 V. Con 4 pilas AA quedarían débiles.",
+      "porque": "El kit de robótica no trae baterías ni portapilas. El puente H L298N pierde ~2 V: con 7,4 V los motores reciben ~5,4 V. El portapilas trae cables que van directo a la bornera del L298N, y el cargador de pared carga las baterías sin módulos ni soldadura.",
       "specs": [
-        "2 celdas de litio 18650 en serie: 7,4 V nominal, 8,4 V cargadas",
-        "Portapilas con interruptor y cables",
-        "Cargador USB TP4056 (1 A, corte a 4,2 V por celda)",
-        "Las celdas se cargan por separado"
+        "Portapilas para 2 celdas 18650 en serie (7,2–8,4 V) con cables",
+        "Baterías EVE INR18650 de 3,6 V 2500 mAh",
+        "Cargador inteligente para 2 baterías, 110 V, corte automático a 4,2 V",
+        "Guardar las baterías fuera del portapilas"
       ],
       "donde": [
-        "Innovatronics (cargador TP4056 a $4.500)",
-        "Carrera 6 entre Calles 15 y 17"
+        "Didácticas Electrónicas I+D (portapilas, baterías y cargador)"
       ],
       "precio": {
-        "valor": 33200,
-        "presentacion": "por el juego (portapilas, 2 celdas y cargador)",
+        "valor": 55083,
+        "presentacion": "por el juego (portapilas $2.827, 2 baterías de $21.468 y cargador $9.320)",
         "compra": 1,
-        "tienda": "Zamux (combinado)",
-        "url": "https://www.zamux.co/porta-pila-para-2-baterias-18650"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/base-bat-18650x2-portapilas-para-bateria-18650-x2-en-serie-2772"
       },
-      "alternativa": "Portapilas de 6×AA con interruptor y 6 pilas AA."
+      "alternativa": "Juego combinado de Zamux ($33.200): portapilas, 2 celdas y cargador TP4056 (este último es un módulo que hay que cablear)."
     },
     {
       "id": "n02",
@@ -465,14 +468,15 @@
         "Empacar fuera del portapilas"
       ],
       "donde": [
+        "Didácticas Electrónicas I+D (Tronex)",
         "Cualquier supermercado o droguería"
       ],
       "precio": {
-        "valor": 2900,
-        "presentacion": "por unidad",
-        "compra": 6,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/bateria-aa-15v-economica"
+        "valor": 4724,
+        "presentacion": "por paquete de 2",
+        "compra": 3,
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/tro-aa-alk-pila-alcalina-aa-x-2-11507"
       },
       "alternativa": "Adaptador de 9 V 1 A, si la placa del Smart Home lo acepta."
     },
@@ -480,7 +484,7 @@
       "id": "n03",
       "ilustracion": "adaptador",
       "categoria": "energia",
-      "nombre": "Adaptador de 9 V 1 A, plug 5,5×2,1 mm",
+      "nombre": "Adaptador de 9 V 2 A, plug 5,5×2,1 mm",
       "usos": [
         "C01",
         "C06",
@@ -493,19 +497,19 @@
       "porque": "Las 3 fuentes MB102 llegaron sin adaptador. Con 9 V en vez de 12 V el regulador de la MB102 se calienta casi la mitad.",
       "specs": [
         "Entrada 100–240 VAC",
-        "Salida 9 VDC, 1 A",
-        "Plug 5,5×2,1 mm, centro positivo"
+        "Salida 9 VDC, 2 A",
+        "Plug 5,5×2,1 mm, centro positivo: entra directo en la MB102"
       ],
       "donde": [
-        "Carrera 6 entre Calles 15 y 17",
-        "Innovatronics"
+        "Didácticas Electrónicas I+D (ref. ADAP-9V-2A)",
+        "Carrera 6 entre Calles 15 y 17"
       ],
       "precio": {
-        "valor": 11900,
+        "valor": 18221,
         "presentacion": "por unidad",
         "compra": 3,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/fuente-de-voltaje-adaptador-9v-1a-dc"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/adap-9v-2a-adaptador-9v-2a-36429"
       },
       "alternativa": "Alimentar la MB102 por USB desde un cargador de celular de 5 V, si la variante lo permite."
     },
@@ -528,15 +532,45 @@
         "Plug 5,5×2,1 mm, centro positivo"
       ],
       "donde": [
-        "Innovatronics ($39.000, versión de 5 A)",
+        "Didácticas Electrónicas I+D (ref. ADAP-12V-2A-F)",
         "Carrera 6 entre Calles 15 y 17"
       ],
       "precio": {
-        "valor": 15900,
+        "valor": 9320,
         "presentacion": "por unidad",
         "compra": 1,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/herramientas/fuentes"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/adap-12v-2a-f-adaptador-12v-2a-frontal-43051"
+      },
+      "alternativa": null
+    },
+    {
+      "id": "n13",
+      "ilustracion": "adaptador",
+      "categoria": "energia",
+      "nombre": "Conector DC hembra con bornera (5,5×2,1 mm)",
+      "usos": [
+        "C09-P3"
+      ],
+      "prioridad": 1,
+      "cantidad": 1,
+      "unidad": "und",
+      "responsable": "compras",
+      "porque": "Permite conectar el adaptador de 12 V al relé y al bombillo con tornillos, sin cortar ni pelar el cable del adaptador.",
+      "specs": [
+        "Jack hembra 5,5×2,1 mm, centro positivo",
+        "Bornera de 2 tornillos (+ y −)"
+      ],
+      "donde": [
+        "Didácticas Electrónicas I+D (ref. B-JACK-H)",
+        "Carrera 6 entre Calles 15 y 17"
+      ],
+      "precio": {
+        "valor": 1647,
+        "presentacion": "por unidad",
+        "compra": 1,
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/b-jack-h-conector-dc-bornera-jack-hembra-5-5x21mm-1541"
       },
       "alternativa": null
     },
@@ -575,7 +609,7 @@
       "id": "n06",
       "ilustracion": "fusible",
       "categoria": "energia",
-      "nombre": "Portafusible en línea con fusible de 10 A (+2 de repuesto)",
+      "nombre": "Portafusible en línea con cable y fusible de cuchilla",
       "usos": [
         "C03-P1",
         "C03-P2"
@@ -584,29 +618,30 @@
       "cantidad": 1,
       "unidad": "juego",
       "responsable": "compras",
-      "porque": "Una batería de 7 Ah en cortocircuito puede quemar los cables. Es la protección mínima en un kit escolar. Va siempre en el positivo de la batería.",
+      "porque": "Una batería de 7 Ah en cortocircuito puede quemar los cables. Es la protección mínima en un kit escolar: trae los cables listos y va en el positivo de la batería. El fusible se cambia a mano, sin herramientas.",
       "specs": [
-        "Portafusible en línea con cable",
-        "Fusible de 10 A",
-        "2 fusibles de repuesto"
+        "Portafusible en línea para fusible de cuchilla mini, con tapa",
+        "Cables incluidos",
+        "Usar fusible de 10 A; dejar 2 de repuesto"
       ],
       "donde": [
-        "Carrera 6 o almacenes de repuestos automotrices"
+        "Homecenter (sedes en Cali)",
+        "Almacenes de repuestos automotrices"
       ],
       "precio": {
-        "valor": 2200,
-        "presentacion": "por juego",
+        "valor": 19900,
+        "presentacion": "por unidad (fusibles aparte)",
         "compra": 1,
-        "tienda": "Zamux (combinado)",
-        "url": "https://www.zamux.co/fusible-largo"
+        "tienda": "Homecenter",
+        "url": "https://www.homecenter.com.co/homecenter-co/product/632739/portafusibles-de-fusible-plano-miniatura-para-automovil/632739/"
       },
-      "alternativa": null
+      "alternativa": "Portafusible para fusible de vidrio 6×30 mm (Zamux, $2.200 con fusible)."
     },
     {
       "id": "n07",
       "ilustracion": "reductor",
       "categoria": "energia",
-      "nombre": "Módulo reductor de voltaje XL4016",
+      "nombre": "Reductor USB 5 V 3 A de 2 puertos (entrada 6–40 V)",
       "usos": [
         "C03-P2"
       ],
@@ -614,91 +649,29 @@
       "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "Es el \"módulo regulador\" del Excel. El estudiante gira el potenciómetro hasta obtener 5,0 V y lo comprueba con el multímetro: ese es el objetivo del proyecto.",
+      "porque": "Reemplaza el regulador ajustable XL4016 y el puerto USB suelto: entran 12 V por bornera de tornillo y salen 5 V fijos por dos puertos USB. No se puede desajustar, así que nadie manda 12 V a un celular por error. Con el multímetro se comprueba que salen 5 V.",
       "specs": [
-        "Entrada 4–40 V, salida ajustable 1,25–36 V",
-        "Hasta 8 A pico; ~5 A continuos con disipador",
-        "Potenciómetro multivuelta para ajustar la salida",
-        "Bornas de tornillo de entrada y salida"
+        "Entrada 6–40 VDC por bornera de tornillo",
+        "Salida 5 VDC fija, 3 A máx., dos puertos USB-A",
+        "Eficiencia hasta 92 %"
       ],
       "donde": [
-        "Innovatronics: LM2596 a $7.500 (alternativa)",
-        "Carrera 6 entre Calles 15 y 17"
+        "Didácticas Electrónicas I+D (ref. BUCK-2-USB-3A)"
       ],
       "precio": {
-        "valor": 27965,
+        "valor": 6493,
         "presentacion": "por unidad",
         "compra": 1,
-        "tienda": "Sigma Electrónica",
-        "url": "https://www.sigmaelectronica.net/producto/tarjeta-xl4016/"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/buck-2-usb-3a-conversor-dc-dc-reductor-usb-2pos-5v-3a-7524"
       },
-      "alternativa": "Módulo LM2596 (3 A): más común y barato; sobra para cargar un celular."
-    },
-    {
-      "id": "n08",
-      "ilustracion": "usb",
-      "categoria": "energia",
-      "nombre": "Puerto USB hembra tipo A (para soldar o con bornera)",
-      "usos": [
-        "C03-P2"
-      ],
-      "prioridad": 2,
-      "cantidad": 1,
-      "unidad": "und",
-      "responsable": "compras",
-      "porque": "Es la salida donde se conecta el cable del celular, después del regulador ajustado a 5 V.",
-      "specs": [
-        "USB tipo A hembra",
-        "Pines VBUS y GND (datos sin usar)"
-      ],
-      "donde": [
-        "Cualquier local de la Carrera 6"
-      ],
-      "precio": {
-        "valor": 1500,
-        "presentacion": "por unidad",
-        "compra": 1,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/conector-usb-chasis-hembra-para-ensamble-1"
-      },
-      "alternativa": null
-    },
-    {
-      "id": "n09",
-      "ilustracion": "toma12",
-      "categoria": "energia",
-      "nombre": "Toma hembra de 12 V tipo encendedor con cables",
-      "usos": [
-        "C03-P1"
-      ],
-      "prioridad": 2,
-      "cantidad": 1,
-      "unidad": "und",
-      "responsable": "compras",
-      "porque": "Está en el Excel: es el punto de consumo de 12 V del banco de energía, donde se conectan cargadores o accesorios de carro.",
-      "specs": [
-        "Toma hembra de encendedor para 12–24 V",
-        "Con tapa y cables para atornillar o soldar",
-        "Se protege con el fusible de 10 A"
-      ],
-      "donde": [
-        "Almacenes de accesorios para carro y moto",
-        "Carrera 6 entre Calles 15 y 17"
-      ],
-      "precio": {
-        "valor": null,
-        "presentacion": "no se encontró precio en línea",
-        "compra": 1,
-        "tienda": "Preguntar en tienda",
-        "url": null
-      },
-      "alternativa": "Bornera de 2 polos."
+      "alternativa": "Reductor USB de 1 puerto (misma tienda, $3.927); entrada por pines para soldar."
     },
     {
       "id": "n10",
       "ilustracion": "cable",
       "categoria": "energia",
-      "nombre": "Cable dúplex 2×14 AWG rojo/negro (3 m) con terminales",
+      "nombre": "Cable dúplex 2×16 AWG rojo/negro (3 m) con 2 terminales faston",
       "usos": [
         "C03-P1",
         "C03-P2"
@@ -707,30 +680,30 @@
       "cantidad": 1,
       "unidad": "juego",
       "responsable": "compras",
-      "porque": "Es el \"juego de cables y accesorios para kit solar\" del Excel: une el panel, el controlador y la batería con un calibre que soporta la corriente sin calentarse.",
+      "porque": "Une el panel, el controlador y la batería. Rojo y negro ayudan a no invertir la polaridad. Los cables pelados entran en las borneras del controlador; para la batería se ponen terminales faston, que se piden ya ponchados en la tienda.",
       "specs": [
-        "2×14 AWG encauchetado, rojo y negro, 3 m",
-        "Soporta ~15 A",
-        "Terminales de ojo para la batería y de pala para borneras"
+        "Cable dúplex polarizado 2×16 AWG, rojo y negro, 3 m",
+        "Soporta las corrientes del kit (≤ 5 A)",
+        "2 terminales faston hembra aislados de 6,3 mm para los bornes de la batería"
       ],
       "donde": [
-        "Ferreterías y almacenes eléctricos",
-        "Carrera 6"
+        "Didácticas Electrónicas I+D (cable MC-DPL16PL y terminales FDFD2-250)",
+        "Ferreterías y almacenes eléctricos"
       ],
       "precio": {
-        "valor": 16400,
-        "presentacion": "por el juego (cable y terminales)",
+        "valor": 4874,
+        "presentacion": "por 3 m de cable ($1.466/m) y 2 terminales ($238 c/u)",
         "compra": 1,
-        "tienda": "Zamux (combinado)",
-        "url": "https://www.zamux.co/cable-duplex-2x14-awg"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/mc-dpl16pl-cable-duplex-polarizado-2x16-rojo-negro-15495"
       },
-      "alternativa": "Cable 2×16 AWG."
+      "alternativa": "Cable 2×14 AWG de la misma tienda ($1.990/m)."
     },
     {
       "id": "n11",
-      "ilustracion": "ledcarga",
+      "ilustracion": "bombillo",
       "categoria": "energia",
-      "nombre": "Carga de prueba de 12 V (cinta LED o bombillo LED de 3–5 W)",
+      "nombre": "Bombillo de 12 V 3 W con socket E10 (carga de prueba)",
       "usos": [
         "C03-P1"
       ],
@@ -738,20 +711,20 @@
       "cantidad": 1,
       "unidad": "und",
       "responsable": "compras",
-      "porque": "Sirve para mostrar que el banco alimenta algo durante un \"apagón\" y para medir el consumo con el multímetro.",
+      "porque": "Se atornilla a la salida de carga del controlador y se ve encender durante un \"apagón\". Con el multímetro se mide cuánto consume.",
       "specs": [
-        "12 V, 3–5 W",
-        "Cinta LED de 50 cm–1 m o bombillo LED con socket"
+        "Bombillo incandescente 12 V 3 W, rosca E10",
+        "Socket E10 con dos tornillos para los cables (hasta 24 V)"
       ],
       "donde": [
-        "Carrera 6 o almacenes de iluminación"
+        "Didácticas Electrónicas I+D (BL-12 y PLF-5)"
       ],
       "precio": {
-        "valor": 7500,
-        "presentacion": "por unidad",
+        "valor": 1577,
+        "presentacion": "por bombillo ($928) y socket ($649)",
         "compra": 1,
-        "tienda": "Zamux",
-        "url": "https://www.zamux.co/cinta-led-3528-blanca-o-azul-1mtr"
+        "tienda": "Didácticas Electrónicas I+D",
+        "url": "https://www.didacticaselectronicas.com/shop/bl-12-bombillo-12v-3w-con-rosca-e10-19615"
       },
       "alternativa": "Ventilador de 12 V de computador."
     },
@@ -901,7 +874,7 @@
         "presentacion": "por unidad",
         "compra": 1,
         "tienda": "La Casa del Científico",
-        "url": "https://lacasadelcientifico.com.co/categoria-producto/batas"
+        "url": "https://lacasadelcientifico.com.co/producto/bata-para-laboratorio-blanca-talla-s-fabricada-en-tela-100-antifluido-con-cierre-de-botones-dos-bolsillos-en-el-abdomen-un-bolsillo-en-el-pecho-largo-hasta-la-mitad-del-muslo-copia-copia"
       },
       "alternativa": null
     },
@@ -984,7 +957,7 @@
         "Supermercados"
       ],
       "precio": {
-        "valor": 4100,
+        "valor": 3270,
         "presentacion": "por vaso de 200 g",
         "compra": 1,
         "tienda": "Éxito",
@@ -1040,7 +1013,7 @@
       ],
       "donde": [
         "Preparación casera (costo casi nulo)",
-        "Farmatodo: $6.150 la bolsa de 500 ml, pide fórmula médica"
+        "Farmatodo: bolsa de 500 ml (pide fórmula médica)"
       ],
       "precio": {
         "valor": 0,
@@ -1084,7 +1057,7 @@
       "id": "l11",
       "ilustracion": "goterorojo",
       "categoria": "laboratorio",
-      "nombre": "Rojo de fenol (indicador)",
+      "nombre": "Rojo de fenol (reactivo de pH para piscinas)",
       "usos": [
         "C09-P1"
       ],
@@ -1092,24 +1065,23 @@
       "cantidad": 1,
       "unidad": "frasco",
       "responsable": "otra persona",
-      "porque": "Cambia de rojo a amarillo cuando el medio se acidifica: es una forma visual de ver la fermentación.",
+      "porque": "Cambia de amarillo a rojo según el pH: es una forma visual de ver la fermentación. El reactivo de pH para piscinas es rojo de fenol, viene en gotero y es mucho más barato que el de laboratorio.",
       "specs": [
-        "Vira de amarillo (pH 6,8) a rojo (pH 8,2)",
-        "Grado laboratorio en frasco de 250 ml",
-        "El reactivo de pH para piscinas es rojo de fenol y sirve para el aula"
+        "Indicador rojo de fenol en gotero de 20 ml",
+        "Vira de amarillo (pH 6,8) a rojo (pH 8,2)"
       ],
       "donde": [
-        "Tiendas de piscinas (reactivo de pH)",
-        "Qualityquim (Bogotá, grado laboratorio)"
+        "Homecenter, sección piscinas (Poolchem)",
+        "Tiendas de piscinas"
       ],
       "precio": {
-        "valor": 114900,
-        "presentacion": "por frasco de 250 ml (grado laboratorio)",
+        "valor": null,
+        "presentacion": "sin precio publicado el 9-nov",
         "compra": 1,
-        "tienda": "Qualityquim",
-        "url": "https://qualityquim.com.co/producto/rojo-de-fenol-solucion-2/"
+        "tienda": "Homecenter",
+        "url": "https://www.homecenter.com.co/homecenter-co/product/47762/frasco-de-rojo-phenol-20-ml/47762/"
       },
-      "alternativa": "Reactivo de pH para piscina (mucho más barato; precio por confirmar)."
+      "alternativa": "Rojo de fenol grado laboratorio, 250 ml (Qualityquim, $114.900)."
     },
     {
       "id": "l12",
@@ -1133,11 +1105,11 @@
         "Supermercados y misceláneas"
       ],
       "precio": {
-        "valor": 14900,
+        "valor": 24900,
         "presentacion": "por unidad",
         "compra": 1,
         "tienda": "Homecenter",
-        "url": "https://www.homecenter.com.co/homecenter-co/k/nevera-de-icopor"
+        "url": "https://www.homecenter.com.co/homecenter-co/product/377035/nevera-icopor-10-litros/377035/"
       },
       "alternativa": null
     },
@@ -1167,7 +1139,7 @@
         "presentacion": "por 4 sobres (sin el maíz)",
         "compra": 1,
         "tienda": "Homecenter",
-        "url": "https://www.homecenter.com.co/homecenter-co/category/cat1690120/semillas-y-bulbos/"
+        "url": "https://www.homecenter.com.co/homecenter-co/product/552505/semilla-frijol-lingua-organico-5-gramos/552505/"
       },
       "alternativa": null
     },
@@ -1286,5 +1258,17 @@
       },
       "alternativa": "Cinta negra directamente sobre un piso claro."
     }
-  ]
+  ],
+  "cambios": [
+    "Seguidor de línea: módulo de 3 sensores TCRT5000 en una placa (ref. TAR-TCRT5000 de I+D), 1 unidad.",
+    "Conversor de nivel por sonda BME280 de 3,3–5 V con cable: 4 cables directos al Arduino.",
+    "Transistor 2N2222 por módulo buzzer activo de 3 pines.",
+    "Regulador XL4016 + puerto USB suelto por reductor USB 5 V de 2 puertos con bornera: no se desajusta.",
+    "Se retira la toma de 12 V tipo encendedor: el controlador ya trae salida de carga de 12 V y 2 USB.",
+    "Cinta LED por bombillo de 12 V con socket de tornillo.",
+    "Cargador TP4056 (módulo para cablear) por cargador de pared para 2 baterías 18650.",
+    "Se agrega conector DC con bornera para usar el adaptador de 12 V sin cortar su cable.",
+    "La electrónica se cotiza en Didácticas Electrónicas I+D (donde se compró el kit de robótica); sus precios incluyen IVA."
+  ],
+  "criterio": "Todo lo electrónico debe ser prácticamente conectar y usar: módulos con pines o borneras, pocas conexiones y nada que soldar, para que los estudiantes de grados 6–9 entiendan qué hace cada pieza."
 }

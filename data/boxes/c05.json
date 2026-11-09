@@ -7,11 +7,11 @@
   "accent": "#C0392B",
   "items": [
     {"id": "C05-01", "name": "Kit de robótica KIT-RBT-01-RN (placa compatible UNO, puente H L298N, 2 motorreductores, rueda loca, HC-SR04, sensor IR, SG90, chasis)", "qty": 1, "unit": "kit", "status": "en_mano", "group": "placa", "source": "I+D S202767", "note": "Abierto 7-nov: puente H L298N y rueda loca incluidos; NO trae seguidor de línea (ver C05-15)."},
-    {"id": "C05-02", "name": "Portapilas 2×18650 con interruptor + 2 celdas 18650 + cargador USB", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #8", "care": "Celdas fuera del portapilas y en estuche para transporte; nunca sueltas con objetos metálicos."},
+    {"id": "C05-02", "name": "Portapilas 2×18650 en serie + 2 baterías 18650 + cargador de pared", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #8", "care": "Celdas fuera del portapilas y en estuche para transporte; nunca sueltas con objetos metálicos."},
     {"id": "C05-03", "name": "Rueda loca", "qty": 1, "unit": "und", "status": "en_mano", "group": "mecanico", "source": "Incluida en el kit KIT-RBT-01-RN", "note": "Verificada al abrir (7-nov)."},
     {"id": "C05-04", "name": "Kit Smart Home IoT Keyes KEY-HOME (placa compatible UNO + shield, PIR, LCD 1602, relé, 2 servos, ventilador, HM-10, sensores)", "qty": 1, "unit": "kit", "status": "en_mano", "group": "placa", "source": "I+D S202767", "care": "Piezas de madera planas, con separadores; tornillería en bolsas rotuladas."},
     {"id": "C05-05", "name": "Pilas AA alcalinas", "qty": 6, "unit": "und", "status": "pendiente_compra", "group": "energia", "source": "Compra lunes #9", "care": "Empacar fuera del portapilas."},
-    {"id": "C05-06", "name": "Sensor magnético de puerta (reed switch MC-38)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "sensor", "source": "Compra lunes #19"},
+    {"id": "C05-06", "name": "Sensor magnético de puerta NC (dos piezas, dos cables)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "sensor", "source": "Compra lunes #19"},
     {"id": "C05-07", "name": "Capacitor electrolítico 470 µF 16 V", "qty": 2, "unit": "und", "status": "pendiente_compra", "group": "granel", "source": "Compra lunes #21"},
     {"id": "C05-08", "name": "Cinta aislante negra + 2 pliegos de cartulina blanca (pista)", "qty": 1, "unit": "juego", "status": "pendiente_compra", "group": "consumible", "source": "Compra lunes #24"},
     {"id": "C05-09", "name": "Arduino UNO R3 (CH340) + cable USB (placas de práctica)", "qty": 2, "unit": "und", "status": "en_mano", "group": "placa", "source": "San Nicolás 908817", "note": "Los dos kits traen su placa; estas sirven para practicar mientras se arma la mecánica."},
@@ -19,7 +19,7 @@
     {"id": "C05-11", "name": "Pantalla LCD 1602 azul", "qty": 2, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "San Nicolás 908817"},
     {"id": "C05-12", "name": "Backpack I2C PCF8574 para LCD 1602", "qty": 2, "unit": "und", "status": "en_mano", "group": "pantalla", "source": "Compra oficina (soldado a la LCD, 7-nov)"},
     {"id": "C05-13", "name": "Cables de conexión M-M, M-H y H-H 10 cm (20 de cada uno) + M-H 20 cm ×20", "qty": 80, "unit": "und", "status": "en_mano", "group": "cableado", "source": "San Nicolás 908817 / Vistrónica"},
-    {"id": "C05-15", "name": "Módulo seguidor de línea TCRT5000 (1 canal, salida digital)", "qty": 2, "unit": "und", "status": "pendiente_compra", "group": "sensor", "source": "Compra lunes #27", "note": "El kit no lo trae. Uno a cada lado de la línea."},
+    {"id": "C05-15", "name": "Módulo seguidor de línea de 3 sensores TCRT5000 (TAR-TCRT5000)", "qty": 1, "unit": "und", "status": "pendiente_compra", "group": "sensor", "source": "Compra lunes #27", "note": "El kit no lo trae. Un solo módulo con sensores izquierda, centro y derecha."},
     {"id": "C05-14", "name": "Material pedagógico (guía + acceso a la página de simulación)", "qty": 1, "unit": "und", "status": "interno", "group": "documento", "source": "Asesoría técnica + pedagoga", "note": "Corregir el Excel: el vehículo se programa con Arduino, no con Micro:Bit."}
   ],
   "projects": [
@@ -44,7 +44,7 @@
       "challenge": "Dificultad para entregar materiales o mensajes a estudiantes con movilidad reducida dentro del salón.",
       "objective": "Programar el robot para que siga una línea en el piso con el sensor infrarrojo y lleve objetos del escritorio del profesor al estudiante.",
       "grades": "6-7", "ods": ["ODS 10", "ODS 4"],
-      "uses": [{"item": "C05-01", "qty": 1}, {"item": "C05-02", "qty": 1}, {"item": "C05-03", "qty": 1}, {"item": "C05-08", "qty": 1}, {"item": "C05-15", "qty": 2}],
+      "uses": [{"item": "C05-01", "qty": 1}, {"item": "C05-02", "qty": 1}, {"item": "C05-03", "qty": 1}, {"item": "C05-08", "qty": 1}, {"item": "C05-15", "qty": 1}],
       "simulation": {"kind": "interactiva", "status": "pendiente", "note": "Wokwi no simula el robot sobre la pista; simulador propio del seguidor de línea."}
     },
     {

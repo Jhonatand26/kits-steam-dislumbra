@@ -80,6 +80,8 @@ dicen cosas distintas.
 | Panel de C03 de 20 W (RTM020M), no de 80 W | Ya estaba en Dislumbra. Con el controlador PWM el panel trabaja al voltaje de la batería y entrega su corriente: ~1 A ≈ 0,14C, carga sana para la batería de 7 Ah. Uno de 80 W daría ~4,5 A (0,6C) y la calentaría. Repone ~45–55 Wh por día de sol y cabe en la caja. Ahorro: $120.960. |
 | Informe en LaTeX generado desde JSON | El contenido vive en `data/compras/faltantes.json` (validado con Pydantic) y la presentación en `plantilla.tex.j2`. Cambiar un precio no toca LaTeX, y cambiar el diseño no toca datos. Los ítems citan proyectos como `"C09-P3"` y el generador toma los nombres de `data/boxes`, así no se repiten. |
 | Jinja con `\VAR{}` y `\BLOCK{}` | Los delimitadores por defecto (`{{ }}`, `{% %}`) chocan con las llaves de LaTeX. Con estos, la plantilla sigue siendo LaTeX legible. |
+| Electrónica "conectar y usar" | Criterio del 9-nov: módulos con pines o borneras, pocas conexiones y nada que soldar, para que estudiantes de grados 6–9 entiendan cada pieza. Por eso se cambiaron el conversor de nivel por una sonda BME280 de 5 V, el transistor por un módulo buzzer, el XL4016 + puerto USB por un reductor USB fijo de 5 V (además es más seguro: no se desajusta) y se quitó la toma de 12 V (el controlador ya trae salida de carga). |
+| Fotos reales de tienda en el informe | El informe va al cliente como una cotización. Cada ficha usa la foto de la tienda donde se consultó el precio (`fotos/<id>.png`); la ilustración TikZ queda solo como respaldo si falta la foto. |
 | Ilustraciones TikZ + QR, fotos opcionales | Desde el entorno de desarrollo no se pueden descargar fotos de las tiendas. Las ilustraciones comparten estilo, el QR lleva a la foto real, y una foto en `fotos/<id>.jpg` reemplaza la ilustración sin tocar código. |
 | XeLaTeX con Barlow | Misma tipografía que la página web (identidad visual). Las fuentes van en el repo (licencia OFL) para que compile igual en cualquier equipo. |
 | Numeración fija en la compra del lunes | Las cajas y las hojas citan los ítems como "Compra lunes #N". Quitar una fila con `RESUELTO` no renumera las demás. |
@@ -120,13 +122,21 @@ Ver `.env.example`. No hay credenciales en el proyecto.
 | `Missing character: ↔` en el log de XeLaTeX | Barlow no tiene la flecha doble | Escribir "3,3 V – 5 V" en los datos; en ilustraciones usar `$\leftrightarrow$` (fuente matemática) |
 | URLs larguísimas desbordaban el anexo | `\url` no corta en cualquier carácter | Paquete `xurl` |
 | No se pudieron leer precios de MercadoLibre ni descargar imágenes | MercadoLibre bloquea lectores automáticos (`robots`) y la red del entorno solo permite GitHub y registros de paquetes | Precios de tiendas con página consultable; Barlow vía npm (`@expo-google-fonts/barlow`) |
+| No se podían bajar fotos desde el entorno de desarrollo | La red del entorno solo permite GitHub y los registros de paquetes | Se abrió cada tienda en el navegador del computador de Jhonatan y se capturaron las fotos en una cuadrícula; luego se recortaron con Pillow |
+| `fetch` de imágenes fallaba con `TypeError: Failed to fetch` | La CDN de la tienda (p. ej. jumpseller de Zamux) no envía cabeceras CORS para otros orígenes | Abrir la CDN como página y hacer `fetch` desde su mismo origen, o mostrar la imagen con `<img>` (no necesita CORS) y capturarla |
+| Las descargas del navegador quedaban como `.org.chromium.Chromium.*` y desaparecían | El navegador bloquea las descargas automáticas múltiples y las cancela al navegar | No depender de descargas: capturas de pantalla |
 | `faltantes_build.py` fallaba con `FileNotFoundError` en un clon nuevo | Rutas absolutas fijas a la carpeta de trabajo donde se escribió el script | Rutas relativas al repo con `Path(__file__).resolve().parent.parent / "exports"` |
 
 ## Deuda técnica conocida
 
 - `tools/faltantes_build.py` (Excel de la compra del lunes) y
   `data/compras/faltantes.json` (informe PDF) repiten precios y tiendas.
+  Desde el 9-nov el Excel quedó desactualizado (no tiene los cambios de
+  "conectar y usar"): la referencia de compra es el PDF.
   El siguiente paso es que el script del Excel lea el JSON, para que
   haya una sola fuente de precios.
+- La lección del Tablero de Convivencia (`data/lessons/c06-p1.json`)
+  todavía explica el buzzer con transistor; hay que pasarla al módulo
+  buzzer activo (C06-16).
 - El script del Excel enlaza filas con precios por número de fila
   (`_map`); con la fuente única desaparece.

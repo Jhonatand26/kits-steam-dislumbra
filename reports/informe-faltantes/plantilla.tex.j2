@@ -122,7 +122,7 @@
 \end{itemize}
 
 \vfill
-{\small\color{suave}Las imágenes son ilustraciones de referencia. El código QR de cada ficha abre la página del producto, con la foto real. Los precios son aproximados: no incluyen envío y pueden cambiar.}
+{\small\color{suave}Las fotos son las de la tienda donde se consultó cada precio; el código QR de cada ficha abre esa página. Los precios son aproximados: no incluyen envío y pueden cambiar.}
 
 \newpage
 %% ---------------------------------------------------------------- Resumen
@@ -182,9 +182,25 @@
 \end{tcolorbox}
 \end{minipage}
 
+\BLOCK{if c.cambios}
 \vspace{14pt}
+\begin{tcolorbox}[colback=white, colframe=linea, boxrule=0.6pt, arc=3pt]
+\rotulo{Criterio de selección}
+{\small \VAR{c.criterio|e}}
+
+\vspace{4pt}
+\rotulo{Cambios frente a la versión anterior}
+{\small\begin{itemize}
+\BLOCK{for x in c.cambios}
+  \item \VAR{x|e}
+\BLOCK{endfor}
+\end{itemize}}
+\end{tcolorbox}
+\BLOCK{endif}
+
+\vspace{8pt}
 \begin{tcolorbox}[colback=marca!6, colframe=marca!6, boxrule=0pt, arc=3pt]
-\small\textbf{Para el martes 10 de noviembre.} Las tiendas de Bogotá y Medellín tardan de 2 a 3 días en entregar. Lo de prioridad 1 conviene buscarlo el lunes en las tiendas físicas de Cali, y dejar los envíos para lo que no se consiga allí. El material de laboratorio y los perecederos los consigue otra persona; los perecederos (levadura, yogur) se entregan aparte de la caja, no guardados en ella.
+\small\textbf{Para el martes 10 de noviembre.} Los pedidos por envío (I+D, Zamux, Bogotá y Medellín) tardan de 1 a 3 días hábiles. Si algo imprescindible no llega, la caja se presenta con el ítem marcado como pendiente y su ficha de este informe. El material de laboratorio y los perecederos los consigue otra persona; los perecederos (levadura, yogur) se entregan aparte de la caja, no guardados en ella.
 \end{tcolorbox}
 
 %% --------------------------------------------------------- Lista de compra
@@ -194,14 +210,15 @@
 \BLOCK{for resp, titulo in [("compras", "Compras del lunes · electrónica y energía"), ("otra persona", "Lo consigue otra persona · laboratorio, biología, herramientas y papelería")]}
 \subsection{\VAR{titulo}}
 {\small
-\begin{xltabular}{\linewidth}{@{}l L r l c r r@{}}
+\renewcommand{\arraystretch}{1.15}
+\begin{xltabular}{\linewidth}{@{}c l L r l c r r@{}}
 \toprule
-\textbf{ID} & \textbf{Elemento} & \textbf{Cant.} & \textbf{Cajas} & \textbf{P} & \textbf{Precio ref.} & \textbf{Subtotal}\\
+ & \textbf{ID} & \textbf{Elemento} & \textbf{Cant.} & \textbf{Cajas} & \textbf{P} & \textbf{Precio ref.} & \textbf{Subtotal}\\
 \midrule
 \endhead
 \BLOCK{for nombre, fichas in grupos}
 \BLOCK{for f in fichas if f.item.responsable == resp}
-\texttt{\VAR{f.item.id}} & \VAR{f.item.nombre|e} & \VAR{f.item.cantidad} & \BLOCK{for u in f.usos|unique(attribute='caja')}\chipsuave{caja\VAR{u.caja}}{\VAR{u.caja}}\BLOCK{endfor} & \textcolor{p\VAR{f.item.prioridad}}{\textbf{\VAR{f.item.prioridad}}} & \VAR{f.item.precio.valor|pesos} & \VAR{f.item.precio.subtotal|pesos}\\
+\BLOCK{if f.foto}\raisebox{-0.42\height}{\includegraphics[width=1.05cm, height=0.95cm, keepaspectratio]{../fotos/\VAR{f.foto}}}\BLOCK{endif} & \texttt{\VAR{f.item.id}} & \VAR{f.item.nombre|e} & \VAR{f.item.cantidad} & \BLOCK{for u in f.usos|unique(attribute='caja')}\chipsuave{caja\VAR{u.caja}}{\VAR{u.caja}}\BLOCK{endfor} & \textcolor{p\VAR{f.item.prioridad}}{\textbf{\VAR{f.item.prioridad}}} & \VAR{f.item.precio.valor|pesos} & \VAR{f.item.precio.subtotal|pesos}\\
 \BLOCK{endfor}
 \BLOCK{endfor}
 \bottomrule
@@ -239,7 +256,7 @@
 \end{xltabular}}
 
 \begin{tcolorbox}[colback=fondo, colframe=fondo, boxrule=0pt, arc=3pt]
-\small\textbf{Ruta sugerida para el lunes.} (1) Carrera 6 entre Calles 15 y 17: módulos, transistores, capacitores, adaptadores, caimanes, puerto USB y cable. (2) Innovatronics (confirmar antes por WhatsApp): DS18B20, protoboards, relé y reductor. (3) Almacén de repuestos automotrices: bombillo 1156 con socket, toma de 12 V y portafusible. Lo que no aparezca se pide por envío a Zamux o Electronilab.
+\small\textbf{Ruta sugerida.} (1) Hacer hoy el pedido de electrónica a Didácticas Electrónicas I+D: casi todo está ahí y en una sola compra. (2) Lo imprescindible que no llegue a tiempo se busca en la Carrera 6 entre Calles 15 y 17 o en Innovatronics (confirmar antes por WhatsApp). (3) Homecenter: portafusible, destornilladores, pelacables, cinta, nevera de icopor y semillas. (4) Almacén de repuestos automotrices: bombillo 1156 con su socket.
 \end{tcolorbox}
 
 %% -------------------------------------------------------------- Fichas
@@ -250,12 +267,12 @@
 \BLOCK{set it = f.item}
 \begin{tcolorbox}[enhanced, unbreakable, colback=white, colframe=linea,
   boxrule=0.6pt, arc=4pt, left=0pt, right=8pt, top=4pt, bottom=4pt,
-  sidebyside, sidebyside align=top seam, lefthand width=3.7cm,
+  sidebyside, sidebyside align=top seam, lefthand width=4.4cm,
   segmentation style={draw=linea, line width=0.6pt},
   before skip=0pt, after skip=8pt]
 \centering
 \BLOCK{if f.foto}
-\includegraphics[width=3.2cm, height=2.4cm, keepaspectratio]{../fotos/\VAR{f.foto}}
+\includegraphics[width=3.9cm, height=3.3cm, keepaspectratio]{../fotos/\VAR{f.foto}}
 \BLOCK{else}
 \ilus{\VAR{it.ilustracion}}
 \BLOCK{endif}
@@ -263,7 +280,7 @@
 \vspace{4pt}
 \BLOCK{if it.precio.url}
 \qrcode[height=1.3cm]{\VAR{it.precio.url|qr}}\\[2pt]
-{\condensada\scriptsize\color{suave}Foto real y ficha:\\\href{\VAR{it.precio.url|link}}{\VAR{it.precio.url|dominio}}}
+{\condensada\scriptsize\color{suave}Página del producto:\\\href{\VAR{it.precio.url|link}}{\VAR{it.precio.url|dominio}}}
 \BLOCK{elif it.precio.valor == 0}
 {\condensada\scriptsize\color{suave}Se prepara en el aula}
 \BLOCK{else}
@@ -338,7 +355,7 @@ sin costo (\VAR{it.precio.presentacion|e}).
 \bottomrule
 \end{xltabular}}
 
-\subsection{Cómo poner fotos reales}
-{\small Guarda la foto como \texttt{reports/informe-faltantes/fotos/<ID>.jpg} (por ejemplo \texttt{e01.jpg}) y vuelve a generar el informe con \texttt{uv run informe} desde \texttt{tools/informe}. La ficha usa la foto en lugar de la ilustración, sin cambiar el código. Este informe tiene \VAR{con_foto} foto(s) real(es).}
+\subsection{Fotos}
+{\small Las fotos están en \texttt{reports/informe-faltantes/fotos/<ID>.png} (por ejemplo \texttt{e01.png}). Para cambiar una, reemplaza el archivo y vuelve a generar el informe con \texttt{uv run informe} desde \texttt{tools/informe}. Si falta la foto de un ítem, la ficha usa una ilustración. Este informe tiene \VAR{con_foto} de \VAR{total.items} fotos reales.}
 
 \end{document}

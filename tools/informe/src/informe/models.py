@@ -76,3 +76,5 @@ class Catalogo(BaseModel):
     tiendas_cali: list[TiendaCali]
     tiendas_envio: list[TiendaEnvio]
     items: list[Item]
+    criterio: str = ""
+    cambios: list[str] = []

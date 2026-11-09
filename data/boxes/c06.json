@@ -62,7 +62,7 @@
     },
     {
       "id": "C06-07",
-      "name": "Adaptador 9 V 1 A plug 5.5×2.1",
+      "name": "Adaptador 9 V 2 A plug 5.5×2.1",
       "qty": 1,
       "unit": "und",
       "status": "pendiente_compra",
@@ -145,8 +145,8 @@
     },
     {
       "id": "C06-16",
-      "name": "Transistor NPN 2N2222 (driver del buzzer)",
-      "qty": 4,
+      "name": "Módulo buzzer activo (3 pines: VCC, GND, señal)",
+      "qty": 1,
       "unit": "und",
       "status": "pendiente_compra",
       "group": "granel",
