@@ -37,7 +37,10 @@ const base = import.meta.env.BASE_URL;
           </svg>
           <span>Kits STEAM · Dislumbra</span>
         </a>
-        <span class="muted top-note">Centros de Interés CP 2026</span>
+        <nav aria-label="Navegación principal">
+          <span class="muted top-note">Centros de Interés CP 2026</span>
+          <a class="lab-link" href={`${base}laboratorio/`}>Laboratorio 3D</a>
+        </nav>
       </div>
     </header>
     <main id="contenido">
@@ -78,8 +81,15 @@ const base = import.meta.env.BASE_URL;
         font-weight: 600;
         font-size: 1.2rem;
       }
+      .lab-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 0.95rem; white-space: nowrap; }
+      nav { display: flex; align-items: center; gap: 1.2rem; }
       .top-note { font-size: 0.95rem; }
-      @media (max-width: 520px) { .top-note { display: none; } }
+      @media (max-width: 760px) { .top-note { display: none; } }
+      @media (max-width: 520px) {
+        .brand { font-size: 1rem; }
+        .brand svg { display: none; }
+        .top-row { gap: 0.6rem; }
+      }
       .foot {
         margin-top: 5rem;
         padding: 2rem 0 3rem;

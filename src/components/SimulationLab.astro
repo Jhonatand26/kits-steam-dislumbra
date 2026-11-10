@@ -1,0 +1,108 @@
+---
+import { simulationScenes } from "../lab/scenes/index";
+import "../styles/lab.css";
+const scenes = simulationScenes.list();
+const first = scenes[0];
+---
+
+<simulation-lab class="lab" data-viewer-state="idle">
+  <p class="sheet lab-notice" data-no-script>Este laboratorio necesita JavaScript para el visor y los controles. La guía sin visor sigue disponible más abajo.</p>
+  <div data-controls hidden>
+    <div class="lab-scene-bar sheet">
+      <label class="lab-scene-picker">Experiencia
+        <select data-scenes aria-label="Experiencia">
+          {scenes.map((scene) => <option value={scene.id}>{scene.title}</option>)}
+        </select>
+      </label>
+      <p data-scene-summary>{first.summary}</p>
+      <span class="lab-model-note">Modelo de comportamiento<br /><strong>No sustituye una prueba física</strong></span>
+    </div>
+
+    <div class="lab-workbench sheet">
+      <div class="lab-main">
+        <div class="lab-view-heading">
+          <h2 data-scene-title>{first.title}</h2>
+          <button type="button" data-action="fullscreen" title="Activar o salir de pantalla completa">Pantalla completa</button>
+        </div>
+        <div class="lab-camera" aria-label="Controles de cámara">
+          <button type="button" data-camera data-action="home" disabled>Vista inicial</button>
+          <button type="button" data-camera data-action="top" disabled>Vista superior</button>
+          <button type="button" data-camera data-action="zoom-in" disabled aria-label="Acercar">+</button>
+          <button type="button" data-camera data-action="zoom-out" disabled aria-label="Alejar">−</button>
+          <label class="lab-check"><input type="checkbox" data-exploded disabled /> Vista expandida</label>
+        </div>
+
+        <div class="lab-stage">
+          <div data-viewport class="lab-viewport"></div>
+          <div data-placeholder class="lab-placeholder">
+            <svg class="lab-board-art" width="260" height="180" viewBox="0 0 260 180" aria-hidden="true">
+              <rect x="26" y="18" width="208" height="140" rx="8" fill="var(--paper-2)" stroke="var(--inner)" stroke-width="2" />
+              <path d="M58 50h50v25h60m-110 50h50V95h60m-30-60v25m-50 85v-30h70" fill="none" stroke="var(--copper)" stroke-width="2" />
+              <rect x="100" y="68" width="80" height="40" rx="3" fill="var(--ink)" />
+              <path d="M108 58v10m12-10v10m12-10v10m12-10v10m12-10v10m12-10v10M108 108v10m12-10v10m12-10v10m12-10v10m12-10v10m12-10v10" stroke="var(--copper)" stroke-width="4" />
+              <rect x="16" y="65" width="37" height="43" rx="3" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2" />
+              <path d="M76 32h120M76 143h120" stroke="var(--ink-2)" stroke-width="7" stroke-dasharray="4 5" />
+              <circle cx="43" cy="34" r="4" fill="var(--copper)" /><circle cx="218" cy="143" r="4" fill="var(--copper)" />
+            </svg>
+            <p>Una mesa de trabajo para<br /><strong>mirar, probar y comprender.</strong></p>
+            <button type="button" class="lab-primary" data-action="activate">Activar visor 3D</button>
+          </div>
+          <div class="lab-hud" aria-label="Estado de la experiencia">
+            <span data-step-count>Paso 1 de {first.chapters.length}</span>
+            <strong data-signal>{first.chapters[0].signal}</strong>
+          </div>
+        </div>
+        <p class="lab-viewer-message" data-viewer-message role="status">El visor se carga al activarlo.</p>
+        <p class="lab-help" id="lab-viewer-help">Arrastra para girar; rueda o pellizco para acercar. Con el visor enfocado: flechas para girar, +/− para zoom e Inicio para restablecer.</p>
+
+        <div class="lab-transport">
+          <div class="lab-timeline-label"><label for="lab-timeline">Posición de reproducción</label><span data-time role="timer" aria-live="off">0.0 / {first.duration.toFixed(1)} s</span></div>
+          <input id="lab-timeline" data-timeline type="range" min="0" max={first.duration} step="0.01" value="0" />
+          <div class="lab-transport-buttons">
+            <button type="button" data-action="previous" aria-label="Paso anterior" disabled>Anterior</button>
+            <button type="button" data-action="play" class="lab-primary">Reproducir</button>
+            <button type="button" data-action="next" aria-label="Siguiente paso">Siguiente</button>
+            <button type="button" data-action="reset" aria-label="Reiniciar secuencia">Reiniciar</button>
+            <label class="lab-rate">Velocidad
+              <select data-rate aria-label="Velocidad"><option value="0.25">0,25×</option><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+            </label>
+            <label class="lab-check"><input type="checkbox" data-loop /> Repetir</label>
+          </div>
+        </div>
+      </div>
+
+      <aside class="lab-learning" aria-label="Guía de exploración">
+        <section class="lab-explanation" aria-live="polite" aria-atomic="true">
+          <span class="lab-section-label">Observa y explica</span>
+          <h3 data-chapter-title>{first.chapters[0].title}</h3>
+          <p data-chapter-description>{first.chapters[0].description}</p>
+        </section>
+        <ol class="lab-chapters" data-chapters aria-label="Pasos de la experiencia"></ol>
+        <section class="lab-inspection">
+          <h3>Explora las piezas</h3>
+          <div class="lab-parts" data-parts></div>
+          <div class="lab-inspector" aria-live="polite">
+            <h4 data-inspector-title>Selecciona una pieza</h4>
+            <p data-inspector-description>Puedes usar los botones o tocar el modelo.</p>
+          </div>
+          <button type="button" data-action="focus" disabled>Centrar pieza</button>
+        </section>
+        <details class="lab-code"><summary>Instrucción ilustrativa</summary><pre><code data-code></code></pre><p>No se compila ni se envía a una placa.</p></details>
+      </aside>
+    </div>
+  </div>
+
+  <details class="lab-reference sheet">
+    <summary>Guía sin visor</summary>
+    <p>Consulta los mismos pasos sin WebGL ni JavaScript. No necesitas una placa física para explorar estas ideas.</p>
+    {scenes.map((scene) => <section>
+      <h2>{scene.title}</h2>
+      <p>{scene.summary}</p>
+      <ol>{scene.chapters.map((chapter) => <li><h3>{chapter.title}</h3><p>{chapter.description}</p></li>)}</ol>
+    </section>)}
+  </details>
+</simulation-lab>
+
+<script>
+  import "../lab/element";
+</script>

@@ -130,6 +130,23 @@ Para las pruebas del navegador, `TEST_PORT` cambia el puerto local de prueba;
 `TEST_BASE_URL` apunta a una vista previa ya iniciada. Las capturas y trazas
 se guardan en `test-results/` y no se versionan.
 
+## Laboratorio educativo 3D
+
+Desde **Laboratorio 3D** en la navegación se accede a `/laboratorio/`: una mesa
+de exploración con dos experiencias originales, anatomía de la UNO y señal
+digital/LED. El visor permite girar, acercar, inspeccionar piezas y expandir el
+modelo; el reproductor permite pausar, avanzar por pasos, buscar un instante,
+cambiar la velocidad y repetir. La guía funciona sin WebGL ni JavaScript.
+
+Three.js se carga al activar el visor, no en las páginas de inventario. El
+laboratorio conserva la identidad visual del portal y no sustituye las lecciones
+SVG, el firmware ni las instrucciones de montaje físico. No compila Arduino ni
+simula corriente eléctrica.
+
+La arquitectura `SimulationSceneRegistry` permite registrar nuevas experiencias
+sin cambiar el visor ni la interfaz. Contratos, extensión, procedencia de la
+referencia y comprobaciones: [guía del laboratorio](docs/laboratory.md).
+
 ## Decisiones técnicas
 
 | Decisión | Por qué |
@@ -137,7 +154,7 @@ se guardan en `test-results/` y no se versionan.
 | Una caja por categoría, proyectos en serie | Acordado con Dislumbra: cada caja debe bastar para todos sus proyectos, uno tras otro. Por eso la regla de inventario es el **máximo** que pide un proyecto, no la suma (`rules.required_qty`). |
 | JSON + JSON Schema como contrato | Lo consumen dos lenguajes (Astro y Python). Un esquema neutro evita duplicar el contrato en zod y Pydantic. |
 | Astro estático | Páginas rápidas, sin servidor, que funcionan con mala conexión (contexto rural). Vercel lo construye sin configuración. |
-| Simulador propio en SVG, no Wokwi embebido | La página explica el montaje paso a paso (pieza, agujero exacto, cable, código) y luego lo corre. Es liviano, funciona en celulares y en conexiones lentas, y permite mostrar el programa real resaltado por partes. Un 3D (como los ejemplos de referencia) costaría días por proyecto. |
+| Simulador propio en SVG, no Wokwi embebido | Las lecciones de proyecto explican el montaje paso a paso y luego ejecutan su modelo de comportamiento. Se conserva esta opción liviana; el laboratorio 3D independiente explora conceptos, sin sustituir las guías de montaje. |
 | La lección se describe por agujeros ("e20") | El mismo dato sirve para dibujar, para el texto de cada paso y para que el estudiante replique el montaje físico exactamente igual. |
 | Parámetros leídos del sketch | Las opciones se aplican antes de resolver AVISO_MS, COLOR_MS y BRILLO. Los pines, el dibujo y el código visible usan la misma configuración; la lógica portada sigue requiriendo pruebas de correspondencia. |
 | Simulación en Wokwi enlazada (proyectos aún sin lección) | Los proyectos de Arduino ya se validaron en Wokwi (agosto 2026). Energía solar y seguidor de línea no se pueden simular en Wokwi: llevan simulador propio. |

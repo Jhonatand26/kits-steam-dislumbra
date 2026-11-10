@@ -1,0 +1,432 @@
+/* The laboratory inherits the portal's paper, ink, copper and type tokens. */
+.lab-intro {
+  padding: 2.4rem 0 1.3rem;
+}
+.lab-intro > a {
+  font-size: 0.95rem;
+}
+.lab-intro h1 {
+  margin-top: 0.45rem;
+}
+.lab-intro p {
+  margin-bottom: 0;
+  color: var(--ink-2);
+}
+.lab {
+  display: block;
+  min-width: 0;
+}
+.lab [hidden] {
+  display: none !important;
+}
+.lab button,
+.lab select,
+.lab input {
+  font: inherit;
+}
+.lab button,
+.lab select {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0.45rem 0.7rem;
+}
+.lab button {
+  cursor: pointer;
+  line-height: 1.2;
+}
+.lab button:hover:not(:disabled),
+.lab button[aria-pressed="true"] {
+  border-color: var(--copper);
+  background: var(--paper-2);
+}
+.lab button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+.lab button.lab-primary {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+  font-weight: 600;
+}
+.lab button.lab-primary:hover:not(:disabled) {
+  background: var(--ink-2);
+}
+.lab-scene-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.lab-scene-picker {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  min-width: 220px;
+}
+.lab-scene-picker select {
+  width: 100%;
+  color: var(--ink);
+  font-size: 1.06rem;
+}
+.lab-scene-bar p {
+  margin: 0;
+  max-width: 36ch;
+  font-size: 0.95rem;
+}
+.lab-model-note {
+  margin-left: auto;
+  color: var(--ink-2);
+  font-size: 0.8rem;
+}
+.lab-model-note strong {
+  font-weight: 500;
+}
+.lab-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(270px, 1fr);
+  overflow: hidden;
+  border-radius: 8px;
+}
+.lab-main {
+  min-width: 0;
+}
+.lab-view-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 1rem 1rem 0;
+}
+.lab-view-heading h2 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+.lab-view-heading button {
+  font-size: 0.82rem;
+}
+.lab-camera {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+}
+.lab-camera button {
+  font-size: 0.88rem;
+}
+.lab-camera button[aria-label] {
+  min-width: 44px;
+  font-size: 1.35rem;
+}
+.lab-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.lab-check input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--copper);
+}
+.lab-stage {
+  position: relative;
+  height: 420px;
+  background: var(--paper);
+  border-block: 1px solid var(--line);
+}
+.lab-viewport {
+  position: absolute;
+  inset: 0;
+}
+.lab-viewport canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.lab-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2.4rem;
+  text-align: center;
+}
+.lab-placeholder p {
+  margin: 0.3rem 0 1rem;
+  color: var(--ink-2);
+}
+.lab-placeholder strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.lab-board-art {
+  width: min(240px, 75%);
+  height: auto;
+}
+.lab-hud {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  pointer-events: none;
+  font-size: 0.85rem;
+}
+.lab-hud > * {
+  padding: 0.3rem 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.lab-hud strong {
+  font-weight: 500;
+}
+.lab-viewer-message {
+  padding: 0.7rem 1rem 0;
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  min-height: 2rem;
+}
+.lab-help {
+  padding: 0.4rem 1rem 0.7rem;
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.8rem;
+}
+.lab-transport {
+  border-top: 1px solid var(--line);
+  padding: 1rem;
+  background: var(--paper-2);
+}
+.lab-timeline-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.88rem;
+}
+.lab-timeline-label span {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lab-transport input[type="range"] {
+  width: 100%;
+  min-height: 32px;
+  margin: 0.25rem 0;
+  accent-color: var(--copper);
+  cursor: pointer;
+}
+.lab-transport-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.lab-transport-buttons button {
+  font-size: 0.9rem;
+}
+.lab-rate {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  font-size: 0.85rem;
+}
+.lab-rate select {
+  padding-inline: 0.35rem;
+}
+.lab-learning {
+  border-left: 1px solid var(--line);
+  padding: 1.25rem;
+  min-width: 0;
+}
+.lab-section-label {
+  display: block;
+  color: var(--ink-2);
+  margin-bottom: 0.65rem;
+  font-size: 0.85rem;
+}
+.lab-explanation h3 {
+  font-size: 1.6rem;
+}
+.lab-explanation p {
+  font-size: 0.95rem;
+  min-height: 8.8rem;
+  margin-bottom: 0.8rem;
+}
+.lab-chapters {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.lab-chapters button {
+  width: 100%;
+  text-align: left;
+  font-size: 0.88rem;
+  border-color: transparent;
+  border-left: 3px solid var(--line);
+  border-radius: 0 4px 4px 0;
+}
+.lab-chapters button[aria-current] {
+  border-left-color: var(--copper);
+  background: var(--paper-2);
+  font-weight: 600;
+}
+.lab-inspection {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.lab-parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.8rem;
+}
+.lab-parts button {
+  font-size: 0.84rem;
+}
+.lab-inspector {
+  min-height: 9rem;
+}
+.lab-inspector h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.lab-inspector p {
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+.lab-code {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+.lab-code pre {
+  background: var(--paper-2);
+  padding: 0.7rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+.lab-code p {
+  color: var(--ink-2);
+  font-size: 0.8rem;
+}
+.lab summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding-block: 0.5rem;
+}
+.lab-reference {
+  margin-top: 1.25rem;
+  padding: 0.5rem 1.25rem;
+}
+.lab-reference > summary {
+  font-weight: 500;
+}
+.lab-reference section {
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+.lab-reference li {
+  padding-left: 0.4rem;
+  margin-bottom: 1rem;
+}
+.lab-scope {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+.lab-notice {
+  padding: 1rem;
+}
+.lab:fullscreen {
+  background: var(--paper);
+  padding: 1rem;
+  overflow: auto;
+}
+@media (max-width: 900px) {
+  .lab-workbench {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lab-learning {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .lab-explanation p,
+  .lab-inspector {
+    min-height: auto;
+  }
+  .lab-chapters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lab-model-note {
+    display: none;
+  }
+}
+@media (max-width: 520px) {
+  .lab-intro {
+    padding-top: 1.5rem;
+  }
+  .lab-intro h1 {
+    font-size: 2.8rem;
+  }
+  .lab-scene-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  .lab-view-heading {
+    flex-wrap: wrap;
+  }
+  .lab-stage {
+    height: 350px;
+  }
+  .lab-camera,
+  .lab-transport,
+  .lab-learning {
+    padding: 0.8rem;
+  }
+  .lab-timeline-label {
+    font-size: 0.8rem;
+  }
+  .lab-transport-buttons button {
+    flex-grow: 1;
+  }
+  .lab-check {
+    font-size: 0.85rem;
+  }
+}
+@media print {
+  .lab [data-controls],
+  .lab-intro > a {
+    display: none !important;
+  }
+  .lab-reference {
+    border: 0;
+    padding: 0;
+  }
+  .lab-reference::details-content {
+    display: block;
+  }
+}
