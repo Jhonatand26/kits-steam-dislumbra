@@ -12,7 +12,6 @@ for (const action of ["switch", "disconnect"] as const) {
     const requested = new Promise<void>((resolve) => {
       reached = resolve;
     });
-    await page.route("https://**", (route) => route.abort());
     await page.route(/\/_astro\/uno\.[^/]+\.js$/, async (route) => {
       reached();
       await gate;
