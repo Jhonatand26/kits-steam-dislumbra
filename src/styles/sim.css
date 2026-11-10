@@ -10,18 +10,33 @@ sim-player { display: block; margin-top: 1.2rem; }
     "strip strip";
   gap: 12px;
 }
-.sp-stage { grid-area: stage; }
-.sp-panel { grid-area: panel; }
-.sp-serial { grid-area: serial; }
-.sp-strip { grid-area: strip; }
+.sp-stage { grid-area: stage; min-width: 0; }
+.sp-panel { grid-area: panel; min-width: 0; }
+.sp-serial { grid-area: serial; min-width: 0; }
+.sp-strip { grid-area: strip; min-width: 0; }
 
 .sp-stage, .sp-panel, .sp-serial {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
 }
-.sp-svg { padding: 8px 8px 0; }
-.sp-canvas { width: 100%; height: auto; display: block; touch-action: manipulation; }
+.sp-svg { padding: 8px 8px 0; overflow-x: auto; }
+.sp-pan-hint { display: none; }
+.sp-canvas { width: 100%; min-width: 560px; height: auto; display: block; touch-action: manipulation; }
+.sp-stage-label { max-width: none; padding: 10px 12px; margin: 0; border-bottom: 1px solid var(--line); font: 600 1rem var(--font-cond); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; }
+.sp-state { color: var(--ink-2); font-weight: 400; }
+.running .sp-state { color: var(--ok); }
+.sp-inputs { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; }
+.sp-inputs button { flex: 1 1 130px; border: 1px solid var(--line); border-left: 5px solid var(--button-color); border-radius: 5px; min-height: 44px; padding: 8px; background: var(--paper); color: var(--ink); font: 600 1rem var(--font-cond); cursor: pointer; touch-action: none; }
+.sp-inputs button[aria-pressed="true"] { background: var(--paper-2); box-shadow: inset 0 0 0 2px var(--ink); }
+.sp-inputs button:disabled { opacity: 0.55; cursor: default; }
+.sp-settings { border-top: 1px solid var(--line); padding: 12px; }
+.sp-settings summary { cursor: pointer; padding: 4px 0; font-weight: 600; }
+.sp-settings .sp-hint { margin-top: 8px; }
+.sp-controls { display: grid; gap: 14px; }
+.sp-control { display: grid; grid-template-columns: 20px 1fr; column-gap: 8px; font-weight: 600; cursor: pointer; }
+.sp-control input { accent-color: var(--accent); width: 18px; height: 18px; margin: 4px 0; }
+.sp-control small { grid-column: 2; color: var(--ink-2); font-size: 0.9rem; font-weight: 400; }
 
 .sp-run {
   display: flex;
@@ -32,6 +47,7 @@ sim-player { display: block; margin-top: 1.2rem; }
   border-top: 1px solid var(--line);
 }
 .sp-run button, .sp-nav button {
+  min-height: 44px;
   font: 600 1rem var(--font-cond);
   padding: 0.5rem 0.9rem;
   border-radius: 6px;
@@ -47,7 +63,7 @@ sim-player { display: block; margin-top: 1.2rem; }
 .sp-toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
 
 /* Panel */
-.sp-panel { display: flex; flex-direction: column; min-height: 0; }
+.sp-panel { display: flex; flex-direction: column; min-height: 0; align-self: start; }
 .sp-tabs { display: flex; border-bottom: 1px solid var(--line); }
 .sp-tabs button {
   flex: 1;
@@ -62,7 +78,7 @@ sim-player { display: block; margin-top: 1.2rem; }
 .sp-tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 .sp-view { padding: 14px 16px 16px; overflow: auto; }
 .sp-view[hidden] { display: none; }
-.sp-count { margin: 0; font: 600 0.95rem var(--font-cond); color: var(--accent); }
+.sp-count { margin: 0; font: 600 0.95rem var(--font-cond); color: color-mix(in srgb, var(--accent) 65%, var(--ink)); }
 .sp-title { font-size: 1.55rem; margin: 0.2rem 0 0.5rem; }
 .sp-body { font-size: 1.02rem; }
 .sp-nav { display: flex; gap: 8px; margin-top: 1rem; }
@@ -126,11 +142,11 @@ sim-player { display: block; margin-top: 1.2rem; }
 .sp-strip li.done button { color: var(--ink); }
 .sp-strip li.done span { color: var(--ok); }
 .sp-strip li.current button { border-color: var(--accent); color: var(--ink); box-shadow: inset 0 -3px 0 var(--accent); }
-.sp-strip li.current span { color: var(--accent); }
+.sp-strip li.current span { color: color-mix(in srgb, var(--accent) 65%, var(--ink)); }
 
 /* ---------- Piezas SVG ---------- */
 .part { transition: opacity 260ms ease; cursor: pointer; outline: none; }
-.part.hidden { opacity: 0; pointer-events: none; }
+.part.hidden { visibility: hidden; opacity: 0; pointer-events: none; }
 .part.dim { opacity: 0.55; }
 sim-player.running .part.dim { opacity: 1; }
 .part.enter { animation: sp-in 420ms ease both; }
@@ -169,7 +185,7 @@ sim-player.running .part.dim { opacity: 1; }
 
 .led-dome { fill: rgba(255, 255, 255, 0.55); stroke: #b9c2c6; }
 .led-lens { fill: rgba(235, 240, 242, 0.7); transition: fill 80ms linear; }
-.led-glow { filter: url(#glow); opacity: 0; pointer-events: none; }
+.led-glow { pointer-events: none; }
 
 .btn-base { fill: #2d3236; stroke: #1d2124; }
 .btn-cap { stroke: rgba(0, 0, 0, 0.35); stroke-width: 1.5; transition: transform 60ms ease; transform-box: fill-box; transform-origin: center; }
@@ -178,6 +194,8 @@ sim-player.running .part.dim { opacity: 1; }
 sim-player:not(.running) .pressable { cursor: help; }
 
 .bz-body { fill: #22272a; stroke: #111; }
+.module-body { fill: #276e50; stroke: #174c36; stroke-width: 1.5; }
+.module-label { font: 700 5px var(--font); fill: #fff; }
 .bz-hole { fill: #5b6266; }
 .bz-plus { font: 700 10px var(--font); fill: #eaeaea; }
 .bz-wave { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0; }
@@ -199,6 +217,11 @@ sim-player:not(.running) .pressable { cursor: help; }
   }
   .sp-code { max-height: 300px; }
 }
+@media (max-width: 600px) {
+  .sp-pan-hint { display: block; padding: 0 12px; margin: 8px 0 0; font-size: 0.85rem; color: var(--ink-2); }
+}
 @media (prefers-reduced-motion: reduce) {
   .part.enter, .part-wire.enter .wire, .part.focus, .sounding .bz-wave { animation: none !important; }
+  .sounding .bz-wave { opacity: 0.75; }
 }
+@media print { sim-player { display: none; } }

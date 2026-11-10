@@ -42,10 +42,11 @@ electrónica y programación; una pedagoga adapta el material.
 - Stack de la página: Astro + TypeScript + CSS propio (no cambiarlo).
   Se publica en Vercel desde este repo.
 
-## Estado al 9-nov-2026
+## Estado al 10-nov-2026
 
-- 10-nov: se entregan al cliente las cajas organizadas, con la página
-  como evidencia de funcionamiento.
+- El 10-nov no es una fecha límite rígida. La prioridad es avanzar el
+  portal con simulador integrado y material pedagógico mientras se compran
+  los componentes del informe. La recepción física no bloquea las lecciones.
 - Informe de faltantes en `exports/Informe_Faltantes_Kits_STEAM.pdf`
   (generado con `cd tools/informe && uv run informe` desde
   `data/compras/faltantes.json`). Es la referencia de compra.
@@ -60,14 +61,15 @@ electrónica y programación; una pedagoga adapta el material.
 
 ## Pendientes de la página
 
-1. Lección del Tablero (`data/lessons/c06-p1.json`, firmware y
-   simulador): pasar del buzzer con transistor al módulo buzzer activo de
-   3 pines (verificar si activa en alto o en bajo).
-2. Si se confirma el LED RGB de ánodo común: parámetro `ANODO_COMUN` en
-   el sketch, leído también por el simulador para que no se desincronicen.
-3. C05-P3 (seguidor): ajustar lección y firmware al módulo de 3 sensores.
-4. C01-P2 (Microclimas): usar la sonda BME280 en vez del BME280 3,3 V +
-   conversor.
+1. Tablero: experiencia nativa implementada con módulo activo de tres pines,
+   RGB configurable, experimentos, registro descargable y guía docente
+   imprimible. Pendiente confirmar pinout y polaridades en componentes reales.
+2. Reutilizar `schema/lesson.schema.json`, `src/sim/lesson.ts` y
+   `LearningGuide.astro` para nuevas experiencias. El simulador es un modelo
+   de comportamiento, no un emulador C++ ni un simulador eléctrico.
+3. C05-P3 (seguidor): crear lección nativa y firmware para el módulo de
+   tres sensores; actualmente no existe una lección nativa que ajustar.
+4. C01-P2 (Microclimas): crear lección nativa y firmware para la sonda BME280.
 5. Laboratorio 3D interactivo (Three.js) con arquitectura modular de
    registro de escenas, tomando como referencia funcional
    learn-arduino-red.vercel.app con identidad propia; en 4 entregas, con

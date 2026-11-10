@@ -137,3 +137,12 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+@media print {
+  :root, :root[data-theme] { --paper: #fff; --paper-2: #fff; --surface: #fff; --ink: #17262b; --ink-2: #4f6166; --line: #aaa; --copper: #75421e; color-scheme: light; }
+  body { background: #fff; font-size: 11pt; }
+  body > header, body > footer, .skip { display: none; }
+  .wrap { width: 100%; }
+  h1 { font-size: 26pt; }
+  h2 { font-size: 19pt; }
+  h2, h3 { break-after: avoid; }
+}

@@ -1,6 +1,7 @@
 // Única capa de acceso a datos del sitio. Las páginas no saben dónde ni
 // cómo se guardan las cajas: solo llaman a estas funciones.
 // El contrato vive en schema/box.schema.json (validado antes del build).
+import type { Lesson } from "../sim/lesson";
 
 export type Status =
   | "en_mano"
@@ -105,12 +106,6 @@ export function bandDigits(box: Box): number[] {
 }
 
 // ---- Lecciones paso a paso y firmware real ----
-export interface Lesson {
-  project: string;
-  firmware: string;
-  [k: string]: unknown;
-}
-
 const lessonModules = import.meta.glob<Lesson>("../../data/lessons/*.json", {
   eager: true,
   import: "default",

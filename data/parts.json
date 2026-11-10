@@ -3,7 +3,7 @@
     "name": "Arduino UNO",
     "what": "Es el cerebro del proyecto: una pequeña computadora que lee botones y sensores y enciende luces, sonidos o motores según el programa que le cargamos.",
     "how": "Se conecta al computador con el cable USB para cargarle el programa y recibir energía. Los pines de arriba (D0 a D13) son entradas y salidas digitales; los de abajo dan energía (5V y GND) y leen sensores analógicos (A0 a A5).",
-    "care": "Nunca conectes un pin directamente a 5V o a GND sin una resistencia o un componente en el medio. Desconecta el USB antes de cambiar cables."
+    "care": "No unas 5V con GND ni conectes una salida directamente al nivel opuesto. Los botones de este montaje usan INPUT_PULLUP y se conectan a GND. Desconecta el USB antes de cambiar cables."
   },
   "breadboard": {
     "name": "Protoboard",
@@ -20,8 +20,8 @@
   "rgb-led": {
     "name": "LED RGB",
     "what": "Tres LED en uno: rojo, verde y azul. Mezclando sus brillos se forman otros colores, como el amarillo (rojo + verde).",
-    "how": "Tiene 4 patas. La más larga es la común y va a GND (cátodo común). Las otras tres controlan cada color, cada una con su propia resistencia.",
-    "care": "Si al probarlo no enciende con la pata larga a GND, es de ánodo común: la pata larga va a 5V y en el programa se invierte el brillo."
+    "how": "Tiene cuatro patas: una común y tres canales de color, cada uno con su resistencia. La común va a 5V en ánodo común o a GND en cátodo común. Confirma la distribución de patas de tu componente.",
+    "care": "Prueba cada canal con una resistencia en serie. La configuración ANODO_COMUN debe coincidir con el cableado; el programa invierte el PWM cuando está activada."
   },
   "button": {
     "name": "Pulsador",
@@ -34,6 +34,12 @@
     "what": "Produce un pitido cuando recibe energía. 'Activo' significa que trae su propio oscilador: basta con encenderlo y apagarlo.",
     "how": "Tiene polaridad: la pata marcada con + va a 5V. La otra va al transistor, que funciona como un interruptor controlado por el Arduino.",
     "care": "Si suena muy débil o no suena, revisa la polaridad y el transistor."
+  },
+  "buzzer-module": {
+    "name": "Módulo buzzer activo de tres pines",
+    "what": "Genera un tono propio. La placa incorpora el control del zumbador y permite conectarlo con alimentación, tierra y una señal digital.",
+    "how": "VCC a 5V, GND a tierra común y SIG (o I/O) al pin de control. Identifica las etiquetas en el módulo real: su orden puede variar. No hace falta un transistor externo.",
+    "care": "Comprueba si la señal activa es HIGH o LOW y configura BUZZER_ACTIVO_ALTO. Desconecta el USB antes de cambiar los cables."
   },
   "npn": {
     "name": "Transistor NPN 2N2222",

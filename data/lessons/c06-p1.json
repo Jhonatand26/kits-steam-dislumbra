@@ -1,6 +1,83 @@
 {
   "project": "C06-P1",
   "firmware": "c06-p1-tablero/c06-p1-tablero.ino",
+  "hardware": [
+    "El montaje usa el módulo buzzer activo de tres pines previsto en el informe de compras. Se puede explorar la simulación antes de recibirlo.",
+    "El LED se representa inicialmente como ánodo común, según el proveedor. Confirma la variante física y ajusta ANODO_COMUN antes de cargar el programa.",
+    "Comprueba si el módulo buzzer se activa con HIGH o LOW y ajusta BUZZER_ACTIVO_ALTO. Identifica VCC, GND y señal por la serigrafía: el orden físico puede variar.",
+    "El dibujo muestra la zona de columnas 1–30 de la protoboard. Revisa continuidad de los rieles en la placa real y desconecta la alimentación al cambiar conexiones."
+  ],
+  "controls": [
+    { "parameter": "MODO_DEMO", "label": "Modo demostración", "help": "Compara un aviso de 150 ms y color de 2 s con un aviso de 1200 ms y color de 5 s. El conteo comienza de nuevo al cambiar la configuración." },
+    { "parameter": "ANODO_COMUN", "label": "LED de ánodo común", "help": "Activado: común a 5 V y PWM invertido. Desactivado: común a GND. El cable del dibujo cambia con esta selección." },
+    { "parameter": "BUZZER_ACTIVO_ALTO", "label": "Buzzer activado en alto", "help": "Activado: suena con HIGH. Desactivado: suena con LOW. Selecciona la variante que corresponda al módulo recibido." }
+  ],
+  "pedagogy": {
+    "duration": "Dos sesiones sugeridas de 45 minutos",
+    "question": "¿Cómo puede una interfaz de tres botones comunicar una necesidad sin complicar su uso?",
+    "goals": [
+      "Relacionar una entrada (pulsador), una decisión del programa y dos salidas (luz y sonido).",
+      "Explicar por qué un botón mantenido no debe generar múltiples reportes.",
+      "Comparar dos configuraciones con evidencias y proponer una mejora para el contexto escolar."
+    ],
+    "vocabulary": [
+      { "term": "Entrada digital", "meaning": "Una lectura con dos estados. Con INPUT_PULLUP, un botón suelto vale HIGH y uno oprimido vale LOW." },
+      { "term": "PWM", "meaning": "Encendido y apagado muy rápido que permite regular el brillo. En ánodo común, un valor menor produce más luz." },
+      { "term": "Variable", "meaning": "Un dato que el programa conserva y puede cambiar, como el número de reportes de cada botón." }
+    ],
+    "activities": [
+      {
+        "title": "Una pulsación, un reporte",
+        "predict": "Si mantienes oprimido el botón durante tres segundos, ¿cuántos reportes esperas?",
+        "action": "Inicia la simulación. Mantén oprimido «Estoy bien», suéltalo y vuelve a oprimirlo después de medio segundo.",
+        "observe": "Compara el contador en el monitor serie antes de soltar y después de la segunda pulsación.",
+        "explain": "¿Qué ocurriría si el programa no esperara a que se suelte el botón?"
+      },
+      {
+        "title": "Discreto o demostración",
+        "predict": "¿Qué cambiará al activar el modo demostración: el significado del botón, la duración o el conteo?",
+        "action": "Prueba el mismo botón en ambos modos. El cambio reinicia los contadores para que compares desde cero.",
+        "observe": "Anota la duración del sonido y del color. El tono y la duración del aviso son iguales para los tres botones dentro de cada modo.",
+        "explain": "¿Qué modo elegirías para mostrarlo a un grupo y cuál para usarlo individualmente? Justifica con lo observado."
+      },
+      {
+        "title": "La luz también comunica",
+        "predict": "Si todos los sonidos son iguales, ¿el reporte es completamente privado?",
+        "action": "Prueba los tres botones con situaciones inventadas. Observa los colores y el monitor serie; luego desactiva el sonido.",
+        "observe": "El color y el conteo siguen revelando el tipo de reporte, aunque el sonido sea igual o esté apagado.",
+        "explain": "Propón una modificación para comunicar confirmación al estudiante sin mostrar el tipo de reporte a todo el grupo."
+      }
+    ],
+    "evidence": [
+      "Representa el recorrido botón → lectura → decisión → luz/sonido.",
+      "Registra una predicción, una observación y una explicación por experimento.",
+      "Explica una limitación del prototipo y una mejora posible."
+    ],
+    "teacher": {
+      "preparation": [
+        "Organizar parejas: una persona manipula y otra observa; intercambiar roles en el segundo experimento.",
+        "Usar situaciones ficticias. Este prototipo sirve para estudiar interfaces; el color y el monitor no ofrecen anonimato.",
+        "La sesión virtual puede realizarse con los componentes aún en compra. Reservar la comprobación de polaridad y pinout para la sesión física."
+      ],
+      "sequence": [
+        "10 min: presentar el reto y recoger predicciones sobre entradas y salidas.",
+        "20 min: recorrer el montaje, inspeccionar piezas y explicar las conexiones.",
+        "30 min: realizar los tres experimentos y registrar evidencias.",
+        "20 min: comparar explicaciones y diseñar una mejora en parejas.",
+        "10 min: compartir la mejora y revisar los criterios de logro."
+      ],
+      "discussion": [
+        "¿Qué cambia en el circuito y qué cambia en el programa al usar ánodo común?",
+        "¿Cómo distingue el programa una pulsación sostenida de dos pulsaciones separadas?",
+        "¿Qué necesitaría un sistema real para que una solicitud de ayuda reciba atención?"
+      ],
+      "assessment": [
+        "Identifica entrada, procesamiento y salidas con ejemplos del montaje.",
+        "Contrasta su predicción con un resultado reproducible del simulador.",
+        "Justifica una mejora considerando a quien usará el tablero."
+      ]
+    }
+  },
   "parts": [
     {
       "id": "uno",
@@ -21,10 +98,11 @@
       "label": "LED RGB",
       "at": "e20",
       "bind": {
-        "r": "D9",
-        "g": "D10",
-        "b": "D11"
-      }
+        "r": "PIN_ROJO",
+        "g": "PIN_VERDE",
+        "b": "PIN_AZUL"
+      },
+      "polarity": { "parameter": "ANODO_COMUN", "activeLowWhen": true }
     },
     {
       "id": "r_rojo",
@@ -57,61 +135,45 @@
       "id": "btn_bien",
       "type": "button",
       "item": "C06-13",
-      "label": "Botón 'Estoy bien' (tapa azul)",
+      "label": "Estoy bien",
       "at": "e3",
       "cap": "#2f63c4",
       "bind": {
-        "pin": "D2"
+        "pin": "PIN_BIEN"
       }
     },
     {
       "id": "btn_regular",
       "type": "button",
       "item": "C06-13",
-      "label": "Botón 'Regular' (tapa amarilla)",
+      "label": "Regular",
       "at": "e9",
       "cap": "#f2c318",
       "bind": {
-        "pin": "D3"
+        "pin": "PIN_REGULAR"
       }
     },
     {
       "id": "btn_ayuda",
       "type": "button",
       "item": "C06-13",
-      "label": "Botón 'Necesito ayuda' (tapa roja)",
+      "label": "Necesito ayuda",
       "at": "e15",
       "cap": "#c62d2d",
       "bind": {
-        "pin": "D4"
+        "pin": "PIN_AYUDA"
       }
-    },
-    {
-      "id": "npn",
-      "type": "npn",
-      "item": "C06-16",
-      "label": "Transistor 2N2222",
-      "at": "h24"
-    },
-    {
-      "id": "r_base",
-      "type": "resistor",
-      "item": "C06-22",
-      "label": "Resistencia 1 kΩ (base)",
-      "from": "i25",
-      "to": "i21",
-      "ohms": 1000
     },
     {
       "id": "buzzer",
-      "type": "buzzer",
-      "item": "C06-15",
-      "label": "Zumbador",
-      "minus": "f26",
-      "plus": "f29",
+      "type": "buzzer-module",
+      "item": "C06-16",
+      "label": "Módulo buzzer activo",
+      "at": "h24",
       "bind": {
-        "pin": "D8"
-      }
+        "pin": "PIN_ZUMBADOR"
+      },
+      "polarity": { "parameter": "BUZZER_ACTIVO_ALTO", "activeLowWhen": false }
     }
   ],
   "wires": [
@@ -143,41 +205,49 @@
       "id": "w_k",
       "from": "bb.a21",
       "to": "bb.tn21",
-      "color": "black"
+      "color": "black",
+      "when": { "parameter": "ANODO_COMUN", "equals": false }
+    },
+    {
+      "id": "w_anode",
+      "from": "bb.a21",
+      "to": "bb.tp21",
+      "color": "red",
+      "when": { "parameter": "ANODO_COMUN", "equals": true }
     },
     {
       "id": "w_d9",
-      "from": "uno.D9",
+      "from": "uno.PIN_ROJO",
       "to": "bb.b16",
       "color": "orange"
     },
     {
       "id": "w_d10",
-      "from": "uno.D10",
+      "from": "uno.PIN_VERDE",
       "to": "bb.c26",
       "color": "green"
     },
     {
       "id": "w_d11",
-      "from": "uno.D11",
+      "from": "uno.PIN_AZUL",
       "to": "bb.b28",
       "color": "blue"
     },
     {
       "id": "w_d2",
-      "from": "uno.D2",
+      "from": "uno.PIN_BIEN",
       "to": "bb.a3",
       "color": "yellow"
     },
     {
       "id": "w_d3",
-      "from": "uno.D3",
+      "from": "uno.PIN_REGULAR",
       "to": "bb.a9",
       "color": "yellow"
     },
     {
       "id": "w_d4",
-      "from": "uno.D4",
+      "from": "uno.PIN_AYUDA",
       "to": "bb.a15",
       "color": "yellow"
     },
@@ -201,8 +271,8 @@
     },
     {
       "id": "w_d8",
-      "from": "uno.D8",
-      "to": "bb.j21",
+      "from": "uno.PIN_ZUMBADOR",
+      "to": "bb.j26",
       "color": "violet"
     },
     {
@@ -213,8 +283,8 @@
     },
     {
       "id": "w_bz",
-      "from": "bb.j29",
-      "to": "bb.bp29",
+      "from": "bb.j25",
+      "to": "bb.bp25",
       "color": "red"
     }
   ],
@@ -247,17 +317,18 @@
     },
     {
       "title": "Coloca el LED RGB",
-      "body": "Inserta el LED en la fila e, columnas 20 a 23, con la pata más larga en la columna 21. Esa pata es la común: con un cable negro llévala de a21 a la línea azul (−).",
+      "body": "El dibujo ubica R, común, G y B en e20–e23. Confirma las patas de tu LED antes de montarlo. Con ánodo común, une a21 con el riel positivo; con cátodo común, con el negativo. La opción «LED de ánodo común» cambia ese cable y la lógica del programa juntos.",
       "show": [
         "rgb",
-        "w_k"
+        "w_k",
+        "w_anode"
       ],
       "focus": [
         "rgb"
       ],
       "code": [
-        12,
-        14
+        6,
+        7
       ]
     },
     {
@@ -277,8 +348,8 @@
         "r_azul"
       ],
       "code": [
-        27,
-        31
+        25,
+        29
       ]
     },
     {
@@ -301,38 +372,35 @@
         "btn_ayuda"
       ],
       "code": [
-        33,
-        38
+        41,
+        46
       ]
     },
     {
-      "title": "Agrega el zumbador con su transistor",
-      "body": "El pin del Arduino no tiene fuerza suficiente para el zumbador, así que un transistor hace de interruptor. Coloca el 2N2222 en h24-h26 con la cara plana hacia ti, la resistencia de 1 kΩ entre su base y el pin 8, y el zumbador con su pata + en la columna 29. El emisor va a la línea azul (−).",
+      "title": "Conecta el módulo buzzer",
+      "body": "El módulo ya incluye la electrónica de control. En el dibujo: GND en h24, VCC en h25 y señal en h26; la señal llega a D8. En tu módulo sigue las etiquetas de sus pines, aunque su orden sea distinto. Selecciona activación en alto o en bajo según la prueba del componente recibido.",
       "show": [
-        "npn",
-        "r_base",
         "buzzer",
         "w_d8",
         "w_e",
         "w_bz"
       ],
       "focus": [
-        "npn",
         "buzzer"
       ],
       "code": [
-        48,
-        51
+        56,
+        59
       ]
     },
     {
       "title": "Entiende el programa",
-      "body": "Al oprimir un botón, el programa suma un reporte, muestra el color y suena el aviso. El aviso es el mismo para los tres botones, así nadie alrededor sabe qué reportó el estudiante. Arriba del programa están los parámetros: con MODO_DEMO en true el aviso y el color duran más, para mostrarlo a un grupo.",
+      "body": "El programa lee una entrada, incrementa su contador y activa luz y sonido. El sonido es igual para los tres botones, pero el color y el monitor sí muestran qué se reportó. Abre «Código» para comparar los parámetros; usa el modo demostración para alargar los avisos.",
       "show": [],
       "focus": [],
       "code": [
         4,
-        8
+        10
       ]
     },
     {
@@ -345,10 +413,9 @@
         "btn_ayuda"
       ],
       "code": [
-        52,
-        61
-      ],
-      "run": true
+        60,
+        69
+      ]
     }
   ]
 }

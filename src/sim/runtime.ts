@@ -14,14 +14,28 @@ export class Board {
   private inputs = new Map<string, number>();
   private analogIn = new Map<string, number>();
   private t0 = performance.now();
+  private generation = 0;
   running = false;
   onChange: () => void = () => {};
   onSerial: (text: string) => void = () => {};
 
   reset() {
+    this.generation++;
     this.modes.clear();
     this.out.clear();
+    this.inputs.clear();
     this.t0 = performance.now();
+    this.onChange();
+    return this.generation;
+  }
+
+  isCurrent(session: number) { return session === this.generation; }
+  get session() { return this.generation; }
+
+  stop() {
+    this.running = false;
+    this.generation++;
+    this.inputs.clear();
     this.onChange();
   }
 
@@ -40,8 +54,9 @@ export class Board {
   delay = (ms: number): Promise<void> =>
     new Promise((resolve, reject) => {
       const start = performance.now();
+      const session = this.generation;
       const tick = () => {
-        if (!this.running) return reject(new Stopped());
+        if (!this.running || !this.isCurrent(session)) return reject(new Stopped());
         if (performance.now() - start >= ms) return resolve();
         setTimeout(tick, Math.min(16, ms));
       };
@@ -58,7 +73,12 @@ export class Board {
   level(pin: string): number {
     return this.running ? this.out.get(pin) ?? 0 : 0;
   }
-  setInput(pin: string, v: number) { this.inputs.set(pin, v); }
+  activeLevel(pin: string, activeLow = false): number {
+    if (!this.running || !this.out.has(pin)) return 0;
+    const level = this.level(pin);
+    return activeLow ? 1 - level : level;
+  }
+  setInput(pin: string, v: number) { this.inputs.set(pin, v); this.onChange(); }
   setAnalog(pin: string, raw: number) { this.analogIn.set(pin, raw); }
 }
 
@@ -72,15 +92,17 @@ export type FirmwareFactory = (b: Board, params: Record<string, number | boolean
 /** Corre setup() y loop() hasta que se detenga la simulación. */
 export async function run(board: Board, fw: Firmware): Promise<void> {
   board.running = true;
-  board.reset();
+  const session = board.reset();
   try {
     await fw.setup();
-    while (board.running) {
+    while (board.running && board.isCurrent(session)) {
       await fw.loop();
       await board.delay(5);
     }
   } catch (e) {
     if (!(e instanceof Stopped)) throw e;
+  } finally {
+    if (board.isCurrent(session)) board.stop();
   }
 }
 
@@ -88,21 +110,36 @@ export async function run(board: Board, fw: Firmware): Promise<void> {
 export class Beeper {
   private ctx?: AudioContext;
   private osc?: OscillatorNode;
+  private gain?: GainNode;
   enabled = true;
+  unlock() {
+    if (!this.enabled || typeof AudioContext === "undefined") return;
+    this.ctx ??= new AudioContext();
+    void this.ctx.resume().catch(() => {});
+  }
   set(on: boolean) {
+    if (typeof AudioContext === "undefined") return;
     if (!this.enabled) on = false;
     if (on && !this.osc) {
       this.ctx ??= new AudioContext();
-      const gain = this.ctx.createGain();
-      gain.gain.value = 0.06;
+      this.gain = this.ctx.createGain();
+      this.gain.gain.value = 0.06;
       this.osc = this.ctx.createOscillator();
       this.osc.type = "square";
       this.osc.frequency.value = 2300;
-      this.osc.connect(gain).connect(this.ctx.destination);
+      this.osc.connect(this.gain).connect(this.ctx.destination);
       this.osc.start();
     } else if (!on && this.osc) {
       this.osc.stop();
+      this.osc.disconnect();
+      this.gain?.disconnect();
       this.osc = undefined;
+      this.gain = undefined;
     }
+  }
+  dispose() {
+    this.set(false);
+    void this.ctx?.close().catch(() => {});
+    this.ctx = undefined;
   }
 }

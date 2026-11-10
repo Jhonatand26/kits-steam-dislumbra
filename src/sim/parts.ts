@@ -4,8 +4,9 @@
 import {
   ALL_ROWS, BB, BB_SIZE, PITCH, UNO, colX, holeXY, parseHole, rowY,
   shiftHole, unoPins, refXY, type Pt,
-} from "./geometry";
-import type { Board } from "./runtime";
+} from "./geometry.ts";
+import type { Board } from "./runtime.ts";
+import { bindButton } from "./buttons.ts";
 
 const NS = "http://www.w3.org/2000/svg";
 
@@ -31,6 +32,8 @@ export interface PartSpec {
   ohms?: number;
   cap?: string;
   bind?: Record<string, string>;
+  polarity?: { parameter: string; activeLowWhen: boolean };
+  activeLow?: boolean;
 }
 
 export interface Rendered {
@@ -148,7 +151,7 @@ const rgbLed: Renderer = (spec) => {
     g,
     center: { x: cx, y: top + 6 },
     update(board) {
-      const v = (pin?: string) => (pin ? board.level(pin) : 0);
+      const v = (pin?: string) => (pin ? board.activeLevel(pin, spec.activeLow) : 0);
       const r = v(spec.bind?.r), gr = v(spec.bind?.g), b = v(spec.bind?.b);
       // El tono sale de la mezcla; el brillo, del canal más alto.
       const on = Math.max(r, gr, b);
@@ -174,16 +177,12 @@ const button: Renderer = (spec, board) => {
   const cap = el("circle", { cx, cy, r: 11, fill: spec.cap ?? "#333", class: "btn-cap" }, g);
   const pin = spec.bind?.pin;
   g.classList.add("pressable");
-  const press = (v: boolean) => {
-    if (!pin) return;
-    board.setInput(pin, v ? 0 : 1);
-    cap.classList.toggle("down", v);
-  };
-  g.addEventListener("pointerdown", (e) => { e.preventDefault(); press(true); });
-  for (const ev of ["pointerup", "pointerleave", "pointercancel"]) g.addEventListener(ev, () => press(false));
-  g.addEventListener("keydown", (e) => { if ((e as KeyboardEvent).key === " " || (e as KeyboardEvent).key === "Enter") press(true); });
-  g.addEventListener("keyup", () => press(false));
-  return { g, center: { x: cx, y: cy } };
+  if (pin) bindButton(g, board, pin, (pressed) => cap.classList.toggle("down", pressed));
+  return { g, center: { x: cx, y: cy }, update: (b) => {
+    const pressed = !!pin && b.running && b.digitalRead(pin) === 0;
+    cap.classList.toggle("down", pressed);
+    g.setAttribute("aria-pressed", String(pressed));
+  } };
 };
 
 // ---------- Zumbador activo ----------
@@ -205,7 +204,7 @@ const buzzer: Renderer = (spec) => {
     g,
     center: { x: cx, y: cy },
     update(board) {
-      const on = spec.bind?.pin ? board.level(spec.bind.pin) > 0.5 : false;
+       const on = spec.bind?.pin ? board.activeLevel(spec.bind.pin, spec.activeLow) > 0.5 : false;
       g.classList.toggle("sounding", on);
     },
   };
@@ -226,6 +225,27 @@ const npn: Renderer = (spec) => {
   return { g, center: { x: cx, y: top + 4 } };
 };
 
+// Módulo activo: tres terminales rotulados, no un buzzer suelto con NPN.
+const buzzerModule: Renderer = (spec) => {
+  const g = group(spec);
+  const holes = [0, 1, 2].map((offset) => holeXY(shiftHole(spec.at!, offset)));
+  const cx = holes[1].x;
+  const cy = holes[1].y + 25;
+  el("rect", { x: cx - 29, y: cy - 20, width: 58, height: 49, rx: 4, class: "module-body" }, g);
+  holes.forEach((p, i) => {
+    leg(g, p, { x: p.x, y: cy - 15 });
+    const label = el("text", { x: p.x, y: cy - 8, "text-anchor": "middle", class: "module-label" }, g);
+    label.textContent = ["GND", "VCC", "SIG"][i];
+  });
+  const waves = el("g", {}, g);
+  for (const radius of [22, 28]) el("circle", { cx, cy: cy + 10, r: radius, class: "bz-wave" }, waves);
+  el("circle", { cx, cy: cy + 10, r: 14, class: "bz-body" }, g);
+  el("circle", { cx, cy: cy + 10, r: 3, class: "bz-hole" }, g);
+  return { g, center: { x: cx, y: cy }, update(board: Board) {
+    g.classList.toggle("sounding", board.activeLevel(spec.bind!.pin, spec.activeLow) > 0.5);
+  } };
+};
+
 export const RENDERERS: Record<string, Renderer> = {
   "arduino-uno": uno,
   breadboard,
@@ -233,6 +253,7 @@ export const RENDERERS: Record<string, Renderer> = {
   "rgb-led": rgbLed,
   button,
   buzzer,
+  "buzzer-module": buzzerModule,
   npn,
 };
 

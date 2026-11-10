@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import StatusChip from "../../components/StatusChip.astro";
 import SimPlayer from "../../components/SimPlayer.astro";
+import LearningGuide from "../../components/LearningGuide.astro";
 import { boxes, firmwareCode, itemsFor, lessonFor, SIM_LABEL, type Box, type Project } from "../../lib/boxes";
 
 export function getStaticPaths() {
@@ -38,11 +39,26 @@ const next = box.projects[idx + 1];
       </div>
     </header>
 
+    {lesson && <>
+      <nav class="learning-route" aria-label="Recorrido de aprendizaje">
+        <a href="#lab"><span>01</span> Arma y explora</a>
+        <a href="#experimentos"><span>02</span> Experimenta</a>
+        <a href="#evidencias"><span>03</span> Explica</a>
+        <a href="#docente">Guía docente ↓</a>
+      </nav>
+      <section class="learning-intro" aria-labelledby="pregunta">
+        <div><p class="pid">Laboratorio de interfaces · {lesson.pedagogy.duration}</p><h2 id="pregunta">{lesson.pedagogy.question}</h2></div>
+        <div><h3>Al terminar podrás…</h3><ul>{lesson.pedagogy.goals.map((goal) => <li>{goal}</li>)}</ul></div>
+      </section>
+    </>}
+
     {lesson ? (
       <section class="lab" aria-labelledby="lab">
         <h2 id="lab">Ármalo y pruébalo paso a paso</h2>
         <p class="muted">Avanza por los pasos para ver cómo se monta, toca cualquier pieza para saber qué es y, al final, inicia la simulación y oprime los botones.</p>
         <SimPlayer box={box} lesson={lesson} code={code} />
+        <p class="model-note">Modelo de comportamiento: permite explorar entradas, salidas y tiempos. No detecta cortocircuitos ni sustituye la comprobación del montaje físico.</p>
+        <details class="hardware-notes sheet"><summary>Del simulador al kit físico</summary><ul>{lesson.hardware.map((note) => <li>{note}</li>)}</ul></details>
       </section>
     ) : (
     <section class="sim sheet" aria-labelledby="sim">
@@ -59,12 +75,14 @@ const next = box.projects[idx + 1];
       </section>
     )}
 
+    {lesson && <LearningGuide lesson={lesson} title={project.title} />}
+
     <section aria-labelledby="piezas">
       <h2 id="piezas">Piezas que usa de la caja</h2>
       {pending.length > 0 && (
-        <p class="warn">{pending.length} {pending.length === 1 ? "pieza está" : "piezas están"} pendiente{pending.length === 1 ? "" : "s"}; el resto ya está en la caja.</p>
+        <p class="warn">{pending.length} referencia{pending.length === 1 ? "" : "s"} pendiente{pending.length === 1 ? "" : "s"}. Consulta el estado de cada material.{lesson && " Puedes realizar la experiencia virtual mientras se completa el kit."}</p>
       )}
-      <div class="sheet tbl">
+      <div class="sheet tbl" tabindex="0" role="region" aria-label="Materiales y disponibilidad; tabla desplazable">
         <table>
           <thead><tr><th>Etiqueta</th><th>Pieza</th><th class="num">Usa</th><th>Estado</th></tr></thead>
           <tbody>
@@ -84,7 +102,7 @@ const next = box.projects[idx + 1];
     {project.wiring?.length ? (
       <section aria-labelledby="conexiones">
         <h2 id="conexiones">Conexiones</h2>
-        <div class="sheet tbl">
+        <div class="sheet tbl" tabindex="0" role="region" aria-label="Conexiones; tabla desplazable">
           <table>
             <thead><tr><th>Desde</th><th>Hasta</th><th>Nota</th></tr></thead>
             <tbody>{project.wiring.map((w) => <tr><td>{w.from}</td><td>{w.to}</td><td class="muted">{w.note}</td></tr>)}</tbody>
@@ -96,7 +114,10 @@ const next = box.projects[idx + 1];
     <section aria-labelledby="armado">
       <h2 id="armado">Cómo se arma</h2>
       {lesson ? (
-        <p class="muted">El armado completo está en el simulador de arriba: un paso por cada grupo de piezas, con el agujero exacto de cada pata.</p>
+        <>
+          <p class="muted">Sigue el montaje del simulador y contrasta las conexiones con las etiquetas del componente recibido. Las variantes de LED y módulo buzzer se indican en «Del simulador al kit físico».</p>
+          <ol class="steps print-assembly">{lesson.steps.map((step) => <li><h3>{step.title}</h3><p>{step.body}</p></li>)}</ol>
+        </>
       ) : project.steps?.length ? (
         <ol class="steps">{project.steps.map((s) => <li><h3>{s.title}</h3><p>{s.detail}</p></li>)}</ol>
       ) : (
@@ -107,7 +128,7 @@ const next = box.projects[idx + 1];
     {project.failures?.length ? (
       <section aria-labelledby="fallos">
         <h2 id="fallos">Si algo no funciona</h2>
-        <div class="sheet tbl">
+        <div class="sheet tbl" tabindex="0" role="region" aria-label="Resolución de problemas; tabla desplazable">
           <table>
             <thead><tr><th>Lo que pasa</th><th>Por qué</th><th>Cómo se corrige</th></tr></thead>
             <tbody>{project.failures.map((f) => <tr><td>{f.symptom}</td><td>{f.cause}</td><td>{f.fix}</td></tr>)}</tbody>
@@ -133,11 +154,26 @@ const next = box.projects[idx + 1];
 <style>
   .crumbs { padding: 1.2rem 0 0; font-size: 0.95rem; }
   .head { padding: 1.8rem 0 2rem; border-bottom: 2px solid var(--ink); }
-  .pid { font-family: var(--font-cond); font-weight: 600; color: var(--accent); margin: 0 0 0.3rem; font-size: 1.1rem; }
+  .pid { font-family: var(--font-cond); font-weight: 600; color: color-mix(in srgb, var(--accent) 65%, var(--ink)); margin: 0 0 0.3rem; font-size: 1.1rem; }
   .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; }
   .label { font-size: 1.15rem; color: var(--ink-2); margin-bottom: 0.2rem; }
   section { margin-top: 2.5rem; }
   .lab { margin-top: 2rem; }
+  .learning-route { display: flex; flex-wrap: wrap; gap: 0.5rem 1.7rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+  .learning-route a { color: var(--ink); font: 600 1.1rem var(--font-cond); padding: 0.4rem 0; text-decoration: none; }
+  .learning-route a:hover { text-decoration: underline; }
+  .learning-route span { color: var(--copper); margin-right: 0.4rem; }
+  .learning-route a:last-child { margin-left: auto; }
+  .learning-intro { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; padding: 1.2rem 0; }
+  .learning-intro h2 { max-width: 25ch; }
+  .learning-intro h3 { font-size: 1.2rem; }
+  .learning-intro ul { margin: 0; padding-left: 1.2rem; }
+  .learning-intro li { margin-bottom: 0.5rem; }
+  .model-note { font-size: 0.9rem; color: var(--ink-2); margin: 0.8rem 0 1.2rem; }
+  .hardware-notes { padding: 0.8rem 1rem; }
+  .hardware-notes summary { cursor: pointer; font-weight: 600; padding: 0.3rem 0; }
+  .hardware-notes ul { padding-left: 1.2rem; }
+  .hardware-notes li { margin-bottom: 0.5rem; }
   .sim {
     display: flex;
     justify-content: space-between;
@@ -154,6 +190,8 @@ const next = box.projects[idx + 1];
   .soon { margin: 0; }
   .warn { color: var(--todo); font-weight: 500; }
   .tbl { padding: 0.4rem 1rem; overflow-x: auto; }
+  .tbl table { min-width: 620px; }
+  .print-assembly { display: none; }
   .tag { white-space: nowrap; color: var(--ink-2); font-size: 0.92rem; }
   .note { display: block; font-size: 0.88rem; color: var(--ink-2); }
   .steps { padding-left: 1.4rem; }
@@ -171,9 +209,21 @@ const next = box.projects[idx + 1];
     font-size: 1.15rem;
   }
   @media (max-width: 760px) {
+    .learning-intro { grid-template-columns: 1fr; gap: 1rem; }
+    .learning-route a:last-child { margin-left: 0; }
     .pair { grid-template-columns: 1fr; gap: 0.5rem; }
     .sim { flex-direction: column; align-items: flex-start; }
     .pager { flex-direction: column; }
-    th:first-child, td.tag { display: none; }
+    .tbl::before { content: "Desliza la tabla para ver todas las columnas →"; display: block; color: var(--ink-2); font-size: 0.85rem; padding: 0.3rem 0; }
+  }
+  @media print {
+    .crumbs, .learning-route, .pager, .model-note { display: none; }
+    .head { padding-top: 0; }
+    section { margin-top: 1.5rem; }
+    .hardware-notes ul { display: block; content-visibility: visible; }
+    .print-assembly { display: block; }
+    .tbl { overflow: visible; padding: 0; }
+    .tbl table { min-width: 0; }
+    .tbl::before { display: none; }
   }
 </style>

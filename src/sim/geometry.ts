@@ -55,7 +55,7 @@ export function rowY(row: string): number {
 /** Separa "e20" o "tp4" en fila y columna. */
 export function parseHole(hole: string): { row: string; col: number } {
   const m = /^(tp|tn|bp|bn|[a-j])(\d{1,2})$/.exec(hole);
-  if (!m) throw new Error(`Agujero inválido: ${hole}`);
+  if (!m || Number(m[2]) < 1 || Number(m[2]) > BB.cols) throw new Error(`Agujero inválido: ${hole}`);
   return { row: m[1], col: Number(m[2]) };
 }
 
@@ -77,6 +77,7 @@ export function refXY(ref: string): { p: Pt; dir: number } {
     if (!found) throw new Error(`Pin desconocido: ${ref}`);
     return { p: found.p, dir: found.side === "top" ? -1 : 1 };
   }
+  if (dev !== "bb") throw new Error(`Dispositivo desconocido: ${ref}`);
   const { row } = parseHole(pin);
   const top = ["tp", "tn", ...ROWS_TOP].includes(row);
   return { p: holeXY(pin), dir: top ? -1 : 1 };

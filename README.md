@@ -5,18 +5,44 @@ qué trae cada caja, cómo se arma cada proyecto, cómo se simula y cómo se
 comprueba que funciona. Está pensada para personas no técnicas
 (comerciales, docentes, rectores) y para estudiantes de grados 6–9.
 
+**Prioridad actual:** avanzar el portal, el simulador integrado y las guías
+pedagógicas con los componentes previstos en el informe de compras. El
+10 de noviembre no es una fecha límite rígida: la experiencia virtual puede
+usarse mientras se completa la compra y se verifican los componentes físicos.
+
+## Experiencia disponible: Tablero de Convivencia
+
+En `/software-aplicaciones/tablero-convivencia/`:
+
+- Montaje por pasos, inspección de piezas y código con la configuración elegida.
+- Pulsadores utilizables con mouse, pantalla táctil o teclado; monitor serie,
+  luz, sonido opcional, reinicio y modo demostración.
+- LED de ánodo/cátodo común y módulo buzzer activo de tres pines con
+  activación alta/baja. El cable común y el programa cambian juntos.
+- Tres experimentos para **predecir, probar, observar y explicar**; respuestas
+  descargables como texto y guía imprimible con pasos de montaje.
+- Orientaciones docentes, tiempos sugeridos, vocabulario y criterios de logro.
+
+Las respuestas se mantienen solo en la página abierta: no se envían ni se
+guardan al recargar. El botón de descarga permite conservarlas.
+
+La simulación es un **modelo de comportamiento**, no un emulador de C++ ni
+un cálculo eléctrico. La variante del RGB, el orden de pines y la polaridad
+de activación del módulo deben comprobarse en el kit recibido. El prototipo
+no ofrece anonimato: su color y monitor revelan el tipo de reporte.
+
 ## Estructura
 
 ```text
 data/boxes/*.json        ← FUENTE ÚNICA: inventario y proyectos por caja
-schema/box.schema.json   ← contrato de datos (JSON Schema)
-scripts/validate-data.mjs← valida los JSON antes de cada build
+schema/*.schema.json    ← contratos de cajas y lecciones (JSON Schema)
+scripts/validate-data.mjs← valida contratos, referencias, pines y variantes antes del build
 src/lib/boxes.ts         ← única capa de acceso a datos del sitio
 src/pages/               ← inicio, caja y proyecto (rutas estáticas)
 src/components/          ← resistor, barra de avance, etiqueta de estado
 src/sim/                 ← simulador paso a paso (geometría, piezas, Arduino virtual, reproductor)
 src/sim/firmware/*.ts    ← lógica de cada proyecto portada del sketch real
-data/lessons/*.json      ← lección de cada proyecto: piezas por agujero, cables y pasos
+data/lessons/*.json      ← montaje, controles, experimentos y guía docente de cada proyecto
 data/parts.json          ← qué es, cómo se conecta y cómo se cuida cada tipo de pieza
 firmware/<proyecto>/     ← sketch real que se carga en la placa (y que muestra la página)
 tools/inventario/        ← Python (uv): valida y genera el Excel físico
@@ -30,11 +56,21 @@ exports/                 ← Excel de separación, Excel de faltantes y
 
 ## Uso
 
+Requiere Node.js **22.18 o posterior** (validación y pruebas ejecutan los
+módulos TypeScript directamente).
+
 ```sh
 npm install
 npm run dev          # http://localhost:4321
 npm run build        # valida datos + genera dist/
+npm run check        # tipos de TypeScript y componentes Astro
+npm test             # parámetros, polaridades, conteos, cancelación y referencias
+npx playwright install chromium  # una vez para las pruebas de navegador
+npm run test:browser  # compila y prueba escritorio + móvil (también modo oscuro)
 
+arduino-cli core install arduino:avr
+arduino-cli compile --fqbn arduino:avr:uno --warnings all firmware/c06-p1-tablero
+# Alternativa con el core y avr-gcc instalados manualmente:
 ARDUINO_CORE=/ruta/ArduinoCore-avr scripts/compile-firmware.sh firmware/c06-p1-tablero
 
 cd tools/inventario
@@ -65,6 +101,35 @@ Para cambiar el contenido de una caja se edita **solo** su JSON. El sitio
 y el Excel se regeneran desde ahí, así la página y la caja física nunca
 dicen cosas distintas.
 
+## Añadir una experiencia pedagógica
+
+Usa `data/lessons/c06-p1.json` como referencia. El contrato está en
+`schema/lesson.schema.json` y los tipos compartidos en `src/sim/lesson.ts`.
+
+1. Crea el sketch en `firmware/<proyecto>/` y su modelo de comportamiento
+   en `src/sim/firmware/`; registra la carga en `src/sim/player.ts`.
+2. Describe piezas, cables y pasos. Usa nombres `PIN_*` del sketch en `bind`
+   y en extremos como `uno.PIN_BIEN`, en lugar de duplicar números de pin.
+3. Declara los controles booleanos, las condiciones `when` de los cables y
+   `polarity` de las salidas. El lector acepta constantes literales,
+   referencias a constantes anteriores y ternarios simples; rechaza
+   expresiones que no comprende, sin ejecutar código del sketch.
+4. Completa `pedagogy`: pregunta, objetivos, actividades, evidencias,
+   vocabulario y orientación docente. `LearningGuide.astro` genera la guía
+   y el registro sin código específico del proyecto.
+5. Ejecuta validación, pruebas y revisión en navegador. Comprueba coherencia
+   con `uses` del inventario y con las etiquetas del componente físico.
+
+Los cambios de configuración reinician los contadores. Volver a un paso de
+montaje detiene el programa; llegar al último paso no lo inicia automáticamente.
+La validación revisa todas las combinaciones de controles, las referencias
+del montaje, cantidades de piezas y rangos de líneas del código. No prueba
+continuidad eléctrica ni equivalencia completa entre C++ y el modelo.
+
+Para las pruebas del navegador, `TEST_PORT` cambia el puerto local de prueba;
+`TEST_BASE_URL` apunta a una vista previa ya iniciada. Las capturas y trazas
+se guardan en `test-results/` y no se versionan.
+
 ## Decisiones técnicas
 
 | Decisión | Por qué |
@@ -74,7 +139,7 @@ dicen cosas distintas.
 | Astro estático | Páginas rápidas, sin servidor, que funcionan con mala conexión (contexto rural). Vercel lo construye sin configuración. |
 | Simulador propio en SVG, no Wokwi embebido | La página explica el montaje paso a paso (pieza, agujero exacto, cable, código) y luego lo corre. Es liviano, funciona en celulares y en conexiones lentas, y permite mostrar el programa real resaltado por partes. Un 3D (como los ejemplos de referencia) costaría días por proyecto. |
 | La lección se describe por agujeros ("e20") | El mismo dato sirve para dibujar, para el texto de cada paso y para que el estudiante replique el montaje físico exactamente igual. |
-| Parámetros leídos del sketch | El simulador lee MODO_DEMO, AVISO_MS, etc. del .ino real: placa y página no se pueden desincronizar en esos valores. |
+| Parámetros leídos del sketch | Las opciones se aplican antes de resolver AVISO_MS, COLOR_MS y BRILLO. Los pines, el dibujo y el código visible usan la misma configuración; la lógica portada sigue requiriendo pruebas de correspondencia. |
 | Simulación en Wokwi enlazada (proyectos aún sin lección) | Los proyectos de Arduino ya se validaron en Wokwi (agosto 2026). Energía solar y seguidor de línea no se pueden simular en Wokwi: llevan simulador propio. |
 | Excel generado, no editado | Evita que el inventario físico y la página se desincronicen. |
 | Panel de C03 de 20 W (RTM020M), no de 80 W | Ya estaba en Dislumbra. Con el controlador PWM el panel trabaja al voltaje de la batería y entrega su corriente: ~1 A ≈ 0,14C, carga sana para la batería de 7 Ah. Uno de 80 W daría ~4,5 A (0,6C) y la calentaría. Repone ~45–55 Wh por día de sol y cabe en la caja. Ahorro: $120.960. |
@@ -86,7 +151,7 @@ dicen cosas distintas.
 | XeLaTeX con Barlow | Misma tipografía que la página web (identidad visual). Las fuentes van en el repo (licencia OFL) para que compile igual en cualquier equipo. |
 | Numeración fija en la compra del lunes | Las cajas y las hojas citan los ítems como "Compra lunes #N". Quitar una fila con `RESUELTO` no renumera las demás. |
 | Identidad visual por código de colores | Cada caja se reconoce por un resistor cuyas bandas son su número de categoría (C06 = negro, azul). |
-| Separación de rigor | Se dejó el formato pesado del repo EHS-Dislumbra (LaTeX, actas de 14 pruebas) para cumplir la entrega del 10-nov; cada proyecto conserva código, simulación, piezas, armado, fallos y prueba de funcionamiento. |
+| Portal como experiencia educativa | Este repo es el principal; EHS-Dislumbra queda como archivo histórico. La fecha original del 10-nov no bloquea el desarrollo: el avance se centra en simulación y material pedagógico reutilizable. |
 
 ## Variables de entorno
 
@@ -117,7 +182,9 @@ Ver `.env.example`. No hay credenciales en el proyecto.
 | Las fuentes se ven distintas en vista previa local sin internet | Google Fonts no carga | Es solo local; en Vercel cargan Barlow y Barlow Condensed |
 | `arduino-cli` no se instala en el contenedor | downloads.arduino.cc está bloqueado por la red | `apt install gcc-avr avr-libc` + clonar `arduino/ArduinoCore-avr` desde GitHub y usar `scripts/compile-firmware.sh` |
 | El LED RGB del simulador no cambiaba de color | Una regla CSS con `fill` pisa el atributo `fill` del SVG | Cambiar el color con `element.style.fill` |
-| El monitor serie mostraba todo duplicado | `start()` saltaba al último paso y ese paso volvía a llamar `start()` | Bandera `starting` que evita la doble ejecución |
+| El monitor serie mostraba todo duplicado | `start()` saltaba al último paso y ese paso volvía a llamar `start()` | Inicio solo por acción explícita, solicitud cancelable y generación de ejecución para invalidar esperas antiguas |
+| Cambiar MODO_DEMO no recalculaba los tiempos del sketch | El lector anterior solo reconocía literales y la fábrica repetía constantes | Resolver ternarios después de aplicar las opciones, con pruebas de tiempos y brillo |
+| Un clic o toque breve no generaba un reporte | El navegador podía entregar presión y liberación entre dos lecturas del modelo | Conservar al menos 32 ms de entrada y cancelar liberaciones de ejecuciones anteriores; probado con clic y toque reales del navegador |
 | El título de la portada salía sin espacios entre palabras | El nodo TikZ justificaba el texto de 40 pt en un ancho fijo | `\raggedright` dentro del nodo y `\spaceskip` explícito |
 | `Missing character: ↔` en el log de XeLaTeX | Barlow no tiene la flecha doble | Escribir "3,3 V – 5 V" en los datos; en ilustraciones usar `$\leftrightarrow$` (fuente matemática) |
 | URLs larguísimas desbordaban el anexo | `\url` no corta en cualquier carácter | Paquete `xurl` |
@@ -135,8 +202,7 @@ Ver `.env.example`. No hay credenciales en el proyecto.
   "conectar y usar"): la referencia de compra es el PDF.
   El siguiente paso es que el script del Excel lea el JSON, para que
   haya una sola fuente de precios.
-- La lección del Tablero de Convivencia (`data/lessons/c06-p1.json`)
-  todavía explica el buzzer con transistor; hay que pasarla al módulo
-  buzzer activo (C06-16).
+- Replicar la estructura pedagógica del Tablero en los siguientes proyectos.
+  C05-P3 y C01-P2 aún necesitan su lección nativa, sketch y modelo de comportamiento.
 - El script del Excel enlaza filas con precios por número de fila
   (`_map`); con la fuente única desaparece.

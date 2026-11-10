@@ -243,7 +243,7 @@
       "slug": "tablero-convivencia",
       "title": "Tablero de Convivencia",
       "challenge": "Inseguridad en el entorno escolar, problemas de convivencia y barreras de comunicación para reportar acoso.",
-      "objective": "Ensamblar una interfaz física con botones y LED RGB para que los estudiantes reporten su estado de ánimo o soliciten ayuda de forma discreta.",
+      "objective": "Construir y evaluar una interfaz de tres botones con luz y sonido, usando situaciones ficticias para estudiar cómo comunicar una necesidad y qué límites tiene la privacidad del prototipo.",
       "grades": "6-7",
       "ods": [
         "ODS 16",
@@ -271,16 +271,12 @@
           "qty": 3
         },
         {
-          "item": "C06-15",
-          "qty": 1
-        },
-        {
           "item": "C06-16",
           "qty": 1
         },
         {
           "item": "C06-22",
-          "qty": 4
+          "qty": 3
         },
         {
           "item": "C06-23",
@@ -291,13 +287,13 @@
         "kind": "interactiva",
         "status": "validada",
         "wokwi": "https://wokwi.com/projects/471465315562171393",
-        "note": "Simulación paso a paso con el mismo programa que se carga en la placa. Aviso igual para los tres botones; duración y brillo parametrizables (modo discreto o demostración)."
+        "note": "Modelo de comportamiento con parámetros del sketch, montaje guiado y experimentos. Módulo buzzer activo y LED de ánodo o cátodo común configurables; polaridad y distribución de pines por confirmar en el kit físico."
       },
       "failures": [
         {
           "symptom": "El LED no enciende con ningún botón",
-          "cause": "La pata larga (común) no está en la línea azul (−) o el LED es de ánodo común",
-          "fix": "Revisa el cable negro de a21 a la línea azul. Si sigue apagado, pasa la pata larga a la línea roja (+) y cambia el programa a ánodo común"
+          "cause": "La conexión común o la configuración no corresponden a la variante del LED",
+          "fix": "Identifica las patas y prueba cada canal con su resistencia. Ánodo común: común a 5V y ANODO_COMUN=true; cátodo común: común a GND y ANODO_COMUN=false"
         },
         {
           "symptom": "Sale un color distinto al esperado (p. ej. azul en vez de verde)",
@@ -316,8 +312,8 @@
         },
         {
           "symptom": "El zumbador no suena o suena muy débil",
-          "cause": "Polaridad invertida, transistor girado o falta la resistencia de 1 kΩ",
-          "fix": "Pata + del zumbador a la línea roja; transistor con la cara plana hacia ti (E-B-C); 1 kΩ entre la base y el pin 8"
+          "cause": "Alimentación o señal del módulo incorrectas, o nivel de activación distinto al configurado",
+          "fix": "Revisa las etiquetas: VCC a 5V, GND a tierra y señal a D8. Comprueba si se activa en HIGH o LOW y ajusta BUZZER_ACTIVO_ALTO; el módulo no necesita un transistor externo"
         },
         {
           "symptom": "El Arduino se reinicia al oprimir un botón",
@@ -330,7 +326,7 @@
         "Cada botón enciende su color: azul→verde, amarillo→amarillo, rojo→rojo.",
         "Los tres botones suenan exactamente igual (mismo tono y duración).",
         "Un toque suma un solo reporte en el monitor serie.",
-        "El color se apaga solo a los 2 s en modo discreto (5 s en demostración)."
+        "Tras una pulsación breve, el color dura unos 2 s en modo discreto (5 s en demostración). Si mantienes el botón, el programa espera a que lo sueltes antes de comprobar el apagado."
       ]
     },
     {

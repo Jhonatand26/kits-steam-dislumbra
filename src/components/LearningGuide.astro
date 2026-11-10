@@ -1,0 +1,155 @@
+---
+import type { Lesson } from "../sim/lesson";
+interface Props { lesson: Lesson; title: string }
+const { lesson, title } = Astro.props;
+const guide = lesson.pedagogy;
+---
+<lesson-notebook data-project={lesson.project} data-title={title}>
+  <section aria-labelledby="experimentos" class="learning-section">
+    <div class="section-heading">
+      <div><p class="eyebrow">02 / Experimenta</p><h2 id="experimentos">Predice, prueba y explica</h2></div>
+      <a href="#lab">Volver al simulador ↑</a>
+    </div>
+    <p>Trabajen en pareja: una persona manipula y otra observa. Cambien de rol después de cada prueba.</p>
+    <p class="muted notebook-help">Escribe tus hallazgos aquí o en tu cuaderno. Las respuestas permanecen solo en esta página: descarga el registro antes de salir o recargar.</p>
+    <div class="activities">
+      {guide.activities.map((activity, index) => (
+        <details class="activity sheet" open={index === 0}>
+          <summary><span class="activity-number">{String(index + 1).padStart(2, "0")}</span>{activity.title}</summary>
+          <div class="activity-body">
+            <div class="experiment-prompts">
+              <div><h3>Antes de probar</h3><p>{activity.predict}</p></div>
+              <div><h3>Haz la prueba</h3><p>{activity.action}</p></div>
+              <div><h3>Observa</h3><p>{activity.observe}</p></div>
+              <div><h3>Explica</h3><p>{activity.explain}</p></div>
+            </div>
+            <div class="response-fields">
+              {[
+                ["Mi predicción", "¿Qué crees que va a pasar?"],
+                ["Lo que observé", "Registra el resultado y cómo lo obtuviste."],
+                ["Mi explicación", "Compara con tu predicción. ¿Por qué ocurrió?"],
+              ].map(([label, placeholder], field) => (
+                <label for={`${lesson.project}-${index}-${field}`}>
+                  {label}
+                  <textarea id={`${lesson.project}-${index}-${field}`} rows="3" placeholder={placeholder} data-activity={activity.title} data-label={label}></textarea>
+                  <span class="print-answer" aria-hidden="true"></span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="evidencias" class="learning-section evidence-section">
+    <div>
+      <p class="eyebrow">03 / Comparte lo aprendido</p>
+      <h2 id="evidencias">Tu evidencia de aprendizaje</h2>
+      <ul>{guide.evidence.map((evidence) => <li>{evidence}</li>)}</ul>
+      <div class="guide-actions">
+        <button type="button" class="btn" data-export>Descargar mi registro</button>
+        <button type="button" class="print-button" data-print>Imprimir guía</button>
+      </div>
+      <p class="export-state muted" role="status"></p>
+    </div>
+    <aside class="vocabulary sheet" aria-labelledby="vocabulario">
+      <h3 id="vocabulario">Palabras para explicar</h3>
+      <dl>{guide.vocabulary.map((entry) => <><dt>{entry.term}</dt><dd>{entry.meaning}</dd></>)}</dl>
+    </aside>
+  </section>
+
+  <section class="learning-section" aria-labelledby="docente">
+    <details class="teacher-guide sheet">
+      <summary><span class="eyebrow">Para acompañar la experiencia</span><span id="docente">Guía docente · {guide.duration}</span></summary>
+      <div class="teacher-content">
+        <div><h3>Preparación</h3><ul>{guide.teacher.preparation.map((text) => <li>{text}</li>)}</ul></div>
+        <div><h3>Secuencia sugerida</h3><ol>{guide.teacher.sequence.map((text) => <li>{text}</li>)}</ol></div>
+        <div><h3>Preguntas para conversar</h3><ul>{guide.teacher.discussion.map((text) => <li>{text}</li>)}</ul></div>
+        <div><h3>Criterios de logro</h3><ul>{guide.teacher.assessment.map((text) => <li>{text}</li>)}</ul></div>
+      </div>
+    </details>
+  </section>
+</lesson-notebook>
+<script>
+  class LessonNotebook extends HTMLElement {
+    private initialized = false;
+    connectedCallback() {
+      if (this.initialized) return;
+      this.initialized = true;
+      const fields = [...this.querySelectorAll<HTMLTextAreaElement>("textarea")];
+      fields.forEach((field) => field.addEventListener("input", () => {
+        field.nextElementSibling!.textContent = field.value;
+      }));
+      this.querySelector("[data-export]")!.addEventListener("click", () => {
+        const lines = [this.dataset.title!, this.dataset.project!, "Registro de experimentos", ""];
+        for (const field of fields) {
+          lines.push(`${field.dataset.activity} — ${field.dataset.label}`, field.value.trim() || "(Sin completar)", "");
+        }
+        const url = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" }));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${this.dataset.project!.toLowerCase()}-registro.txt`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        this.querySelector(".export-state")!.textContent = "Registro preparado para descargar. Tus respuestas siguen disponibles aquí.";
+      });
+      this.querySelector("[data-print]")!.addEventListener("click", () => {
+        const closed = [...document.querySelectorAll<HTMLDetailsElement>("article details:not([open])")];
+        closed.forEach((details) => details.open = true);
+        const restore = () => closed.forEach((details) => details.open = false);
+        window.addEventListener("afterprint", restore, { once: true });
+        window.print();
+      });
+    }
+  }
+  if (!customElements.get("lesson-notebook")) customElements.define("lesson-notebook", LessonNotebook);
+</script>
+<style>
+  lesson-notebook { display: block; }
+  .learning-section { margin-top: 3rem; scroll-margin-top: 1rem; }
+  .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+  .section-heading a { white-space: nowrap; font-size: 0.95rem; }
+  .eyebrow { font: 600 0.95rem var(--font-cond); color: var(--copper); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+  .notebook-help { font-size: 0.95rem; }
+  .activities { display: grid; gap: 0.8rem; }
+  summary { cursor: pointer; padding: 1rem 1.2rem; font: 600 1.4rem var(--font-cond); min-height: 48px; }
+  summary::marker { color: var(--copper); }
+  .activity-number { display: inline-block; font-variant-numeric: tabular-nums; margin: 0 0.8rem 0 0.2rem; color: var(--copper); }
+  .activity[open] { border-color: var(--copper); }
+  .activity-body { padding: 0.4rem 1.4rem 1.4rem; }
+  .experiment-prompts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 2rem; }
+  .experiment-prompts h3 { font-size: 1.1rem; color: var(--ink-2); }
+  .response-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  label { font: 600 1.1rem var(--font-cond); }
+  textarea { display: block; width: 100%; margin-top: 0.4rem; padding: 0.7rem; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--ink); font: 400 1rem/1.5 var(--font); resize: vertical; }
+  textarea::placeholder { color: var(--ink-2); opacity: 1; }
+  .evidence-section { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; }
+  .guide-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; }
+  button { cursor: pointer; border: 1px solid var(--ink); }
+  .print-button { font: 600 1.1rem var(--font-cond); background: transparent; color: var(--ink); padding: 0.7rem 1.1rem; border-radius: 6px; }
+  .export-state { margin-top: 0.7rem; font-size: 0.95rem; }
+  .vocabulary { padding: 1.4rem; border-top: 3px solid var(--copper); }
+  dl { margin: 0; }
+  dt { font-weight: 600; margin-top: 0.9rem; }
+  dd { margin: 0; font-size: 0.95rem; color: var(--ink-2); }
+  .teacher-guide summary .eyebrow { display: block; }
+  .teacher-content { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2.5rem; padding: 1rem 1.5rem; }
+  ul, ol { padding-left: 1.2rem; }
+  li { margin-bottom: 0.5rem; }
+  .print-answer { display: none; }
+  @media (max-width: 700px) {
+    .section-heading { display: block; margin-bottom: 1rem; }
+    .experiment-prompts, .response-fields, .evidence-section, .teacher-content { grid-template-columns: 1fr; }
+    .activity-body { padding-inline: 1rem; }
+  }
+  @media print {
+    .guide-actions, textarea, .notebook-help, .export-state, .section-heading a { display: none; }
+    .print-answer { display: block; white-space: pre-wrap; min-height: 6rem; font: 400 11pt/1.5 sans-serif; border-bottom: 1px solid #777; padding: 0.5rem 0; }
+    .learning-section { margin-top: 1.5rem; }
+    .activity, .vocabulary { break-inside: avoid; }
+    .activity-body, .teacher-content { display: block; content-visibility: visible; }
+    .evidence-section { grid-template-columns: 1fr; }
+    summary { list-style: none; }
+  }
+</style>

@@ -1,56 +1,50 @@
-// Port en TypeScript de firmware/c06-p1-tablero (misma lógica, mismos
-// pines). Los parámetros MODO_DEMO, AVISO_MS, etc. se leen del sketch
-// real, así el simulador y la placa usan los mismos valores.
-import { LOW, HIGH, type FirmwareFactory } from "../runtime";
+// Modelo de comportamiento: las constantes se leen del sketch real.
+import { LOW, HIGH, type FirmwareFactory } from "../runtime.ts";
+import { numberParameter, booleanParameter } from "../parameters.ts";
 
-type Estado = "BIEN" | "REGULAR" | "AYUDA";
-const ESTADOS: Estado[] = ["BIEN", "REGULAR", "AYUDA"];
-
-function color(estado: Estado, brillo: number) {
-  if (estado === "BIEN") return [0, brillo, 0];
-  if (estado === "REGULAR") return [brillo, Math.floor(brillo / 2), 0];
-  return [brillo, 0, 0];
-}
-
-const factory: FirmwareFactory = (b, params) => {
-  const demo = Boolean(params.MODO_DEMO);
-  const AVISO_MS = demo ? 1200 : 150;
-  const COLOR_MS = demo ? 5000 : 2000;
-  const BRILLO = demo ? 255 : 60;
-  const BOTONES = ["D2", "D3", "D4"];
-  const conteo = [0, 0, 0];
-  let finColor = 0;
-
-  const mostrar = ([r, g, bl]: number[]) => {
-    b.analogWrite("D9", r);
-    b.analogWrite("D10", g);
-    b.analogWrite("D11", bl);
-  };
-  const oprimido = () => BOTONES.findIndex((p) => b.digitalRead(p) === LOW);
+const factory: FirmwareFactory = (board, params) => {
+  const pin = (name: string) => `D${numberParameter(params, name)}`;
+  const buttons = ["PIN_BIEN", "PIN_REGULAR", "PIN_AYUDA"].map(pin);
+  const channels = ["PIN_ROJO", "PIN_VERDE", "PIN_AZUL"].map(pin);
+  const buzzer = pin("PIN_ZUMBADOR");
+  const commonAnode = booleanParameter(params, "ANODO_COMUN");
+  const activeHigh = booleanParameter(params, "BUZZER_ACTIVO_ALTO");
+  const brightness = numberParameter(params, "BRILLO");
+  const noticeMs = numberParameter(params, "AVISO_MS");
+  const colorMs = numberParameter(params, "COLOR_MS");
+  const colors = [[0, brightness, 0], [brightness, Math.floor(brightness / 2), 0], [brightness, 0, 0]];
+  const counts = [0, 0, 0];
+  let colorUntil = 0;
+  const show = (values: number[]) => channels.forEach((channel, i) => {
+    board.analogWrite(channel, commonAnode ? 255 - values[i] : values[i]);
+  });
+  const sound = (on: boolean) => board.digitalWrite(buzzer, on === activeHigh ? HIGH : LOW);
 
   return {
     setup() {
-      b.Serial.begin(9600);
-      BOTONES.forEach((p) => b.pinMode(p, "INPUT_PULLUP"));
-      b.pinMode("D8", "OUTPUT");
-      b.Serial.println(`Tablero listo (modo ${demo ? "demostración" : "discreto"})`);
+      buttons.forEach((button) => board.pinMode(button, "INPUT_PULLUP"));
+      channels.forEach((channel) => board.pinMode(channel, "OUTPUT"));
+      board.pinMode(buzzer, "OUTPUT");
+      show([0, 0, 0]);
+      sound(false);
+      board.Serial.println("Tablero listo");
     },
     async loop() {
-      const boton = oprimido();
-      if (boton >= 0) {
-        conteo[boton]++;
-        mostrar(color(ESTADOS[boton], BRILLO));
-        finColor = b.millis() + COLOR_MS;
-        b.digitalWrite("D8", HIGH);
-        await b.delay(AVISO_MS);
-        b.digitalWrite("D8", LOW);
-        b.Serial.println(`Reportes  bien:${conteo[0]}  regular:${conteo[1]}  ayuda:${conteo[2]}`);
-        while (b.digitalRead(BOTONES[boton]) === LOW) await b.delay(10);
-        await b.delay(250);
+      const button = buttons.findIndex((key) => board.digitalRead(key) === LOW);
+      if (button >= 0) {
+        counts[button]++;
+        show(colors[button]);
+        colorUntil = board.millis() + colorMs;
+        sound(true);
+        await board.delay(noticeMs);
+        sound(false);
+        board.Serial.println(`Reportes  bien:${counts[0]}  regular:${counts[1]}  ayuda:${counts[2]}`);
+        while (board.digitalRead(buttons[button]) === LOW) await board.delay(10);
+        await board.delay(250);
       }
-      if (finColor > 0 && b.millis() > finColor) {
-        mostrar([0, 0, 0]);
-        finColor = 0;
+      if (colorUntil > 0 && board.millis() > colorUntil) {
+        show([0, 0, 0]);
+        colorUntil = 0;
       }
     },
   };
